@@ -21,17 +21,47 @@ namespace Platformer
 
         [SerializeField]
         private bool isGrounded;
+        public bool IsGrounded
+        {
+            get { return isGrounded; }
+            private set { isGrounded = value; }
+        }
 
         [SerializeField]
         private bool isJumping;
+        public bool IsJumping
+        {
+            get { return isJumping; }
+            private set { isJumping = value; }
+        }
+
+        [SerializeField]
+        private bool isFacingRight;
+        public bool IsFacingRight
+        {
+            get { return isFacingRight; }
+            private set { isFacingRight = value; }
+        }
+
+        [SerializeField]
+        private float jumpPressedRememberTime = .1f;
+
+        [SerializeField]
+        private float groundedRememberTime = .1f;
+
+        [SerializeField]
+        [Range(0f, .99f)]
+        private float horizontalDamping = .2f; //0 = no damping
 
 
         //state
 
-        public CharacterCollisionState2D Flags { get; set; }
+        public CharacterCollisionState2D Flags { get; private set; }
 
         private CharacterController2D characterController;
         private Vector3 moveDirection = Vector3.zero;
+        private float jumpPressedRemember = 0f;
+        private float groundedRemember = 0f;
 
 
         private void Start()
@@ -42,26 +72,32 @@ namespace Platformer
         private void Update()
         {
             moveDirection.x = Input.GetAxis("Horizontal");
-            moveDirection.x *= walkSpeed;
+            moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
 
-            if (isGrounded)
+            groundedRemember -= Time.deltaTime;
+
+            if (moveDirection.x < 0)
             {
-                moveDirection.y = 0;
-                isJumping = false;
+                transform.eulerAngles = 180 * Vector3.up;
+                IsFacingRight = false;
+            }
+            else if (moveDirection.x > 0)
+            {
+                transform.eulerAngles = Vector3.zero;
+                IsFacingRight = true;
+            }
 
-                if (moveDirection.x < 0)
-                {
-                    transform.eulerAngles = 180 * Vector3.up;
-                }
-                else
-                {
-                    transform.eulerAngles = Vector3.zero;
-                }
+            if (IsGrounded)
+            {
+                groundedRemember = groundedRememberTime;
+
+                moveDirection.y = 0;
+                IsJumping = false;
 
                 if (Input.GetButtonDown("Jump"))
                 {
                     moveDirection.y = jumpSpeed;
-                    isJumping = true;
+                    IsJumping = true;
                 }
             }
             else
@@ -72,11 +108,26 @@ namespace Platformer
                 }
             }
 
+            jumpPressedRemember -= Time.deltaTime;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                jumpPressedRemember = jumpPressedRememberTime;
+            }
+
+            if (jumpPressedRemember > 0 && groundedRemember > 0)
+            {
+                jumpPressedRemember = 0;
+                groundedRemember = 0;
+                moveDirection.y = jumpSpeed;
+                IsJumping = true; ///TODO: is this required?
+            }
+
             moveDirection.y -= gravity * Time.deltaTime;
             characterController.move(moveDirection * Time.deltaTime);
 
             Flags = characterController.collisionState;
-            isGrounded = Flags.below;
+            IsGrounded = Flags.below;
 
             if (Flags.above)
             {
