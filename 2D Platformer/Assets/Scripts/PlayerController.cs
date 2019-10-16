@@ -97,7 +97,7 @@ namespace Platformer
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    ActivateJump(jumpSpeed);
+                    //ActivateJump(jumpSpeed);
                     IsJumping = true;
                 }
             }
@@ -107,14 +107,7 @@ namespace Platformer
                 ActivateDoubleJump();
             }
 
-            jumpPressedRemember -= Time.deltaTime;
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                ResetTimer(ref jumpPressedRemember, jumpPressedRememberTime);
-            }
-
-            TryJumpWithHelper();
+            TryJumpWithHelper(jumpSpeed);
 
             ApplyGravity();
 
@@ -131,6 +124,13 @@ namespace Platformer
             if (Flags.left || Flags.right) //left/right walls
             {
                 TryWallJump();
+            }
+
+            jumpPressedRemember -= Time.deltaTime;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                ResetTimer(ref jumpPressedRemember, jumpPressedRememberTime);
             }
         }
 
@@ -175,13 +175,13 @@ namespace Platformer
             HasDoubleJumped = false;
         }
 
-        private bool TryJumpWithHelper()
+        private bool TryJumpWithHelper(float speed)
         {
             if (jumpPressedRemember > 0 && groundedRemember > 0)
             {
                 jumpPressedRemember = 0;
                 groundedRemember = 0;
-                ActivateJump(jumpSpeed);
+                ActivateJump(speed);
                 return true;
             }
             return false;
@@ -193,7 +193,11 @@ namespace Platformer
             {
                 float totalSpeedX = jumpSpeed * wallJumpSpeedMultiplierX;
                 float totalSpeedY = jumpSpeed * wallJumpSpeedMultiplierY;
-                ActivateJump(totalSpeedY);
+                //ActivateJump(totalSpeedY);
+                if (!TryJumpWithHelper(totalSpeedY))
+                {
+                    ActivateJump(totalSpeedY);
+                }
                 if (moveDirection.x < 0)
                 {
                     moveDirection.x = totalSpeedX;

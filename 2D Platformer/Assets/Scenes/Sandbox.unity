@@ -1326,4 +1326,4 @@ MonoBehaviour:
   gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133
-  horizontalDamping: 0.235
+  horizontalDamping: 0.2
