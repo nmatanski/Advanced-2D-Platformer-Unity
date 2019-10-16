@@ -48,20 +48,18 @@ namespace Platformer
         // Update is called once per frame
         private void Update()
         {
-            if (playerController.IsFacingRight)
-            {
-                camera.position = new Vector3(
-                    Mathf.Lerp(camera.position.x, player.transform.position.x + cameraXOffset, horizontalSpeed * Time.deltaTime),
-                    Mathf.Lerp(camera.position.y, player.transform.position.y + cameraYOffset, verticalSpeed * Time.deltaTime),
-                    cameraZPos);
-            }
-            else
-            {
-                camera.position = new Vector3(
-                    Mathf.Lerp(camera.position.x, player.transform.position.x - cameraXOffset, horizontalSpeed * Time.deltaTime),
-                    Mathf.Lerp(camera.position.y, player.transform.position.y + cameraYOffset, verticalSpeed * Time.deltaTime),
-                    cameraZPos);
-            }
+            float newXPos = playerController.IsFacingRight ? cameraXOffset : -cameraXOffset;
+            newXPos += player.transform.position.x;
+
+            InterpolateCameraPosition(camera, new Vector2(newXPos, player.transform.position.y + cameraYOffset), cameraZPos, horizontalSpeed, verticalSpeed);
+        }
+
+        private void InterpolateCameraPosition(Transform camera, Vector2 newPositionXY, float cameraZPosition, float horizontalSpeed = 1f, float verticalSpeed = 1f)
+        {
+            camera.position = new Vector3(
+                    Mathf.Lerp(camera.position.x, newPositionXY.x, horizontalSpeed * Time.deltaTime),
+                    Mathf.Lerp(camera.position.y, newPositionXY.y, verticalSpeed * Time.deltaTime),
+                    cameraZPosition);
         }
     }
 }

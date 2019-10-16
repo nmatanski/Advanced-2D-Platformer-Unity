@@ -71,11 +71,96 @@ namespace Platformer
 
         private void Update()
         {
-            moveDirection.x = Input.GetAxis("Horizontal");
-            moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
+            Run();
+
+            OrientatePlayer();
 
             groundedRemember -= Time.deltaTime;
 
+            if (IsGrounded)
+            {
+                ResetTimer(ref groundedRemember, groundedRememberTime);
+
+                DeactivateJump();
+
+                if (Input.GetButtonDown("Jump"))
+                {
+                    ActivateJump();
+                }
+            }
+            else
+            {
+                ActivateSmartJumpWithHeightCut();
+            }
+
+            jumpPressedRemember -= Time.deltaTime;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                ResetTimer(ref jumpPressedRemember, jumpPressedRememberTime);
+            }
+
+            TryJumpWithHelper();
+
+            ApplyGravity();
+
+            characterController.move(moveDirection * Time.deltaTime);
+
+            Flags = characterController.collisionState;
+            IsGrounded = Flags.below;
+
+            if (Flags.above)
+            {
+                ApplyGravity();
+            }
+        }
+
+
+        private void Run()
+        {
+            moveDirection.x = Input.GetAxis("Horizontal");
+            moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
+        }
+
+        private void ActivateJump()
+        {
+            moveDirection.y = jumpSpeed;
+            IsJumping = true;
+        }
+
+        private void ActivateSmartJumpWithHeightCut()
+        {
+            if (Input.GetButtonUp("Jump") && moveDirection.y > 0)
+            {
+                moveDirection.y *= .5f;
+            }
+        }
+
+        private void DeactivateJump()
+        {
+            moveDirection.y = 0;
+            IsJumping = false;
+        }
+
+        private bool TryJumpWithHelper()
+        {
+            if (jumpPressedRemember > 0 && groundedRemember > 0)
+            {
+                jumpPressedRemember = 0;
+                groundedRemember = 0;
+                ActivateJump();
+                return true;
+            }
+            return false;
+        }
+
+        private void ApplyGravity()
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        private void OrientatePlayer()
+        {
             if (moveDirection.x < 0)
             {
                 transform.eulerAngles = 180 * Vector3.up;
@@ -86,53 +171,11 @@ namespace Platformer
                 transform.eulerAngles = Vector3.zero;
                 IsFacingRight = true;
             }
+        }
 
-            if (IsGrounded)
-            {
-                groundedRemember = groundedRememberTime;
-
-                moveDirection.y = 0;
-                IsJumping = false;
-
-                if (Input.GetButtonDown("Jump"))
-                {
-                    moveDirection.y = jumpSpeed;
-                    IsJumping = true;
-                }
-            }
-            else
-            {
-                if (Input.GetButtonUp("Jump") && moveDirection.y > 0)
-                {
-                    moveDirection.y *= .5f;
-                }
-            }
-
-            jumpPressedRemember -= Time.deltaTime;
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                jumpPressedRemember = jumpPressedRememberTime;
-            }
-
-            if (jumpPressedRemember > 0 && groundedRemember > 0)
-            {
-                jumpPressedRemember = 0;
-                groundedRemember = 0;
-                moveDirection.y = jumpSpeed;
-                IsJumping = true; ///TODO: is this required?
-            }
-
-            moveDirection.y -= gravity * Time.deltaTime;
-            characterController.move(moveDirection * Time.deltaTime);
-
-            Flags = characterController.collisionState;
-            IsGrounded = Flags.below;
-
-            if (Flags.above)
-            {
-                moveDirection.y -= gravity * Time.deltaTime;
-            }
+        private void ResetTimer(ref float currentTimer, float defaultTimer)
+        {
+            currentTimer = defaultTimer;
         }
     }
 }

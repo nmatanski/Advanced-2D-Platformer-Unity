@@ -210,22 +210,19 @@ namespace Prime31
 
         public void OnTriggerEnter2D(Collider2D col)
         {
-            if (onTriggerEnterEvent != null)
-                onTriggerEnterEvent(col);
+            onTriggerEnterEvent?.Invoke(col);
         }
 
 
         public void OnTriggerStay2D(Collider2D col)
         {
-            if (onTriggerStayEvent != null)
-                onTriggerStayEvent(col);
+            onTriggerStayEvent?.Invoke(col);
         }
 
 
         public void OnTriggerExit2D(Collider2D col)
         {
-            if (onTriggerExitEvent != null)
-                onTriggerExitEvent(col);
+            onTriggerExitEvent?.Invoke(col);
         }
 
         #endregion

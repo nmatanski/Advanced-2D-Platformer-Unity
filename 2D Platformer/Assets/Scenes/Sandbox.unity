@@ -999,6 +999,6 @@ MonoBehaviour:
   isGrounded: 0
   isJumping: 0
   isFacingRight: 0
-  jumpPressedRememberTime: 0.13
-  groundedRememberTime: 0.13
+  jumpPressedRememberTime: 0.133
+  groundedRememberTime: 0.133
   horizontalDamping: 0.235
