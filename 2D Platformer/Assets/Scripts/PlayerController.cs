@@ -194,7 +194,7 @@ namespace Platformer
                 float totalSpeedX = jumpSpeed * wallJumpSpeedMultiplierX;
                 float totalSpeedY = jumpSpeed * wallJumpSpeedMultiplierY;
                 //ActivateJump(totalSpeedY);
-                if (!TryJumpWithHelper(totalSpeedY))
+                if (!TryJumpWithHelper(totalSpeedY)) ///TODO: bug: not applying the assist method
                 {
                     ActivateJump(totalSpeedY);
                 }
@@ -211,7 +211,8 @@ namespace Platformer
                     wasLastJumpLeft = true;
                 }
                 StartCoroutine(WallJumpRecoveryTimer(wallJumpRecoveryTime));
-
+                HasDoubleJumped = false;
+                CanDoubleJump = true;
                 return true;
             }
 
