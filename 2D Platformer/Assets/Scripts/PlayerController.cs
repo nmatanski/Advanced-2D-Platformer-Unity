@@ -17,31 +17,10 @@ namespace Platformer
         private float jumpSpeed = 8f;
 
         [SerializeField]
+        private float doubleJumpSpeed = 4f;
+
+        [SerializeField]
         private float gravity = 20f;
-
-        [SerializeField]
-        private bool isGrounded;
-        public bool IsGrounded
-        {
-            get { return isGrounded; }
-            private set { isGrounded = value; }
-        }
-
-        [SerializeField]
-        private bool isJumping;
-        public bool IsJumping
-        {
-            get { return isJumping; }
-            private set { isJumping = value; }
-        }
-
-        [SerializeField]
-        private bool isFacingRight;
-        public bool IsFacingRight
-        {
-            get { return isFacingRight; }
-            private set { isFacingRight = value; }
-        }
 
         [SerializeField]
         private float jumpPressedRememberTime = .1f;
@@ -55,6 +34,18 @@ namespace Platformer
 
 
         //state
+
+        public bool CanDoubleJump { get; private set; } = true;
+
+
+        public bool IsGrounded { get; private set; }
+
+        public bool IsJumping { get; private set; }
+
+        public bool IsFacingRight { get; private set; }
+
+        public bool HasDoubleJumped { get; private set; }
+
 
         public CharacterCollisionState2D Flags { get; private set; }
 
@@ -81,16 +72,18 @@ namespace Platformer
             {
                 ResetTimer(ref groundedRemember, groundedRememberTime);
 
-                DeactivateJump();
+                ResetJump();
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    ActivateJump();
+                    ActivateJump(jumpSpeed);
+                    IsJumping = true;
                 }
             }
             else
             {
                 ActivateSmartJumpWithHeightCut();
+                ActivateDoubleJump();
             }
 
             jumpPressedRemember -= Time.deltaTime;
@@ -115,6 +108,14 @@ namespace Platformer
             }
         }
 
+        private void ActivateDoubleJump()
+        {
+            if (Input.GetButtonDown("Jump") && CanDoubleJump && !HasDoubleJumped)
+            {
+                ActivateJump(doubleJumpSpeed);
+                HasDoubleJumped = true;
+            }
+        }
 
         private void Run()
         {
@@ -122,10 +123,9 @@ namespace Platformer
             moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
         }
 
-        private void ActivateJump()
+        private void ActivateJump(float speed)
         {
-            moveDirection.y = jumpSpeed;
-            IsJumping = true;
+            moveDirection.y = speed;
         }
 
         private void ActivateSmartJumpWithHeightCut()
@@ -136,10 +136,11 @@ namespace Platformer
             }
         }
 
-        private void DeactivateJump()
+        private void ResetJump()
         {
             moveDirection.y = 0;
             IsJumping = false;
+            HasDoubleJumped = false;
         }
 
         private bool TryJumpWithHelper()
@@ -148,7 +149,7 @@ namespace Platformer
             {
                 jumpPressedRemember = 0;
                 groundedRemember = 0;
-                ActivateJump();
+                ActivateJump(jumpSpeed);
                 return true;
             }
             return false;

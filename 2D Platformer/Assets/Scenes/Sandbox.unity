@@ -162,7 +162,7 @@ MonoBehaviour:
   cameraXOffset: 3.5
   cameraYOffset: 1
   horizontalSpeed: 1.9
-  verticalSpeed: 2
+  verticalSpeed: 4
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -709,7 +709,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835636064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.7, y: 3.1, z: 14.637914}
+  m_LocalPosition: {x: 20.7, y: 1.58, z: 14.637914}
   m_LocalScale: {x: 400, y: 18, z: 1}
   m_Children: []
   m_Father: {fileID: 1470237116}
@@ -945,7 +945,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   slopeLimit: 30
-  jumpingThreshold: 0.2
+  jumpingThreshold: 0.133
   slopeSpeedMultiplier:
     serializedVersion: 2
     m_Curve:
@@ -994,11 +994,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 9
-  jumpSpeed: 12
-  gravity: 20
-  isGrounded: 0
-  isJumping: 0
-  isFacingRight: 0
+  jumpSpeed: 16
+  doubleJumpSpeed: 10
+  gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133
   horizontalDamping: 0.235
