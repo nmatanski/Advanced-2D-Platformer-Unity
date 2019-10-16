@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Prime31;
 using static Prime31.CharacterController2D;
+using System;
 
 namespace Platformer
 {
@@ -20,6 +21,15 @@ namespace Platformer
         private float doubleJumpSpeed = 4f;
 
         [SerializeField]
+        private float wallJumpSpeedMultiplierX = 2f;
+
+        [SerializeField]
+        private float wallJumpSpeedMultiplierY = 2f;
+
+        [SerializeField]
+        private float wallJumpRecoveryTime = .2f;
+
+        [SerializeField]
         private float gravity = 20f;
 
         [SerializeField]
@@ -33,10 +43,18 @@ namespace Platformer
         private float horizontalDamping = .2f; //0 = no damping
 
 
-        //state
+        //cached components
+        private CharacterController2D characterController;
+
+
+        //ability toggles
 
         public bool CanDoubleJump { get; private set; } = true;
 
+        public bool CanWallJump { get; private set; } = true;
+
+
+        //state
 
         public bool IsGrounded { get; private set; }
 
@@ -46,13 +64,16 @@ namespace Platformer
 
         public bool HasDoubleJumped { get; private set; }
 
+        public bool HasWallJumped { get; set; }
 
         public CharacterCollisionState2D Flags { get; private set; }
 
-        private CharacterController2D characterController;
-        private Vector3 moveDirection = Vector3.zero;
         private float jumpPressedRemember = 0f;
         private float groundedRemember = 0f;
+
+
+        private Vector3 moveDirection = Vector3.zero;
+        private bool wasLastJumpLeft;
 
 
         private void Start()
@@ -102,11 +123,17 @@ namespace Platformer
             Flags = characterController.collisionState;
             IsGrounded = Flags.below;
 
-            if (Flags.above)
+            if (Flags.above) //ceiling
             {
                 ApplyGravity();
             }
+
+            if (Flags.left || Flags.right) //left/right walls
+            {
+                TryWallJump();
+            }
         }
+
 
         private void ActivateDoubleJump()
         {
@@ -119,6 +146,11 @@ namespace Platformer
 
         private void Run()
         {
+            if (HasWallJumped)
+            {
+                return;
+            }
+
             moveDirection.x = Input.GetAxis("Horizontal");
             moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
         }
@@ -155,6 +187,33 @@ namespace Platformer
             return false;
         }
 
+        private bool TryWallJump()
+        {
+            if (CanWallJump && Input.GetButtonDown("Jump") && !HasWallJumped && !IsGrounded)
+            {
+                float totalSpeedX = jumpSpeed * wallJumpSpeedMultiplierX;
+                float totalSpeedY = jumpSpeed * wallJumpSpeedMultiplierY;
+                ActivateJump(totalSpeedY);
+                if (moveDirection.x < 0)
+                {
+                    moveDirection.x = totalSpeedX;
+                    transform.eulerAngles = Vector3.zero;
+                    wasLastJumpLeft = false;
+                }
+                else if (moveDirection.x > 0)
+                {
+                    moveDirection.x = -totalSpeedX;
+                    transform.eulerAngles = 180 * Vector3.up;
+                    wasLastJumpLeft = true;
+                }
+                StartCoroutine(WallJumpRecoveryTimer(wallJumpRecoveryTime));
+
+                return true;
+            }
+
+            return false;
+        }
+
         private void ApplyGravity()
         {
             moveDirection.y -= gravity * Time.deltaTime;
@@ -177,6 +236,13 @@ namespace Platformer
         private void ResetTimer(ref float currentTimer, float defaultTimer)
         {
             currentTimer = defaultTimer;
+        }
+
+        private IEnumerator WallJumpRecoveryTimer(float waitTime)
+        {
+            HasWallJumped = true;
+            yield return new WaitForSeconds(waitTime);
+            HasWallJumped = false;
         }
     }
 }
