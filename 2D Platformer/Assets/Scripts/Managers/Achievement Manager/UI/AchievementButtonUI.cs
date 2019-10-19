@@ -13,8 +13,6 @@ namespace Platformer.Achievements.UI
             set { achievementCategory = value; }
         }
 
-
-
         [SerializeField]
         private Sprite neutral;
 
@@ -28,18 +26,6 @@ namespace Platformer.Achievements.UI
         private void Awake()
         {
             sprite = GetComponent<Image>();
-        }
-
-        // Start is called before the first frame update
-        private void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-
         }
 
 

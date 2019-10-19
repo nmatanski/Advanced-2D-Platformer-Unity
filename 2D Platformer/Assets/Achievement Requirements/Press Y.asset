@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 312ad90a179f61541bf839a84cd790c7, type: 3}
-  m_Name: Special Ending Trigger
+  m_Script: {fileID: 11500000, guid: 877d88fe229b0a240a7268472bcaffb1, type: 3}
+  m_Name: Press Y
   m_EditorClassIdentifier: 
-  id: SpecialEnding1
-  name: I need to die now!? Please!
-  description: Find the special ending.
+  id: PressY
+  name: There are achievements in this game?
+  description: Open the achievements.

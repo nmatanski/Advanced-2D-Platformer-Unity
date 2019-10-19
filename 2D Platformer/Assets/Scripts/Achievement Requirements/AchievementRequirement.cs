@@ -8,6 +8,7 @@ namespace Platformer.Achievements
         #region EventRequirements
         public static event Action<AchievementRequirement> OnTriggerEnteredAchievementRequirement;
         //public static event Action<AchievementRequirement> OnCollisionEnteredAchievementRequirement; ///TODO: Fix the collisions with charactercontroller
+        public static event Action<AchievementRequirement> OnYKeyPressedAchievementRequirement;
         #endregion
 
         #region RequirementsDTOs
@@ -17,6 +18,14 @@ namespace Platformer.Achievements
         {
             get { return pointOfInterestTriggerEnteredData; }
             private set { pointOfInterestTriggerEnteredData = value; }
+        }
+
+        [SerializeField]
+        private PointOfInterest achievementData;
+        public PointOfInterest AchievementData
+        {
+            get { return achievementData; }
+            set { achievementData = value; }
         }
 
         ///TODO: Add this when I find a raycasting collision fix
@@ -36,6 +45,16 @@ namespace Platformer.Achievements
             onAchievementRequirementFulfilled?.Invoke(this);
         }
 
+        private void Update()
+        {
+            if (gameObject.CompareTag("CollisionAchievement"))
+            {
+                return;
+            }
+
+            OnYKeyPressed();
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             FulfillRequirement(OnTriggerEnteredAchievementRequirement);
@@ -45,5 +64,13 @@ namespace Platformer.Achievements
         //{
         //    FulfillRequirement(OnCollisionEnteredAchievementRequirement);
         //}
+
+        private void OnYKeyPressed()
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                FulfillRequirement(OnYKeyPressedAchievementRequirement);
+            }
+        }
     }
 }

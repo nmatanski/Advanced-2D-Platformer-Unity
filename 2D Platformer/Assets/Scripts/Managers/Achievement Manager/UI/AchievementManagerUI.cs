@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +19,34 @@ namespace Platformer.Achievements.UI
 
         [SerializeField]
         private GameObject achievementMenu;
+        public GameObject AchievementMenu { get => achievementMenu; private set => achievementMenu = value; }
 
+        [SerializeField]
+        private GameObject visualAchievement;
+
+        [SerializeField]
+        private Sprite unlockedAchievementSprite;
+        public Sprite UnlockedAchievementSprite { get => unlockedAchievementSprite; private set => unlockedAchievementSprite = value; }
+
+        [SerializeField]
+        private TextMeshProUGUI pointsText;
+        public TextMeshProUGUI PointsText { get => pointsText; private set => pointsText = value; }
+
+
+        public Dictionary<string, Achievement> Achievements { get; private set; } = new Dictionary<string, Achievement>();
+
+        private static AchievementManagerUI instance;
+        public static AchievementManagerUI Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<AchievementManagerUI>();
+                }
+                return instance;
+            }
+        }
 
         private AchievementButtonUI activeButton;
 
@@ -27,30 +56,10 @@ namespace Platformer.Achievements.UI
         {
             activeButton = GameObject.FindGameObjectWithTag("GeneralButtonUI").GetComponent<AchievementButtonUI>();
 
-            CreateAchievementUI("General", "General Achievement 1", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 2", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 3", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 4", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 5", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 6", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 7", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 8", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 9", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 10", "descr", 5, 0);
-            CreateAchievementUI("General", "General Achievement 11", "descr", 5, 0);
+            CreateAchievementUI("General", "There are achievements in this game?", "Open the achievements.", 5, 0); ///TODO: serializefield and use the gameobject with the requirement
 
-            CreateAchievementUI("Other", "Other Achievement 1", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 2", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 3", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 4", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 5", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 6", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 7", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 8", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 9", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 10", "descr", 5, 0);
-            CreateAchievementUI("Other", "Other Achievement 11", "descr", 5, 0);
-
+            CreateAchievementUI("Other", "I need to die now!? Please!", "Find the special ending.", 5, 0);
+            CreateAchievementUI("Other", "You're not supposed to be here!", "Explore the special place.", 5, 0);
 
             foreach (var achievementCategory in GameObject.FindGameObjectsWithTag("AchievementCategoryUI"))
             {
@@ -59,16 +68,7 @@ namespace Platformer.Achievements.UI
 
             activeButton.OnClick();
 
-            achievementMenu.SetActive(false);
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                achievementMenu.SetActive(!achievementMenu.activeSelf);
-            }
+            AchievementMenu.SetActive(false);
         }
 
 
@@ -83,21 +83,41 @@ namespace Platformer.Achievements.UI
             activeButton = achievementButton;
         }
 
-
-        private void CreateAchievementUI(string category, string title, string description, int points, int spriteIndex)
+        public void TryEarnAchievement(string title, bool isUnlocked, string key)
         {
-            var achievement = Instantiate(achievementPrefab);
-            SetAchievementInfoUI(category, achievement, title, description, points, spriteIndex);
+            Debug.Log('\t' + title);
+            if (!Achievements[title].IsEarned(isUnlocked, key) && !isUnlocked)
+            {
+                var achievement = Instantiate(visualAchievement);
+                SetAchievementInfoUI("EarnAchievementCanvas", achievement, title);
+                StartCoroutine(HideAchievement(achievement, 3f));
+            }
         }
 
-        private void SetAchievementInfoUI(string category, GameObject achievement, string title, string description, int points, int spriteIndex)
+
+        public IEnumerator HideAchievement(GameObject achievement, float delay)
         {
-            achievement.transform.SetParent(GameObject.Find(category).transform);
+            yield return new WaitForSeconds(delay);
+            Destroy(achievement);
+        }
+
+
+        private void CreateAchievementUI(string parent, string title, string description, int points, int spriteIndex)
+        {
+            var achievement = Instantiate(achievementPrefab);
+            var newAchievement = new Achievement(title, description, points, spriteIndex, achievement);
+            Achievements.Add(title, newAchievement);
+            SetAchievementInfoUI(parent, achievement, title);
+        }
+
+        private void SetAchievementInfoUI(string parent, GameObject achievement, string title)
+        {
+            achievement.transform.SetParent(GameObject.Find(parent).transform);
             achievement.transform.localScale = Vector3.one;
             achievement.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = title;
-            achievement.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = description;
-            achievement.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = points.ToString();
-            achievement.transform.GetChild(3).GetComponent<Image>().sprite = sprites[spriteIndex];
+            achievement.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Achievements[title].Description;
+            achievement.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = Achievements[title].Points.ToString();
+            achievement.transform.GetChild(3).GetComponent<Image>().sprite = sprites[Achievements[title].SpriteIndex];
         }
     }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312ad90a179f61541bf839a84cd790c7, type: 3}
   m_Name: Explore Platform Trigger
   m_EditorClassIdentifier: 
-  title: ExploreSpecialPlace
-  description: You explored the special place!
+  id: ExploreSpecialPlatform1
+  name: You're not supposed to be here!
+  description: Explore the special place.
