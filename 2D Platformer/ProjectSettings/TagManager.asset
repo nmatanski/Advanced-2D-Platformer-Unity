@@ -8,6 +8,11 @@ TagManager:
   - OtherButtonUI
   - AchievementCategoryUI
   - CollisionAchievement
+  - YKeyReq
+  - HorizontalButtonReq
+  - JumpButtonReq
+  - FullControlReq
+  - AchievementManagerUI
   layers:
   - Default
   - TransparentFX

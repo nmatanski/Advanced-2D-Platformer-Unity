@@ -22,6 +22,9 @@ namespace Platformer.Managers
         {
             AchievementRequirement.OnTriggerEnteredAchievementRequirement -= AchievementRequirement_OnTriggerEnteredAchievementRequirement;
             AchievementRequirement.OnYKeyPressedAchievementRequirement -= AchievementRequirement_OnYKeyPressedAchievementRequirement;
+            AchievementRequirement.OnJumpKeyPressedAchievementRequirement -= AchievementRequirement_OnJumpKeyPressedAchievementRequirement;
+            AchievementRequirement.OnLeftRightKeysPressedAchievementRequirement -= AchievementRequirement_OnLeftRightKeysPressedAchievementRequirement;
+            //AchievementRequirement.OnFullControlAchievementRequirement -= AchievementRequirement_OnFullControlAchievementRequirement;
             //AchievementRequirement.OnCollisionEnteredAchievementRequirement -= AchievementRequirement_OnCollisionEnteredAchievementRequirement;
         }
 
@@ -34,6 +37,9 @@ namespace Platformer.Managers
             PlayerPrefs.DeleteAll();
             AchievementRequirement.OnTriggerEnteredAchievementRequirement += AchievementRequirement_OnTriggerEnteredAchievementRequirement;
             AchievementRequirement.OnYKeyPressedAchievementRequirement += AchievementRequirement_OnYKeyPressedAchievementRequirement;
+            AchievementRequirement.OnJumpKeyPressedAchievementRequirement += AchievementRequirement_OnJumpKeyPressedAchievementRequirement;
+            AchievementRequirement.OnLeftRightKeysPressedAchievementRequirement += AchievementRequirement_OnLeftRightKeysPressedAchievementRequirement;
+            //AchievementRequirement.OnFullControlAchievementRequirement += AchievementRequirement_OnFullControlAchievementRequirement;
             //AchievementRequirement.OnCollisionEnteredAchievementRequirement += AchievementRequirement_OnCollisionEnteredAchievementRequirement;
             ///Attach more requirement events here
 
@@ -45,8 +51,7 @@ namespace Platformer.Managers
 
         private void AchievementRequirement_OnTriggerEnteredAchievementRequirement(AchievementRequirement requirement)
         {
-            string requirementKey = GetAchievementKey(requirement.PointOfInterestTriggerEnteredData.Name);
-            achievementsUI.TryEarnAchievement(requirement.PointOfInterestTriggerEnteredData.Name, HasBeenAddedToPlayerPrefs(requirementKey), requirementKey); ///TODO: Implement it to send the achievementkey in the ui and there to call the add to playerprefs
+            TryEarnAchievement(requirement.PointOfInterestTriggerEnteredData);
         }
 
         //private void AchievementRequirement_OnCollisionEnteredAchievementRequirement(AchievementRequirement requirement)
@@ -59,8 +64,7 @@ namespace Platformer.Managers
 
         private void AchievementRequirement_OnYKeyPressedAchievementRequirement(AchievementRequirement requirement)
         {
-            string achievementKey = GetAchievementKey(requirement.AchievementData.Name);
-            achievementsUI.TryEarnAchievement(requirement.AchievementData.Name, HasBeenAddedToPlayerPrefs(achievementKey), achievementKey); ///TODO: Implement it to send the achievementkey in the ui and there to call the add to playerprefs
+            TryEarnAchievement(requirement.AchievementData);
 
             if (Input.GetKeyDown(KeyCode.Y))
             {
@@ -68,6 +72,26 @@ namespace Platformer.Managers
             }
         }
 
+        private void AchievementRequirement_OnJumpKeyPressedAchievementRequirement(AchievementRequirement requirement)
+        {
+            TryEarnAchievement(requirement.AchievementData);
+        }
+
+        private void AchievementRequirement_OnLeftRightKeysPressedAchievementRequirement(AchievementRequirement requirement)
+        {
+            TryEarnAchievement(requirement.AchievementData);
+        }
+
+        //private void AchievementRequirement_OnFullControlAchievementRequirement(AchievementRequirement requirement)
+        //{
+        //    TryEarnAchievement(requirement.AchievementData);
+        //}
+
+        private void TryEarnAchievement(PointOfInterest dto)
+        {
+            string achievementKey = GetAchievementKey(dto.Name);
+            achievementsUI.TryEarnAchievement(dto.Name, HasBeenAddedToPlayerPrefs(achievementKey), achievementKey); ///TODO: Implement it to send the achievementkey in the ui and there to call the add to playerprefs
+        }
 
         public static string GetAchievementKey(string title)
         {
@@ -75,7 +99,7 @@ namespace Platformer.Managers
         }
 
 
-        private bool HasBeenAddedToPlayerPrefs(string key)
+        public bool HasBeenAddedToPlayerPrefs(string key)
         {
             if (PlayerPrefs.GetInt(key) == 1)
                 return true;

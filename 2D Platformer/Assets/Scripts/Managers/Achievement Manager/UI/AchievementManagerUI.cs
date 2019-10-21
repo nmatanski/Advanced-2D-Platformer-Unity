@@ -57,6 +57,9 @@ namespace Platformer.Achievements.UI
             activeButton = GameObject.FindGameObjectWithTag("GeneralButtonUI").GetComponent<AchievementButtonUI>();
 
             CreateAchievementUI("General", "There are achievements in this game?", "Open the achievements.", 5, 0); ///TODO: serializefield and use the gameobject with the requirement
+            CreateAchievementUI("General", "Jump", "Find one of the jump keys.", 5, 0);
+            CreateAchievementUI("General", "I can walk!", "Find how to walk.", 5, 0);
+            //CreateAchievementUI("General", "Full control", "Learn how to walk and jump.", 10, 0, new string[] { "Jump", "I can walk!" });
 
             CreateAchievementUI("Other", "I need to die now!? Please!", "Find the special ending.", 5, 0);
             CreateAchievementUI("Other", "You're not supposed to be here!", "Explore the special place.", 5, 0);
@@ -102,12 +105,22 @@ namespace Platformer.Achievements.UI
         }
 
 
-        private void CreateAchievementUI(string parent, string title, string description, int points, int spriteIndex)
+        private void CreateAchievementUI(string parent, string title, string description, int points, int spriteIndex, string[] achievementRequirementsTitles = null)
         {
             var achievement = Instantiate(achievementPrefab);
             var newAchievement = new Achievement(title, description, points, spriteIndex, achievement);
             Achievements.Add(title, newAchievement);
             SetAchievementInfoUI(parent, achievement, title);
+
+            if (achievementRequirementsTitles != null)
+            {
+                foreach (var requiredAchievementTitle in achievementRequirementsTitles)
+                {
+                    var dependency = Achievements[requiredAchievementTitle];
+                    dependency.ChildAchievement = title;
+                    newAchievement.AddRequiredAchievement(dependency);
+                }
+            }
         }
 
         private void SetAchievementInfoUI(string parent, GameObject achievement, string title)

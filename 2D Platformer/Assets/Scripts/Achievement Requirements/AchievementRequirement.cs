@@ -9,6 +9,9 @@ namespace Platformer.Achievements
         public static event Action<AchievementRequirement> OnTriggerEnteredAchievementRequirement;
         //public static event Action<AchievementRequirement> OnCollisionEnteredAchievementRequirement; ///TODO: Fix the collisions with charactercontroller
         public static event Action<AchievementRequirement> OnYKeyPressedAchievementRequirement;
+        public static event Action<AchievementRequirement> OnJumpKeyPressedAchievementRequirement;
+        public static event Action<AchievementRequirement> OnLeftRightKeysPressedAchievementRequirement;
+        //public static event Action<AchievementRequirement> OnFullControlAchievementRequirement;
         #endregion
 
         #region RequirementsDTOs
@@ -27,6 +30,10 @@ namespace Platformer.Achievements
             get { return achievementData; }
             set { achievementData = value; }
         }
+
+        //public bool IsReady { get; set; } = false;
+
+        //public int ReadyRequirements { get; set; } = 0;
 
         ///TODO: Add this when I find a raycasting collision fix
         //[SerializeField]
@@ -51,9 +58,20 @@ namespace Platformer.Achievements
             {
                 return;
             }
-
-            OnYKeyPressed();
+            switch (gameObject.tag)
+            {
+                case "YKeyReq":
+                    OnYKeyPressed();
+                    break;
+                case "JumpButtonReq":
+                    OnJumpKeyPressed();
+                    break;
+                case "HorizontalButtonReq":
+                    OnLeftRightKeysPressed();
+                    break;
+            }
         }
+
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -72,5 +90,29 @@ namespace Platformer.Achievements
                 FulfillRequirement(OnYKeyPressedAchievementRequirement);
             }
         }
+
+        private void OnJumpKeyPressed()
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                FulfillRequirement(OnJumpKeyPressedAchievementRequirement);
+            }
+        }
+
+        private void OnLeftRightKeysPressed()
+        {
+            if (Input.GetButtonDown("Horizontal"))
+            {
+                FulfillRequirement(OnLeftRightKeysPressedAchievementRequirement);
+            }
+        }
+
+        //public void OnFullControl()
+        //{
+        //    if (++ReadyRequirements > 1)
+        //    {
+        //        FulfillRequirement(OnFullControlAchievementRequirement);
+        //    }
+        //}
     }
 }
