@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Press Y
   m_EditorClassIdentifier: 
   id: PressY
+  category: General
   name: There are achievements in this game?
   description: Open the achievements.
+  points: 5
+  sprite: {fileID: 0}

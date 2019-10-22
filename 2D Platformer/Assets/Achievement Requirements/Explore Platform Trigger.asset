@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Explore Platform Trigger
   m_EditorClassIdentifier: 
   id: ExploreSpecialPlatform1
+  category: Other
   name: You're not supposed to be here!
   description: Explore the special place.
+  points: 5

@@ -9,20 +9,28 @@ namespace Platformer.Achievements.UI
     public class AchievementManagerUI : MonoBehaviour
     {
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementManagerUI.achievementPrefab' is never assigned to, and will always have its default value null
         private GameObject achievementPrefab;
+#pragma warning restore CS0649 // Field 'AchievementManagerUI.achievementPrefab' is never assigned to, and will always have its default value null
 
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementManagerUI.sprites' is never assigned to, and will always have its default value null
         private Sprite[] sprites;
+#pragma warning restore CS0649 // Field 'AchievementManagerUI.sprites' is never assigned to, and will always have its default value null
 
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementManagerUI.scrollRect' is never assigned to, and will always have its default value null
         private ScrollRect scrollRect;
+#pragma warning restore CS0649 // Field 'AchievementManagerUI.scrollRect' is never assigned to, and will always have its default value null
 
         [SerializeField]
         private GameObject achievementMenu;
         public GameObject AchievementMenu { get => achievementMenu; private set => achievementMenu = value; }
 
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementManagerUI.visualAchievement' is never assigned to, and will always have its default value null
         private GameObject visualAchievement;
+#pragma warning restore CS0649 // Field 'AchievementManagerUI.visualAchievement' is never assigned to, and will always have its default value null
 
         [SerializeField]
         private Sprite unlockedAchievementSprite;
@@ -32,6 +40,8 @@ namespace Platformer.Achievements.UI
         private TextMeshProUGUI pointsText;
         public TextMeshProUGUI PointsText { get => pointsText; private set => pointsText = value; }
 
+        [SerializeField]
+        private List<PointOfInterest> achievementDTOs = new List<PointOfInterest>();
 
         public Dictionary<string, Achievement> Achievements { get; private set; } = new Dictionary<string, Achievement>();
 
@@ -48,6 +58,7 @@ namespace Platformer.Achievements.UI
             }
         }
 
+
         private AchievementButtonUI activeButton;
 
 
@@ -56,13 +67,10 @@ namespace Platformer.Achievements.UI
         {
             activeButton = GameObject.FindGameObjectWithTag("GeneralButtonUI").GetComponent<AchievementButtonUI>();
 
-            CreateAchievementUI("General", "There are achievements in this game?", "Open the achievements.", 5, 0); ///TODO: serializefield and use the gameobject with the requirement
-            CreateAchievementUI("General", "Jump", "Find one of the jump keys.", 5, 0);
-            CreateAchievementUI("General", "I can walk!", "Find how to walk.", 5, 0);
-            //CreateAchievementUI("General", "Full control", "Learn how to walk and jump.", 10, 0, new string[] { "Jump", "I can walk!" });
-
-            CreateAchievementUI("Other", "I need to die now!? Please!", "Find the special ending.", 5, 0);
-            CreateAchievementUI("Other", "You're not supposed to be here!", "Explore the special place.", 5, 0);
+            foreach (var achievement in achievementDTOs)
+            {
+                CreateAchievementUI(achievement.Category, achievement.Name, achievement.Description, achievement.Points);
+            }
 
             foreach (var achievementCategory in GameObject.FindGameObjectsWithTag("AchievementCategoryUI"))
             {
@@ -93,7 +101,7 @@ namespace Platformer.Achievements.UI
             {
                 var achievement = Instantiate(visualAchievement);
                 SetAchievementInfoUI("EarnAchievementCanvas", achievement, title);
-                StartCoroutine(HideAchievement(achievement, 3f));
+                StartCoroutine(FadeAchievementNotification(achievement, 1f, 3f, 2f));
             }
         }
 
@@ -105,10 +113,10 @@ namespace Platformer.Achievements.UI
         }
 
 
-        private void CreateAchievementUI(string parent, string title, string description, int points, int spriteIndex, string[] achievementRequirementsTitles = null)
+        private void CreateAchievementUI(string parent, string title, string description, int points, int spriteIndex = 0, string[] achievementRequirementsTitles = null)
         {
             var achievement = Instantiate(achievementPrefab);
-            var newAchievement = new Achievement(title, description, points, spriteIndex, achievement);
+            var newAchievement = new Achievement(title, description, points, spriteIndex, achievement); ///TODO: change spriteIndex for Sprite
             Achievements.Add(title, newAchievement);
             SetAchievementInfoUI(parent, achievement, title);
 
@@ -131,6 +139,32 @@ namespace Platformer.Achievements.UI
             achievement.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Achievements[title].Description;
             achievement.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = Achievements[title].Points.ToString();
             achievement.transform.GetChild(3).GetComponent<Image>().sprite = sprites[Achievements[title].SpriteIndex];
+        }
+
+        private IEnumerator FadeAchievementNotification(GameObject achievement, float fadeInTime, float downtime, float fadeOutTime)
+        {
+            var notification = achievement.GetComponent<CanvasGroup>();
+
+            int startAlpha = 0;
+            int endAlpha = 1;
+
+            for (int i = 0; i < 2; i++)
+            {
+                float rate = i == 0 ? 1f / fadeInTime : 1f / fadeOutTime;
+                float progress = 0f;
+
+                while (progress < 1f)
+                {
+                    notification.alpha = Mathf.Lerp(startAlpha, endAlpha, progress);
+                    progress += rate * Time.deltaTime;
+                    yield return null;
+                }
+
+                yield return new WaitForSeconds(downtime);
+                startAlpha = 1;
+                endAlpha = 0;
+            }
+            Destroy(achievement);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Platformer.Achievements
 
         private void OnYKeyPressed()
         {
-            if (Input.GetKeyDown(KeyCode.Y))
+            if (Input.GetKey(KeyCode.Y))
             {
                 FulfillRequirement(OnYKeyPressedAchievementRequirement);
             }

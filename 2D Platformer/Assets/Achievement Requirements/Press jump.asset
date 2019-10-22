@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Press jump
   m_EditorClassIdentifier: 
   id: PressJump
+  category: General
   name: Jump
   description: Find one of the jump keys.
+  points: 5
+  sprite: {fileID: 0}

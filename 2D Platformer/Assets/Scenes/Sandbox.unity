@@ -2714,6 +2714,12 @@ MonoBehaviour:
   unlockedAchievementSprite: {fileID: 21300000, guid: 8a735efb9a1f2104ea8bb0c07a09e184,
     type: 3}
   pointsText: {fileID: 2035930840}
+  achievementDTOs:
+  - {fileID: 11400000, guid: a908d73c7dadb074e993a3dac20ee882, type: 2}
+  - {fileID: 11400000, guid: aacd0fa50c7914949a2db03e6ccf9c84, type: 2}
+  - {fileID: 11400000, guid: 3be4efb68fe982047b3b30832fcd1d66, type: 2}
+  - {fileID: 11400000, guid: 1c09b37c6df39384f86e724eb7cfc522, type: 2}
+  - {fileID: 11400000, guid: db849acb2de7de440bfa908326a24796, type: 2}
 --- !u!1 &1356866448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2758,7 +2764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointOfInterestTriggerEnteredData: {fileID: 0}
-  achievementData: {fileID: 11400000, guid: 4554729475d54384483ac61342544d10, type: 2}
+  achievementData: {fileID: 0}
 --- !u!1 &1470237115
 GameObject:
   m_ObjectHideFlags: 0

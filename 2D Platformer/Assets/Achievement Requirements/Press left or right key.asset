@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Press left or right key
   m_EditorClassIdentifier: 
   id: MoveHorizontally
+  category: General
   name: I can walk!
   description: Find how to walk.
+  points: 5
+  sprite: {fileID: 0}

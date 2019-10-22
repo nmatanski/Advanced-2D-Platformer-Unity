@@ -12,7 +12,9 @@ namespace Platformer
         //state
 
         private GameObject player;
+#pragma warning disable CS0108 // 'CameraController.camera' hides inherited member 'Component.camera'. Use the new keyword if hiding was intended.
         private Transform camera;
+#pragma warning restore CS0108 // 'CameraController.camera' hides inherited member 'Component.camera'. Use the new keyword if hiding was intended.
 
         private readonly float cameraZPos = -10f;
 

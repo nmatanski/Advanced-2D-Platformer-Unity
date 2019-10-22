@@ -73,7 +73,9 @@ namespace Platformer
 
 
         private Vector3 moveDirection = Vector3.zero;
+#pragma warning disable CS0414 // The field 'PlayerController.wasLastJumpLeft' is assigned but its value is never used
         private bool wasLastJumpLeft;
+#pragma warning restore CS0414 // The field 'PlayerController.wasLastJumpLeft' is assigned but its value is never used
 
 
         private void Start()

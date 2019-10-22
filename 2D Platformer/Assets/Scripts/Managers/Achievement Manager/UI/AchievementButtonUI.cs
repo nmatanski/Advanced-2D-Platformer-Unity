@@ -14,10 +14,14 @@ namespace Platformer.Achievements.UI
         }
 
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementButtonUI.neutral' is never assigned to, and will always have its default value null
         private Sprite neutral;
+#pragma warning restore CS0649 // Field 'AchievementButtonUI.neutral' is never assigned to, and will always have its default value null
 
         [SerializeField]
+#pragma warning disable CS0649 // Field 'AchievementButtonUI.highlight' is never assigned to, and will always have its default value null
         private Sprite highlight;
+#pragma warning restore CS0649 // Field 'AchievementButtonUI.highlight' is never assigned to, and will always have its default value null
 
 
         private Image sprite;

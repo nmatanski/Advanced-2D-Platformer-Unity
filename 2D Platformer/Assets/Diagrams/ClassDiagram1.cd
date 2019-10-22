@@ -13,7 +13,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAIAAAACAAAAAEAAAAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AEQCAQAACAACBAoAAAAKAAAAAEAAAAAACAAAAAABAAA=</HashCode>
       <FileName>Assets\Scripts\Achievement Requirements\AchievementRequirement.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -39,7 +39,7 @@
   <Class Name="Platformer.Achievements.PointOfInterest">
     <Position X="6.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAgAEAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACAAAAggAAAIAAAAAQAABAEAAAQAAAIAAAACgA=</HashCode>
       <FileName>Assets\Scripts\Achievement Requirements\DTOs\PointOfInterest.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -58,9 +58,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Platformer.Managers.AchievementManager" BaseTypeListCollapsed="true">
-    <Position X="4" Y="4" Width="4.5" />
+    <Position X="4" Y="4.5" Width="4.5" />
     <TypeIdentifier>
-      <HashCode>AAAJAAAEACAAAAAAAAEAAAAAAAAIIAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAJAIBEAAgAAAAABgAAAAAAAAAAIAAAAAAAAAAAAgA=</HashCode>
       <FileName>Assets\Scripts\Managers\Achievement Manager\AchievementManager.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -80,8 +80,8 @@
       <FileName>Assets\Scripts\Managers\Managers.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Achievements" />
       <Property Name="Player" />
+      <Property Name="Achievements" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Platformer.Managers.PlayerManager" Collapsed="true" BaseTypeListCollapsed="true">
@@ -97,32 +97,20 @@
   </Class>
   <Class Name="Prime31.CharacterController2D" Collapsed="true">
     <Position X="11.5" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="Prime31.CharacterController2D.CharacterRaycastOrigins" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\Third-Party Assets\Scripts\Prime31\CharacterController2D.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-      <Class Name="Prime31.CharacterController2D.CharacterCollisionState2D" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\Third-Party Assets\Scripts\Prime31\CharacterController2D.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>BICIAQCQpChgQAShAQAAAAACJEAFAAAJCAQAJgGAokA=</HashCode>
       <FileName>Assets\Third-Party Assets\Scripts\Prime31\CharacterController2D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Platformer.Achievements.IAchievementRequirement">
-    <Position X="0.75" Y="6" Width="2.25" />
+    <Position X="11" Y="8.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Assets\Scripts\Managers\Achievement Manager\IAchievementRequirement.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Platformer.Managers.IManager">
-    <Position X="5" Y="6.5" Width="1.5" />
+    <Position X="7.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Managers\IManager.cs</FileName>
