@@ -30,6 +30,12 @@ namespace Platformer
         private float wallJumpRecoveryTime = .2f;
 
         [SerializeField]
+        private float wallRunDuration = .5f;
+
+        [SerializeField]
+        private float wallRunSpeed = 2f;
+
+        [SerializeField]
         private float gravity = 20f;
 
         [SerializeField]
@@ -53,12 +59,18 @@ namespace Platformer
 
         public bool CanWallJump { get; private set; } = true;
 
+        public bool CanWallRun { get; private set; } = true;
+
+        public bool CanWallRunAfterWallJump { get; private set; } = true;
+
 
         //state
 
         public bool IsGrounded { get; private set; }
 
         public bool IsJumping { get; private set; }
+
+        public bool IsWallRunning { get; private set; }
 
         public bool IsFacingRight { get; private set; }
 
@@ -101,6 +113,7 @@ namespace Platformer
                 {
                     //ActivateJump(jumpSpeed);
                     IsJumping = true;
+                    IsWallRunning = true;
                 }
             }
             else
@@ -125,7 +138,24 @@ namespace Platformer
 
             if (Flags.left || Flags.right) //left/right walls
             {
+                if (CanWallRun)
+                {
+                    if (Input.GetAxis("Vertical") > 0 && IsWallRunning)
+                    {
+                        moveDirection.y = jumpSpeed / wallRunSpeed;
+                        StartCoroutine(WallRunDurationTimer(wallRunDuration));
+                    }
+                }
+
                 TryWallJump();
+            }
+            else
+            {
+                if (CanWallRunAfterWallJump)
+                {
+                    StopCoroutine(WallRunDurationTimer(wallRunDuration));
+                    IsWallRunning = true;
+                }
             }
 
             jumpPressedRemember -= Time.deltaTime;
@@ -250,6 +280,13 @@ namespace Platformer
             HasWallJumped = true;
             yield return new WaitForSeconds(waitTime);
             HasWallJumped = false;
+        }
+
+        private IEnumerator WallRunDurationTimer(float duration)
+        {
+            IsWallRunning = true;
+            yield return new WaitForSeconds(duration);
+            IsWallRunning = false;  
         }
     }
 }
