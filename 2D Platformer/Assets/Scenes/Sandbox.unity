@@ -2198,10 +2198,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 11
   jumpSpeed: 16
-  doubleJumpSpeed: 10
+  doubleJumpSpeed: 12
   wallJumpSpeedMultiplierX: 0.7
   wallJumpSpeedMultiplierY: 1.1
   wallJumpRecoveryTime: 0.4
+  wallRunDuration: 0.5
+  wallRunSpeed: 2
   gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133

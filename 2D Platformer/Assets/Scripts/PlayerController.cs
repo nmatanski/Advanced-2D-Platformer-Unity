@@ -76,7 +76,7 @@ namespace Platformer
 
         public bool HasDoubleJumped { get; private set; }
 
-        public bool HasWallJumped { get; set; }
+        public bool HasWallJumped { get; private set; }
 
         public CharacterCollisionState2D Flags { get; private set; }
 
@@ -133,29 +133,22 @@ namespace Platformer
 
             if (Flags.above) //ceiling
             {
+                if (moveDirection.y > 0)
+                {
+                    moveDirection.y = 0;
+                }
+
                 ApplyGravity();
             }
 
             if (Flags.left || Flags.right) //left/right walls
             {
-                if (CanWallRun)
-                {
-                    if (Input.GetAxis("Vertical") > 0 && IsWallRunning)
-                    {
-                        moveDirection.y = jumpSpeed / wallRunSpeed;
-                        StartCoroutine(WallRunDurationTimer(wallRunDuration));
-                    }
-                }
-
+                TryWallRun();
                 TryWallJump();
             }
             else
             {
-                if (CanWallRunAfterWallJump)
-                {
-                    StopCoroutine(WallRunDurationTimer(wallRunDuration));
-                    IsWallRunning = true;
-                }
+                TryWallRunAfterWallJump();
             }
 
             jumpPressedRemember -= Time.deltaTime;
@@ -185,6 +178,24 @@ namespace Platformer
 
             moveDirection.x = Input.GetAxis("Horizontal");
             moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
+        }
+
+        private void TryWallRun()
+        {
+            if (CanWallRun && Input.GetAxis("Vertical") > 0 && IsWallRunning)
+            {
+                moveDirection.y = jumpSpeed / wallRunSpeed;
+                StartCoroutine(WallRunDurationTimer(wallRunDuration));
+            }
+        }
+
+        private void TryWallRunAfterWallJump()
+        {
+            if (CanWallRunAfterWallJump)
+            {
+                StopCoroutine(WallRunDurationTimer(wallRunDuration));
+                IsWallRunning = true;
+            }
         }
 
         private void ActivateJump(float speed)
@@ -286,7 +297,7 @@ namespace Platformer
         {
             IsWallRunning = true;
             yield return new WaitForSeconds(duration);
-            IsWallRunning = false;  
+            IsWallRunning = false;
         }
     }
 }
