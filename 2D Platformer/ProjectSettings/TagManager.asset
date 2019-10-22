@@ -12,6 +12,7 @@ TagManager:
   - HorizontalButtonReq
   - JumpButtonReq
   - AchievementManagerUI
+  - FullControlReq
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Player
   - TriggerPlatform
   - ColliderPlatform
-  - 
+  - Platforms
   - 
   - 
   - 

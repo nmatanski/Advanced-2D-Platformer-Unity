@@ -36,6 +36,9 @@ namespace Platformer
         private float wallRunSpeed = 2f;
 
         [SerializeField]
+        private float slideSpeed = 4f;
+
+        [SerializeField]
         private float gravity = 20f;
 
         [SerializeField]
@@ -47,6 +50,9 @@ namespace Platformer
         [SerializeField]
         [Range(0f, .99f)]
         private float horizontalDamping = .2f; //0 = no damping
+
+        [SerializeField]
+        private LayerMask layerMask;
 
 
         //cached components
@@ -63,6 +69,8 @@ namespace Platformer
 
         public bool CanWallRunAfterWallJump { get; private set; } = true;
 
+        public bool CanSlide { get; private set; } = true;
+
 
         //state
 
@@ -78,6 +86,9 @@ namespace Platformer
 
         public bool HasWallJumped { get; private set; }
 
+        public bool IsSliding { get; private set; }
+
+
         public CharacterCollisionState2D Flags { get; private set; }
 
         private float jumpPressedRemember = 0f;
@@ -85,9 +96,9 @@ namespace Platformer
 
 
         private Vector3 moveDirection = Vector3.zero;
-#pragma warning disable CS0414 // The field 'PlayerController.wasLastJumpLeft' is assigned but its value is never used
         private bool wasLastJumpLeft;
-#pragma warning restore CS0414 // The field 'PlayerController.wasLastJumpLeft' is assigned but its value is never used
+        private float slopeAngle;
+        private Vector3 slopeGradient = Vector3.zero;
 
 
         private void Start()
@@ -98,7 +109,7 @@ namespace Platformer
         private void Update()
         {
             Run();
-
+            CheckForSliding();
             OrientatePlayer();
 
             groundedRemember -= Time.deltaTime;
@@ -106,8 +117,9 @@ namespace Platformer
             if (IsGrounded)
             {
                 ResetTimer(ref groundedRemember, groundedRememberTime);
-
                 ResetJump();
+
+                TrySlopeSliding();
 
                 if (Input.GetButtonDown("Jump"))
                 {
@@ -195,6 +207,34 @@ namespace Platformer
             {
                 StopCoroutine(WallRunDurationTimer(wallRunDuration));
                 IsWallRunning = true;
+            }
+        }
+
+        private void CheckForSliding()
+        {
+            var hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, layerMask);
+
+            if (hit)
+            {
+                slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                slopeGradient = hit.normal;
+
+                if (slopeAngle > characterController.slopeLimit)
+                {
+                    IsSliding = true;
+                }
+                else
+                {
+                    IsSliding = false;
+                }
+            }
+        }
+
+        private void TrySlopeSliding()
+        {
+            if (IsSliding)
+            {
+                moveDirection = slideSpeed * new Vector3(slopeGradient.x, -slopeGradient.y, 0f);
             }
         }
 
