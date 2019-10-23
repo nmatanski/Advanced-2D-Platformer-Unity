@@ -10,6 +10,7 @@ namespace Platformer
     public class PlayerController : MonoBehaviour
     {
         //config
+        [Header("CONFIGURATION")]
 
         [SerializeField]
         private float walkSpeed = 6f;
@@ -39,6 +40,9 @@ namespace Platformer
         private float slideSpeed = 4f;
 
         [SerializeField]
+        private float glideSpeeds = 2f;
+
+        [SerializeField]
         private float gravity = 20f;
 
         [SerializeField]
@@ -60,33 +64,67 @@ namespace Platformer
 
 
         //ability toggles
+        [Header("ABILITIES")]
 
-        public bool CanDoubleJump { get; private set; } = true;
+        [SerializeField]
+        private bool canDoubleJump = true;
+        public bool CanDoubleJump { get => canDoubleJump; private set => canDoubleJump = value; }
 
-        public bool CanWallJump { get; private set; } = true;
+        [SerializeField]
+        private bool canWallJump = true;
+        public bool CanWallJump { get => canWallJump; private set => canWallJump = value; }
 
-        public bool CanWallRun { get; private set; } = true;
+        [SerializeField]
+        private bool canWallRun = true;
+        public bool CanWallRun { get => canWallRun; private set => canWallRun = value; }
 
-        public bool CanWallRunAfterWallJump { get; private set; } = true;
+        [SerializeField]
+        private bool canWallRunAfterWallJump = true;
+        public bool CanWallRunAfterWallJump { get => canWallRunAfterWallJump; private set => canWallRunAfterWallJump = value; }
 
-        public bool CanSlide { get; private set; } = true;
+        [SerializeField]
+        private bool canSlide = true;
+        public bool CanSlide { get => canSlide; private set => canSlide = value; }
+
+        [SerializeField]
+        private bool canGlide = true;
+        public bool CanGlide { get => canGlide; private set => canGlide = value; }
 
 
         //state
+        [Header("STATE")]
 
-        public bool IsGrounded { get; private set; }
+        [SerializeField]
+        private bool isGrounded;
+        public bool IsGrounded { get => isGrounded; private set => isGrounded = value; }
 
-        public bool IsJumping { get; private set; }
+        [SerializeField]
+        private bool isJumping;
+        public bool IsJumping { get => isJumping; private set => isJumping = value; }
 
-        public bool IsWallRunning { get; private set; }
+        [SerializeField]
+        private bool isWallRunning;
+        public bool IsWallRunning { get => isWallRunning; private set => isWallRunning = value; }
 
-        public bool IsFacingRight { get; private set; }
+        [SerializeField]
+        private bool isFacingRight;
+        public bool IsFacingRight { get => isFacingRight; private set => isFacingRight = value; }
 
-        public bool HasDoubleJumped { get; private set; }
+        [SerializeField]
+        private bool hasDoubleJumped;
+        public bool HasDoubleJumped { get => hasDoubleJumped; private set => hasDoubleJumped = value; }
 
-        public bool HasWallJumped { get; private set; }
+        [SerializeField]
+        private bool hasWallJumped;
+        public bool HasWallJumped { get => hasWallJumped; private set => hasWallJumped = value; }
 
-        public bool IsSliding { get; private set; }
+        [SerializeField]
+        private bool isSliding;
+        public bool IsSliding { get => isSliding; private set => isSliding = value; }
+
+        [SerializeField]
+        private bool isGliding;
+        public bool IsGliding { get => isGliding; private set => isGliding = value; }
 
 
         public CharacterCollisionState2D Flags { get; private set; }
