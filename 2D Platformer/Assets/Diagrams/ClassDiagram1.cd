@@ -50,10 +50,10 @@
       <FileName>Assets\Scripts\CameraController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Platformer.PlayerController" Collapsed="true">
-    <Position X="9.75" Y="0.5" Width="1.5" />
+  <Class Name="Platformer.PlayerController">
+    <Position X="13.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>IEQBBAhAICIICaAQBAQQAgCRQIBAAACQAAAAKAIAAAI=</HashCode>
+      <HashCode>IHYBRghAIHYICbAQBAQwAkDZQIJAcAKcIAACOlIBAAY=</HashCode>
       <FileName>Assets\Scripts\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>

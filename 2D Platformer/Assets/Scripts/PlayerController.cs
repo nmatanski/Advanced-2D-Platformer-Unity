@@ -40,7 +40,13 @@ namespace Platformer
         private float slideSpeed = 4f;
 
         [SerializeField]
-        private float glideSpeeds = 2f;
+        private float glideGravity = 2f;
+
+        [SerializeField]
+        private float glideDurationCapacity = 2f;
+
+        [SerializeField]
+        private int glideCharges = 2;
 
         [SerializeField]
         private float gravity = 20f;
@@ -131,17 +137,20 @@ namespace Platformer
 
         private float jumpPressedRemember = 0f;
         private float groundedRemember = 0f;
-
-
         private Vector3 moveDirection = Vector3.zero;
         private bool wasLastJumpLeft;
         private float slopeAngle;
         private Vector3 slopeGradient = Vector3.zero;
+        private bool hasStartedGliding;
+        private float remainingGlideTime;
+        private bool isGliderEquipped = true;
 
 
         private void Start()
         {
             characterController = GetComponent<CharacterController2D>();
+
+            ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
 
         private void Update()
@@ -155,13 +164,12 @@ namespace Platformer
             if (IsGrounded)
             {
                 ResetTimer(ref groundedRemember, groundedRememberTime);
+                EquipGlider();
                 ResetJump();
-
                 TrySlopeSliding();
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    //ActivateJump(jumpSpeed);
                     IsJumping = true;
                     IsWallRunning = true;
                 }
@@ -173,8 +181,7 @@ namespace Platformer
             }
 
             TryJumpWithHelper(jumpSpeed);
-
-            ApplyGravity();
+            TryGliding();
 
             characterController.move(moveDirection * Time.deltaTime);
 
@@ -188,7 +195,7 @@ namespace Platformer
                     moveDirection.y = 0;
                 }
 
-                ApplyGravity();
+                ApplyGravity(gravity);
             }
 
             if (Flags.left || Flags.right) //left/right walls
@@ -340,7 +347,61 @@ namespace Platformer
             return false;
         }
 
-        private void ApplyGravity()
+        private void EquipGlider()
+        {
+            if (glideCharges > 0 && Input.GetKeyDown(KeyCode.T) && !isGliderEquipped)
+            {
+                ResetTimer(ref remainingGlideTime, glideDurationCapacity);
+                isGliderEquipped = true;
+            }
+        }
+
+        private void TryGliding()
+        {
+            float gravityType;
+
+            if (CanGlide && Input.GetAxis("Vertical") > .5f && characterController.velocity.y < .2f) ///TODO: Change key
+            {
+                if (remainingGlideTime > 0)
+                {
+                    IsGliding = true;
+
+                    if (hasStartedGliding)
+                    {
+                        moveDirection.y = 0;
+                        hasStartedGliding = false;
+                    }
+
+                    gravityType = glideGravity;
+
+                    remainingGlideTime -= Time.deltaTime; ///TODO: Visualize glider remaining time in UI
+                }
+                else
+                {
+                    isGliding = false;
+
+                    if (isGliderEquipped)
+                    {
+                        Mathf.Clamp(--glideCharges, 0, int.MaxValue);
+                    }
+
+                    isGliderEquipped = false;
+
+                    gravityType = gravity;
+                }
+            }
+            else
+            {
+                isGliding = false;
+                hasStartedGliding = true;
+
+                gravityType = gravity;
+            }
+
+            ApplyGravity(gravityType);
+        }
+
+        private void ApplyGravity(float gravity)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }

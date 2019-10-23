@@ -2421,6 +2421,8 @@ MonoBehaviour:
   wallRunDuration: 0.5
   wallRunSpeed: 2
   slideSpeed: 14
+  glideGravity: 6
+  glideDurationCapacity: 2
   gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133
@@ -2428,6 +2430,20 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  canDoubleJump: 1
+  canWallJump: 1
+  canWallRun: 1
+  canWallRunAfterWallJump: 1
+  canSlide: 1
+  canGlide: 1
+  isGrounded: 0
+  isJumping: 0
+  isWallRunning: 0
+  isFacingRight: 0
+  hasDoubleJumped: 0
+  hasWallJumped: 0
+  isSliding: 0
+  isGliding: 0
 --- !u!114 &2035930840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2415736220572154958, guid: fbaf7d437c5259741b88a6e001429c2a,
