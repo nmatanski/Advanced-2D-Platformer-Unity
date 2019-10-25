@@ -2413,6 +2413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 11
+  crouchWalkSpeed: 5.5
   jumpSpeed: 16
   doubleJumpSpeed: 12
   wallJumpSpeedMultiplierX: 0.7
@@ -2423,6 +2424,7 @@ MonoBehaviour:
   slideSpeed: 14
   glideGravity: 6
   glideDurationCapacity: 2
+  glideCharges: 2
   gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133

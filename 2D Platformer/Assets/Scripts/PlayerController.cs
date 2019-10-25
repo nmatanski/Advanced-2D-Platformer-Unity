@@ -16,6 +16,9 @@ namespace Platformer
         private float walkSpeed = 6f;
 
         [SerializeField]
+        private float crouchWalkSpeed = 3f;
+
+        [SerializeField]
         private float jumpSpeed = 8f;
 
         [SerializeField]
@@ -63,10 +66,6 @@ namespace Platformer
 
         [SerializeField]
         private LayerMask layerMask;
-
-
-        //cached components
-        private CharacterController2D characterController;
 
 
         //ability toggles
@@ -132,9 +131,30 @@ namespace Platformer
         private bool isGliding;
         public bool IsGliding { get => isGliding; private set => isGliding = value; }
 
+        [SerializeField]
+        private bool isDucking;
+        public bool IsDucking
+        {
+            get { return isDucking; }
+            private set { isDucking = value; }
+        }
+
+        [SerializeField]
+        private bool isCrouchWalking;
+        public bool IsCrouchWalking
+        {
+            get { return isCrouchWalking; }
+            private set { isCrouchWalking = value; }
+        }
+
 
         public CharacterCollisionState2D Flags { get; private set; }
 
+        //cached components
+        private CharacterController2D characterController;
+        private BoxCollider2D boxCollider;
+
+        //private variables
         private float jumpPressedRemember = 0f;
         private float groundedRemember = 0f;
         private Vector3 moveDirection = Vector3.zero;
@@ -144,11 +164,17 @@ namespace Platformer
         private bool hasStartedGliding;
         private float remainingGlideTime;
         private bool isGliderEquipped = true;
+        private Vector2 defaultBoxColliderSize;
+        private Vector3 frontTopCorner;
+        private Vector3 backTopCorner;
 
 
         private void Start()
         {
             characterController = GetComponent<CharacterController2D>();
+            boxCollider = GetComponent<BoxCollider2D>();
+
+            defaultBoxColliderSize = boxCollider.size;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
@@ -187,6 +213,15 @@ namespace Platformer
 
             Flags = characterController.collisionState;
             IsGrounded = Flags.below;
+
+
+            frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
+            backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
+
+            var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, 2f, layerMask);
+            var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, 2f, layerMask);
+
+            TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
 
             if (Flags.above) //ceiling
             {
@@ -281,6 +316,37 @@ namespace Platformer
             {
                 moveDirection = slideSpeed * new Vector3(slopeGradient.x, -slopeGradient.y, 0f);
             }
+        }
+
+        private void TryDuckOrCrouchWalk(RaycastHit2D hitFrontCeiling, RaycastHit2D hitBackCeiling)
+        {
+            if (Input.GetAxis("Vertical") < 0 && moveDirection.x == 0) ///TODO: Change duck key bind from vertical negative to Ctrl for example
+            {
+                TryDuckOrCrouchWalk();
+                IsDucking = true;
+                IsCrouchWalking = false;
+            }
+            else if (Input.GetAxis("Vertical") < 0 && moveDirection.x != 0) ///TODO: Change duck key
+            {
+                TryDuckOrCrouchWalk();
+                IsDucking = false;
+                IsCrouchWalking = true;
+            }
+            else
+            {
+                if (!hitFrontCeiling.collider && !hitBackCeiling.collider && (isDucking || IsCrouchWalking))
+                {
+                    ChangeBoxColliderSize(boxCollider, new Vector2(boxCollider.size.x, defaultBoxColliderSize.y), true);
+                    IsDucking = false;
+                    IsCrouchWalking = false;
+                }
+            }
+        }
+
+        private void TryDuckOrCrouchWalk()
+        {
+            if (!IsDucking && !IsCrouchWalking)
+                ChangeBoxColliderSize(boxCollider, new Vector2(boxCollider.size.x, defaultBoxColliderSize.y / 2));
         }
 
         private void ActivateJump(float speed)
@@ -418,6 +484,14 @@ namespace Platformer
                 transform.eulerAngles = Vector3.zero;
                 IsFacingRight = true;
             }
+        }
+
+        private void ChangeBoxColliderSize(BoxCollider2D collider, Vector2 newSize, bool isCrouching = false)
+        {
+            var multiplier = isCrouching ? 1 : -1;
+            collider.size = newSize;
+            transform.position = new Vector3(transform.position.x, transform.position.y + multiplier * (defaultBoxColliderSize.y / 4), transform.position.z);
+            characterController.recalculateDistanceBetweenRays();
         }
 
         private void ResetTimer(ref float currentTimer, float defaultTimer)
