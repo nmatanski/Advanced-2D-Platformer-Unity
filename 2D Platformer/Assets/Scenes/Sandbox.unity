@@ -2413,6 +2413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 11
+  dashCooldown: 1
   crouchWalkSpeed: 5.5
   jumpSpeed: 16
   doubleJumpSpeed: 12
@@ -2442,6 +2443,7 @@ MonoBehaviour:
   canGlide: 1
   canPowerJump: 1
   canGroundSlam: 1
+  canDash: 1
   isGrounded: 0
   isJumping: 0
   isWallRunning: 0
@@ -2454,6 +2456,9 @@ MonoBehaviour:
   isCrouchWalking: 0
   isPowerJumping: 0
   isGroundSlamming: 0
+  isDashing: 0
+  dashSpeed: 100
+  dashTime: 0.1
 --- !u!114 &2035930840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2415736220572154958, guid: fbaf7d437c5259741b88a6e001429c2a,

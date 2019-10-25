@@ -16,6 +16,15 @@ namespace Platformer
         private float walkSpeed = 6f;
 
         [SerializeField]
+        private float dashSpeed;
+
+        [SerializeField]
+        private float dashCooldown = 5f;
+
+        [SerializeField]
+        private float dashTime;
+
+        [SerializeField]
         private float crouchWalkSpeed = 3f;
 
         [SerializeField]
@@ -117,7 +126,13 @@ namespace Platformer
             private set { canGroundSlam = value; }
         }
 
-
+        [SerializeField]
+        private bool canDash = true;
+        public bool CanDash
+        {
+            get { return canDash; }
+            private set { canDash = value; }
+        }
 
 
         //state
@@ -187,6 +202,13 @@ namespace Platformer
             set { isGroundSlamming = value; }
         }
 
+        [SerializeField]
+        private bool isDashing;
+        public bool IsDashing
+        {
+            get { return isDashing; }
+            private set { isDashing = value; }
+        }
 
 
         public CharacterCollisionState2D Flags { get; private set; }
@@ -196,19 +218,21 @@ namespace Platformer
         private BoxCollider2D boxCollider;
 
         //private variables
-        private float jumpPressedRemember = 0f;
-        private float groundedRemember = 0f;
         private Vector3 moveDirection = Vector3.zero;
-        private bool wasLastJumpLeft;
-        private float slopeAngle;
         private Vector3 slopeGradient = Vector3.zero;
-        private bool hasStartedGliding;
-        private float remainingGlideTime;
-        private bool isGliderEquipped = true;
         private Vector2 defaultBoxColliderSize;
         private Vector3 frontTopCorner;
         private Vector3 backTopCorner;
+        private float jumpPressedRemember = 0f;
+        private float groundedRemember = 0f;
+        private float dashPressedRemember = 0f;
+        private float slopeAngle;
+        private float remainingGlideTime;
         private float defaultJumpSpeed;
+        private bool wasLastJumpLeft;
+        private bool hasStartedGliding;
+        private bool isGliderEquipped = true;
+
 
 
         private void Start()
@@ -218,6 +242,8 @@ namespace Platformer
 
             defaultBoxColliderSize = boxCollider.size;
             defaultJumpSpeed = jumpSpeed;
+
+            dashPressedRemember = dashCooldown;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
@@ -229,6 +255,9 @@ namespace Platformer
             OrientatePlayer();
 
             groundedRemember -= Time.deltaTime;
+            dashPressedRemember -= Time.deltaTime;
+
+            TryDash();
 
             if (IsGrounded)
             {
@@ -344,6 +373,15 @@ namespace Platformer
             }
         }
 
+        private void TryDash()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) && dashPressedRemember < 0 && CanDash)
+            {
+                dashPressedRemember = dashCooldown;
+                StartCoroutine(Dash(dashTime));
+            }
+        }
+
         private void CheckForSliding()
         {
             var hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, layerMask);
@@ -441,7 +479,7 @@ namespace Platformer
             {
                 float totalSpeedX = jumpSpeed * wallJumpSpeedMultiplierX;
                 float totalSpeedY = jumpSpeed * wallJumpSpeedMultiplierY;
-                //ActivateJump(totalSpeedY);
+
                 if (!TryJumpWithHelper(totalSpeedY)) ///TODO: bug: not applying the assist method
                 {
                     ActivateJump(totalSpeedY);
@@ -581,6 +619,27 @@ namespace Platformer
             IsPowerJumping = true;
             yield return new WaitForSeconds(delay);
             IsPowerJumping = false;
+        }
+
+        private IEnumerator Dash(float dashTime)
+        {
+            var defaultSpeed = walkSpeed;
+            IsDashing = true;
+
+            if (moveDirection.x == 0)
+            {
+                characterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
+            }
+            else
+            {
+                walkSpeed = dashSpeed;
+            }
+
+            yield return new WaitForSeconds(dashTime);
+
+            walkSpeed = defaultSpeed;
+            characterController.rigidBody2D.velocity = Vector2.zero;
+            IsDashing = false;
         }
     }
 }
