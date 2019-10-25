@@ -25,6 +25,9 @@ namespace Platformer
         private float doubleJumpSpeed = 4f;
 
         [SerializeField]
+        private float powerJumpSpeed = 10f;
+
+        [SerializeField]
         private float wallJumpSpeedMultiplierX = 2f;
 
         [SerializeField]
@@ -50,6 +53,9 @@ namespace Platformer
 
         [SerializeField]
         private int glideCharges = 2;
+
+        [SerializeField]
+        private float groundSlamSpeed = 4f;
 
         [SerializeField]
         private float gravity = 20f;
@@ -94,6 +100,24 @@ namespace Platformer
         [SerializeField]
         private bool canGlide = true;
         public bool CanGlide { get => canGlide; private set => canGlide = value; }
+
+        [SerializeField]
+        private bool canPowerJump = true;
+        public bool CanPowerJump
+        {
+            get { return canPowerJump; }
+            private set { canPowerJump = value; }
+        }
+
+        [SerializeField]
+        private bool canGroundSlam = true;
+        public bool CanGroundSlam
+        {
+            get { return canGroundSlam; }
+            private set { canGroundSlam = value; }
+        }
+
+
 
 
         //state
@@ -147,6 +171,23 @@ namespace Platformer
             private set { isCrouchWalking = value; }
         }
 
+        [SerializeField]
+        private bool isPowerJumping;
+        public bool IsPowerJumping
+        {
+            get { return isPowerJumping; }
+            private set { isPowerJumping = value; }
+        }
+
+        [SerializeField]
+        private bool isGroundSlamming;
+        public bool IsGroundSlamming
+        {
+            get { return isGroundSlamming; }
+            set { isGroundSlamming = value; }
+        }
+
+
 
         public CharacterCollisionState2D Flags { get; private set; }
 
@@ -167,6 +208,7 @@ namespace Platformer
         private Vector2 defaultBoxColliderSize;
         private Vector3 frontTopCorner;
         private Vector3 backTopCorner;
+        private float defaultJumpSpeed;
 
 
         private void Start()
@@ -175,6 +217,7 @@ namespace Platformer
             boxCollider = GetComponent<BoxCollider2D>();
 
             defaultBoxColliderSize = boxCollider.size;
+            defaultJumpSpeed = jumpSpeed;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
@@ -192,22 +235,33 @@ namespace Platformer
                 ResetTimer(ref groundedRemember, groundedRememberTime);
                 EquipGlider();
                 ResetJump();
+                IsGroundSlamming = false;
                 TrySlopeSliding();
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    IsJumping = true;
+                    if (CanPowerJump && (IsDucking || IsCrouchWalking))
+                    {
+                        jumpSpeed += powerJumpSpeed;
+                        StartCoroutine(PowerJumpWaiter(1f));
+                    }
+                    else
+                    {
+                        IsJumping = true;
+                    }
+
                     IsWallRunning = true;
                 }
             }
             else
             {
+                jumpSpeed = defaultJumpSpeed;
                 ActivateSmartJumpWithHeightCut();
                 ActivateDoubleJump();
             }
 
             TryJumpWithHelper(jumpSpeed);
-            TryGliding();
+            ProcessGravity();
 
             characterController.move(moveDirection * Time.deltaTime);
 
@@ -422,7 +476,7 @@ namespace Platformer
             }
         }
 
-        private void TryGliding()
+        private void ProcessGravity()
         {
             float gravityType;
 
@@ -456,6 +510,12 @@ namespace Platformer
                     gravityType = gravity;
                 }
             }
+            else if (CanGroundSlam && IsDucking && !IsPowerJumping)
+            {
+                gravityType = 0;
+                ApplyGravity(gravity, groundSlamSpeed);
+                IsGroundSlamming = true;
+            }
             else
             {
                 isGliding = false;
@@ -464,12 +524,15 @@ namespace Platformer
                 gravityType = gravity;
             }
 
-            ApplyGravity(gravityType);
+            if (gravityType != 0)
+            {
+                ApplyGravity(gravityType);
+            }
         }
 
-        private void ApplyGravity(float gravity)
+        private void ApplyGravity(float gravity, float bonusGravity = 0)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            moveDirection.y -= gravity * Time.deltaTime + bonusGravity;
         }
 
         private void OrientatePlayer()
@@ -511,6 +574,13 @@ namespace Platformer
             IsWallRunning = true;
             yield return new WaitForSeconds(duration);
             IsWallRunning = false;
+        }
+
+        private IEnumerator PowerJumpWaiter(float delay)
+        {
+            IsPowerJumping = true;
+            yield return new WaitForSeconds(delay);
+            IsPowerJumping = false;
         }
     }
 }

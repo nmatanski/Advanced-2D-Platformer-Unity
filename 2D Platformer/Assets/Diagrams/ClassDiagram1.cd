@@ -51,9 +51,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Platformer.PlayerController">
-    <Position X="13.25" Y="0.5" Width="2" />
+    <Position X="13.5" Y="0.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>IHYBRghAIHYICbAQBAQwAkDZQIJAcAKcIAACOlIBAAY=</HashCode>
+      <HashCode>IHZBTihAIHYIWbAQBBQwAkHZQIJAdgKcIAIIe1IBQMY=</HashCode>
       <FileName>Assets\Scripts\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>

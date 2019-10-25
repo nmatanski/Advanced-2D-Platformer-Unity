@@ -2416,6 +2416,7 @@ MonoBehaviour:
   crouchWalkSpeed: 5.5
   jumpSpeed: 16
   doubleJumpSpeed: 12
+  powerJumpSpeed: 8
   wallJumpSpeedMultiplierX: 0.7
   wallJumpSpeedMultiplierY: 1.1
   wallJumpRecoveryTime: 0.4
@@ -2425,6 +2426,7 @@ MonoBehaviour:
   glideGravity: 6
   glideDurationCapacity: 2
   glideCharges: 2
+  groundSlamSpeed: 7
   gravity: 29
   jumpPressedRememberTime: 0.133
   groundedRememberTime: 0.133
@@ -2438,6 +2440,8 @@ MonoBehaviour:
   canWallRunAfterWallJump: 1
   canSlide: 1
   canGlide: 1
+  canPowerJump: 1
+  canGroundSlam: 1
   isGrounded: 0
   isJumping: 0
   isWallRunning: 0
@@ -2446,6 +2450,10 @@ MonoBehaviour:
   hasWallJumped: 0
   isSliding: 0
   isGliding: 0
+  isDucking: 0
+  isCrouchWalking: 0
+  isPowerJumping: 0
+  isGroundSlamming: 0
 --- !u!114 &2035930840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2415736220572154958, guid: fbaf7d437c5259741b88a6e001429c2a,
