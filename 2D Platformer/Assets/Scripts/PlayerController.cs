@@ -4,6 +4,7 @@ using UnityEngine;
 using Prime31;
 using static Prime31.CharacterController2D;
 using System;
+using TMPro;
 
 namespace Platformer
 {
@@ -253,6 +254,8 @@ namespace Platformer
             Run();
             CheckForSliding();
             OrientatePlayer();
+
+            UpdateGliderInfoUI();
 
             groundedRemember -= Time.deltaTime;
             dashPressedRemember -= Time.deltaTime;
@@ -511,6 +514,7 @@ namespace Platformer
             {
                 ResetTimer(ref remainingGlideTime, glideDurationCapacity);
                 isGliderEquipped = true;
+                StartCoroutine(EquipGliderFX(.3f));
             }
         }
 
@@ -532,6 +536,8 @@ namespace Platformer
 
                     gravityType = glideGravity;
 
+                    EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"));
+
                     remainingGlideTime -= Time.deltaTime; ///TODO: Visualize glider remaining time in UI
                 }
                 else
@@ -541,6 +547,11 @@ namespace Platformer
                     if (isGliderEquipped)
                     {
                         Mathf.Clamp(--glideCharges, 0, int.MaxValue);
+
+                        if (remainingGlideTime <= 0)
+                        {
+                            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+                        }
                     }
 
                     isGliderEquipped = false;
@@ -553,6 +564,7 @@ namespace Platformer
                 gravityType = 0;
                 ApplyGravity(gravity, groundSlamSpeed);
                 IsGroundSlamming = true;
+                EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
             }
             else
             {
@@ -560,6 +572,7 @@ namespace Platformer
                 hasStartedGliding = true;
 
                 gravityType = gravity;
+                EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
             }
 
             if (gravityType != 0)
@@ -598,6 +611,17 @@ namespace Platformer
         private void ResetTimer(ref float currentTimer, float defaultTimer)
         {
             currentTimer = defaultTimer;
+        }
+
+        ///TODO: in Util class
+        private static void EnableSpriteOfObject(GameObject go, bool enabled = true)
+        {
+            go.GetComponent<SpriteRenderer>().enabled = enabled;
+        }
+
+        private void UpdateGliderInfoUI()
+        {
+            GameObject.FindGameObjectWithTag("GliderChargesText").GetComponent<TextMeshProUGUI>().text = glideCharges.ToString() + " gliders (" + (int)((remainingGlideTime < 0 ? 0 : remainingGlideTime) * 100 / 2) + "%)";
         }
 
         private IEnumerator WallJumpRecoveryTimer(float waitTime)
@@ -640,6 +664,13 @@ namespace Platformer
             walkSpeed = defaultSpeed;
             characterController.rigidBody2D.velocity = Vector2.zero;
             IsDashing = false;
+        }
+
+        private IEnumerator EquipGliderFX(float time)
+        {
+            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"));
+            yield return new WaitForSeconds(time);
+            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
         }
     }
 }

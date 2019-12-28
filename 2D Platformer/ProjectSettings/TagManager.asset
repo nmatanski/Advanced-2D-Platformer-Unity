@@ -13,6 +13,8 @@ TagManager:
   - JumpButtonReq
   - AchievementManagerUI
   - FullControlReq
+  - Glider
+  - GliderChargesText
   layers:
   - Default
   - TransparentFX
