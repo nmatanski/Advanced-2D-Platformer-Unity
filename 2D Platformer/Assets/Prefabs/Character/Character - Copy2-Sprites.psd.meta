@@ -1,0 +1,463 @@
+fileFormatVersion: 2
+guid: 2d4a6e1454141384f88407a4a63d03f3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3588328690099087398
+    second: Character - Copy2-Sprites_0
+  - first:
+      213: 8837056065447178556
+    second: Character - Copy2-Sprites_1
+  - first:
+      213: -8489730817475023441
+    second: Character - Copy2-Sprites_2
+  - first:
+      213: 909980874960003654
+    second: Character - Copy2-Sprites_3
+  - first:
+      213: -3683131218063895407
+    second: Character - Copy2-Sprites_4
+  - first:
+      213: 3787553415906511786
+    second: Character - Copy2-Sprites_5
+  - first:
+      213: 2051753562475417166
+    second: Character - Copy2-Sprites_6
+  - first:
+      213: 334367764740113844
+    second: Character - Copy2-Sprites_7
+  - first:
+      213: 4168812234573195470
+    second: Character - Copy2-Sprites_8
+  - first:
+      213: 1560357361032554420
+    second: Character - Copy2-Sprites_9
+  - first:
+      213: 3308352164112689480
+    second: Character - Copy2-Sprites_10
+  - first:
+      213: 9137805770566558407
+    second: Character - Copy2-Sprites_11
+  - first:
+      213: 2536529410845554501
+    second: Character - Copy2-Sprites_12
+  - first:
+      213: 7372548692104029026
+    second: Character - Copy2-Sprites_13
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 6327
+        width: 220
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f966f02aab15d143860f6659d3cc9bd
+      internalID: 3588328690099087398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_1
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 4665
+        width: 227
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 047c99e63c1b5d140970b1b57fcaa865
+      internalID: 8837056065447178556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_2
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 4224
+        width: 48
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff4efcf372e20f2469e8e00d4e709e8f
+      internalID: -8489730817475023441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_3
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 4224
+        width: 47
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d2749368fa5c444979e1e7c202d338
+      internalID: 909980874960003654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_4
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 4051
+        width: 275
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138933a858f7bb544901e5a0461f2570
+      internalID: -3683131218063895407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_5
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 2635
+        width: 815
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8df2cc719cd61945b3b37b7a761b5a8
+      internalID: 3787553415906511786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_6
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 2651
+        width: 444
+        height: 211
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfc8fa4ed4ac0ee498fb3c4e003993a4
+      internalID: 2051753562475417166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_7
+      rect:
+        serializedVersion: 2
+        x: 2239
+        y: 2495
+        width: 812
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eef1bcdb092d484a924fc4bfea3ff38
+      internalID: 334367764740113844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_8
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 2319
+        width: 93
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7ddc2e1798941f4ab2600099cbe02d0
+      internalID: 4168812234573195470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_9
+      rect:
+        serializedVersion: 2
+        x: 3594
+        y: 2290
+        width: 93
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4681964eb4178354393db1411fe2c4a6
+      internalID: 1560357361032554420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_10
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 1044
+        width: 176
+        height: 914
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 830685677041bc04ab46d497463caccf
+      internalID: 3308352164112689480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_11
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 1143
+        width: 691
+        height: 824
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be5c39b6f39f8a54588c1c6d9b0f3d19
+      internalID: 9137805770566558407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_12
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 1044
+        width: 179
+        height: 923
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c036672da5f2724fa7e8b1fae4cd06a
+      internalID: 2536529410845554501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character - Copy2-Sprites_13
+      rect:
+        serializedVersion: 2
+        x: 1571
+        y: 46
+        width: 406
+        height: 755
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83b415d523cd84046b47bad8401a6d6e
+      internalID: 7372548692104029026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
