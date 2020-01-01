@@ -281,12 +281,12 @@ TextureImporter:
       name: Character - Copy2-Sprites_6
       rect:
         serializedVersion: 2
-        x: 1548
-        y: 2651
-        width: 448.73975
-        height: 214.74023
+        x: 1545.8699
+        y: 2648.87
+        width: 451
+        height: 216
       alignment: 9
-      pivot: {x: 0.4980615, y: 0.49594808}
+      pivot: {x: 0.50028855, y: 0.50291616}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -386,12 +386,12 @@ TextureImporter:
       name: Character - Copy2-Sprites_11
       rect:
         serializedVersion: 2
-        x: 1413.9999
-        y: 1140
-        width: 694.2135
-        height: 835.08276
+        x: 1412.1127
+        y: 1139.7825
+        width: 696.0001
+        height: 832
       alignment: 9
-      pivot: {x: 0.49912617, y: 0.4969567}
+      pivot: {x: 0.5005564, y: 0.49905956}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -428,12 +428,12 @@ TextureImporter:
       name: Character - Copy2-Sprites_13
       rect:
         serializedVersion: 2
-        x: 1570
-        y: 44.17535
-        width: 413.58594
-        height: 343.96393
+        x: 1569.0859
+        y: 45.165344
+        width: 412
+        height: 355
       alignment: 9
-      pivot: {x: 0.4932469, y: 1.1042572}
+      pivot: {x: 0.49736422, y: 1.0671399}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -458,6 +458,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 637133448453485911
+  userData: 637135001188594875
   assetBundleName: 
   assetBundleVariant: 
