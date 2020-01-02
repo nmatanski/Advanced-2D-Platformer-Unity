@@ -217,6 +217,7 @@ namespace Platformer
         //cached components
         private CharacterController2D characterController;
         private BoxCollider2D boxCollider;
+        private Animator animator;
 
         //private variables
         private Vector3 moveDirection = Vector3.zero;
@@ -240,6 +241,7 @@ namespace Platformer
         {
             characterController = GetComponent<CharacterController2D>();
             boxCollider = GetComponent<BoxCollider2D>();
+            animator = GetComponentInChildren<Animator>();
 
             defaultBoxColliderSize = boxCollider.size;
             defaultJumpSpeed = jumpSpeed;
@@ -329,6 +331,8 @@ namespace Platformer
                 TryWallRunAfterWallJump();
             }
 
+            UpdateAnimator();
+
             jumpPressedRemember -= Time.deltaTime;
 
             if (Input.GetButtonDown("Jump"))
@@ -337,6 +341,22 @@ namespace Platformer
             }
         }
 
+        private void UpdateAnimator()
+        {
+            animator.SetFloat("movementX", moveDirection.x);
+            animator.SetFloat("movementY", moveDirection.y);
+            animator.SetBool("isGrounded", IsGrounded);
+            animator.SetBool("isJumping", IsJumping);
+            animator.SetBool("hasDoubleJumped", HasDoubleJumped);
+            animator.SetBool("hasWallJumped", HasWallJumped);
+            animator.SetBool("isWallRunning", IsWallRunning);
+            animator.SetBool("isGliding", IsGliding);
+            animator.SetBool("isDucking", IsDucking);
+            animator.SetBool("isCrouchWalking", IsCrouchWalking);
+            animator.SetBool("isPowerJumping", IsPowerJumping);
+            animator.SetBool("isGroundSlamming", IsGroundSlamming);
+            animator.SetBool("isDashing", IsDashing);
+        }
 
         private void ActivateDoubleJump()
         {
