@@ -365,12 +365,12 @@ TextureImporter:
       name: Character - Copy2-Sprites_10
       rect:
         serializedVersion: 2
-        x: 786
-        y: 1041
-        width: 180.00006
-        height: 917.9999
+        x: 783.5
+        y: 1039
+        width: 184
+        height: 921
       alignment: 9
-      pivot: {x: 0.49999985, y: 0.50000006}
+      pivot: {x: 0.5027174, y: 0.5005429}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -407,12 +407,12 @@ TextureImporter:
       name: Character - Copy2-Sprites_12
       rect:
         serializedVersion: 2
-        x: 2555
-        y: 1041
-        width: 182
-        height: 929
+        x: 2553
+        y: 1039
+        width: 186
+        height: 932
       alignment: 9
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.5, y: 0.5005365}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -458,6 +458,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 637135001188594875
+  userData: 637135657852707030
   assetBundleName: 
   assetBundleVariant: 
