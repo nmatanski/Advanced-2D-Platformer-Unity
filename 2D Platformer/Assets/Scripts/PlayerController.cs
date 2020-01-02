@@ -343,7 +343,7 @@ namespace Platformer
 
         private void UpdateAnimator()
         {
-            animator.SetFloat("movementX", moveDirection.x);
+            animator.SetFloat("movementX", Mathf.Abs(moveDirection.x));
             animator.SetFloat("movementY", moveDirection.y);
             animator.SetBool("isGrounded", IsGrounded);
             animator.SetBool("isJumping", IsJumping);
