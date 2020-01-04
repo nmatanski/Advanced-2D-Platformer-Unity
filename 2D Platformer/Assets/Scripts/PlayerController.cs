@@ -234,6 +234,7 @@ namespace Platformer
         private bool wasLastJumpLeft;
         private bool hasStartedGliding;
         private bool isGliderEquipped = true;
+        private bool isAbleToWallRun; // again
 
 
 
@@ -284,7 +285,8 @@ namespace Platformer
                         IsJumping = true;
                     }
 
-                    IsWallRunning = true;
+                    //IsWallRunning = true;
+                    isAbleToWallRun = true;
                 }
             }
             else
@@ -380,10 +382,19 @@ namespace Platformer
 
         private void TryWallRun()
         {
-            if (CanWallRun && Input.GetAxis("Vertical") > 0 && IsWallRunning)
+            if (CanWallRun && Input.GetAxis("Vertical") > 0 && isAbleToWallRun) //IsWallRunning
             {
                 moveDirection.y = jumpSpeed / wallRunSpeed;
                 StartCoroutine(WallRunDurationTimer(wallRunDuration));
+
+                if (Flags.left)
+                {
+                    transform.eulerAngles = 180 * Vector3.up;
+                }
+                else if (Flags.right)
+                {
+                    transform.eulerAngles = Vector3.zero;
+                }
             }
         }
 
@@ -392,7 +403,9 @@ namespace Platformer
             if (CanWallRunAfterWallJump)
             {
                 StopCoroutine(WallRunDurationTimer(wallRunDuration));
-                IsWallRunning = true;
+                //IsWallRunning = true;
+                isAbleToWallRun = true;
+                IsWallRunning = false;
             }
         }
 
@@ -656,6 +669,7 @@ namespace Platformer
             IsWallRunning = true;
             yield return new WaitForSeconds(duration);
             IsWallRunning = false;
+            isAbleToWallRun = false;
         }
 
         private IEnumerator PowerJumpWaiter(float delay)
