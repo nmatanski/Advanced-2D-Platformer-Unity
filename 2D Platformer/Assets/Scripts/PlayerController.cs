@@ -576,7 +576,7 @@ namespace Platformer
         {
             float gravityType;
 
-            if (CanGlide && Input.GetAxis("Vertical") > .5f && characterController.velocity.y < .2f) ///TODO: Change key
+            if (CanGlide && Input.GetAxis("Vertical") > .5f && characterController.velocity.y < .2f && !IsGrounded) ///TODO: Change key
             {
                 if (remainingGlideTime > 0)
                 {
