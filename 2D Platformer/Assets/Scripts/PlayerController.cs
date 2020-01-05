@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Prime31;
-using static Prime31.CharacterController2D;
-using System;
 using TMPro;
+using static Prime31.CharacterController2D;
 
 namespace Platformer
 {
@@ -88,6 +86,10 @@ namespace Platformer
         [Header("ABILITIES")]
 
         [SerializeField]
+        private bool canCrouch = true;
+        public bool CanCrouch { get => canCrouch; private set => canCrouch = value; }
+
+        [SerializeField]
         private bool canDoubleJump = true;
         public bool CanDoubleJump { get => canDoubleJump; private set => canDoubleJump = value; }
 
@@ -102,6 +104,10 @@ namespace Platformer
         [SerializeField]
         private bool canWallRunAfterWallJump = true;
         public bool CanWallRunAfterWallJump { get => canWallRunAfterWallJump; private set => canWallRunAfterWallJump = value; }
+
+        [SerializeField]
+        private bool canJumpAfterWallJump = true;
+        public bool CanJumpAfterWallJump { get => canJumpAfterWallJump; private set => canJumpAfterWallJump = value; }
 
         [SerializeField]
         private bool canSlide = true;
@@ -243,10 +249,8 @@ namespace Platformer
             characterController = GetComponent<CharacterController2D>();
             boxCollider = GetComponent<BoxCollider2D>();
             animator = GetComponentInChildren<Animator>();
-
             defaultBoxColliderSize = boxCollider.size;
             defaultJumpSpeed = jumpSpeed;
-
             dashPressedRemember = dashCooldown;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
@@ -300,10 +304,7 @@ namespace Platformer
             ProcessGravity();
 
             characterController.move(moveDirection * Time.deltaTime);
-
             Flags = characterController.collisionState;
-            IsGrounded = Flags.below;
-
 
             frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
             backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
@@ -311,7 +312,14 @@ namespace Platformer
             var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, 2f, layerMask);
             var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, 2f, layerMask);
 
-            TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
+            if (CanCrouch)
+            {
+                TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
+            }
+            //else ///TODO: dangerous hotfix (remove asap)
+            //{
+            //    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+            //}
 
             if (Flags.above) //ceiling
             {
@@ -332,6 +340,8 @@ namespace Platformer
             {
                 TryWallRunAfterWallJump();
             }
+
+            IsGrounded = Flags.below;
 
             UpdateAnimator();
 
@@ -358,6 +368,7 @@ namespace Platformer
             animator.SetBool("isPowerJumping", IsPowerJumping);
             animator.SetBool("isGroundSlamming", IsGroundSlamming);
             animator.SetBool("isDashing", IsDashing);
+            animator.SetBool("isSlopeSliding", IsSliding);
         }
 
         private void ActivateDoubleJump()
@@ -377,12 +388,13 @@ namespace Platformer
             }
 
             moveDirection.x = Input.GetAxis("Horizontal");
-            moveDirection.x *= walkSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
+            var tempSpeed = IsCrouchWalking ? crouchWalkSpeed : walkSpeed;
+            moveDirection.x *= tempSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
         }
 
         private void TryWallRun()
         {
-            if (CanWallRun && Input.GetAxis("Vertical") > 0 && isAbleToWallRun) //IsWallRunning
+            if (CanWallRun && Input.GetAxis("Vertical") > 0 && isAbleToWallRun && !IsGrounded) //IsWallRunning
             {
                 moveDirection.y = jumpSpeed / wallRunSpeed;
                 StartCoroutine(WallRunDurationTimer(wallRunDuration));
@@ -421,7 +433,6 @@ namespace Platformer
         private void CheckForSliding()
         {
             var hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, layerMask);
-
             if (hit)
             {
                 slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -532,8 +543,18 @@ namespace Platformer
                     transform.eulerAngles = 180 * Vector3.up;
                     wasLastJumpLeft = true;
                 }
+
                 StartCoroutine(WallJumpRecoveryTimer(wallJumpRecoveryTime));
-                HasDoubleJumped = false;
+                if (CanJumpAfterWallJump)
+                {
+                    HasDoubleJumped = false;
+                }
+                //HasDoubleJumped = false;
+                if (!CanWallRunAfterWallJump)
+                {
+                    isAbleToWallRun = false;
+                }
+
                 CanDoubleJump = true;
                 return true;
             }
@@ -588,7 +609,6 @@ namespace Platformer
                     }
 
                     isGliderEquipped = false;
-
                     gravityType = gravity;
                 }
             }
@@ -641,17 +661,6 @@ namespace Platformer
             characterController.recalculateDistanceBetweenRays();
         }
 
-        private void ResetTimer(ref float currentTimer, float defaultTimer)
-        {
-            currentTimer = defaultTimer;
-        }
-
-        ///TODO: in Util class
-        private static void EnableSpriteOfObject(GameObject go, bool enabled = true)
-        {
-            go.GetComponent<SpriteRenderer>().enabled = enabled;
-        }
-
         private void UpdateGliderInfoUI()
         {
             GameObject.FindGameObjectWithTag("GliderChargesText").GetComponent<TextMeshProUGUI>().text = glideCharges.ToString() + " gliders (" + (int)((remainingGlideTime < 0 ? 0 : remainingGlideTime) * 100 / 2) + "%)";
@@ -669,7 +678,9 @@ namespace Platformer
             IsWallRunning = true;
             yield return new WaitForSeconds(duration);
             IsWallRunning = false;
-            isAbleToWallRun = false;
+
+            if (!HasWallJumped)
+                isAbleToWallRun = false;
         }
 
         private IEnumerator PowerJumpWaiter(float delay)
@@ -705,6 +716,17 @@ namespace Platformer
             EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"));
             yield return new WaitForSeconds(time);
             EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+        }
+
+        private static void ResetTimer(ref float currentTimer, float defaultTimer)
+        {
+            currentTimer = defaultTimer;
+        }
+
+        ///TODO: in Util class
+        private static void EnableSpriteOfObject(GameObject go, bool enabled = true)
+        {
+            go.GetComponent<SpriteRenderer>().enabled = enabled;
         }
     }
 }
