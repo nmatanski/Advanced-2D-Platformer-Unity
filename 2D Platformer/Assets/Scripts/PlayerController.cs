@@ -754,6 +754,8 @@ namespace Platformer
 
         private IEnumerator DisableOneWayPlatform()
         {
+            bool defaultCanGroundSlam = CanGroundSlam;
+
             if (temporaryOneWayPlatform)
             {
                 isOnOneWayPlatform = true;
@@ -768,7 +770,7 @@ namespace Platformer
                 isOnOneWayPlatform = false;
                 temporaryOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = true;
                 temporaryOneWayPlatform = null;
-                CanGroundSlam = true;
+                CanGroundSlam = defaultCanGroundSlam;
             }
         }
 
@@ -776,7 +778,6 @@ namespace Platformer
         {
             yield return new WaitForSeconds(delay);
             hasDoubleJumpedLastAerial = false;
-            //animator.SetBool("hasDoubleJumpedLastAerial", hasDoubleJumpedLastAerial);
         }
 
         private IEnumerator EquipGliderFX(float time)
