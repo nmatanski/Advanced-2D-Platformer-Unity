@@ -28,7 +28,7 @@ TagManager:
   - TriggerPlatform
   - ColliderPlatform
   - Platforms
-  - 
+  - OneWayPlatform
   - 
   - 
   - 

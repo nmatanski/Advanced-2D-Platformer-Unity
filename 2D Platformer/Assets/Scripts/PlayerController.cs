@@ -81,6 +81,9 @@ namespace Platformer
         [SerializeField]
         private LayerMask layerMask;
 
+        [SerializeField]
+        private GroundType groundType;
+
 
         //ability toggles
         [Header("ABILITIES")]
@@ -226,6 +229,7 @@ namespace Platformer
         private Animator animator;
 
         //private variables
+        private GameObject temporaryOneWayPlatform;
         private Vector3 moveDirection = Vector3.zero;
         private Vector3 slopeGradient = Vector3.zero;
         private Vector2 defaultBoxColliderSize;
@@ -241,6 +245,7 @@ namespace Platformer
         private bool hasStartedGliding;
         private bool isGliderEquipped = true;
         private bool isAbleToWallRun; // again
+        private bool isOnOneWayPlatform;
 
 
 
@@ -259,7 +264,7 @@ namespace Platformer
         private void Update()
         {
             Run();
-            CheckForSliding();
+            ManagePlatformBelow();
             OrientatePlayer();
 
             UpdateGliderInfoUI();
@@ -279,10 +284,14 @@ namespace Platformer
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    if (CanPowerJump && (IsDucking || IsCrouchWalking))
+                    if (CanPowerJump && (IsDucking || IsCrouchWalking) && !groundType.Equals(GroundType.OneWayPlatform))
                     {
                         jumpSpeed += powerJumpSpeed;
                         StartCoroutine(PowerJumpWaiter(1f));
+                    }
+                    else if (Input.GetAxis("Vertical") < 0 && groundType.Equals(GroundType.OneWayPlatform)) ///TODO: add ISDucking when the animation is fixed
+                    {
+                        StartCoroutine(DisableOneWayPlatform());
                     }
                     else
                     {
@@ -369,6 +378,8 @@ namespace Platformer
             animator.SetBool("isGroundSlamming", IsGroundSlamming);
             animator.SetBool("isDashing", IsDashing);
             animator.SetBool("isSlopeSliding", IsSliding);
+
+            animator.SetBool("isOnOneWayPlatform", isOnOneWayPlatform);
         }
 
         private void ActivateDoubleJump()
@@ -430,7 +441,7 @@ namespace Platformer
             }
         }
 
-        private void CheckForSliding()
+        private void ManagePlatformBelow()
         {
             var hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, layerMask);
             if (hit)
@@ -446,6 +457,25 @@ namespace Platformer
                 {
                     IsSliding = false;
                 }
+
+                string layerName = LayerMask.LayerToName(hit.transform.gameObject.layer);
+                switch (layerName)
+                {
+                    case "OneWayPlatform":
+                        groundType = GroundType.OneWayPlatform;
+                        if (!temporaryOneWayPlatform)
+                        {
+                            temporaryOneWayPlatform = hit.transform.gameObject;
+                        }
+                        break;
+                    case "Platforms":
+                        groundType = GroundType.RegularPlatform;
+                        break;
+                }
+            }
+            else
+            {
+                groundType = GroundType.None;
             }
         }
 
@@ -490,6 +520,11 @@ namespace Platformer
 
         private void ActivateJump(float speed)
         {
+            if (isOnOneWayPlatform)
+            {
+                return;
+            }
+
             moveDirection.y = speed;
         }
 
@@ -709,6 +744,26 @@ namespace Platformer
             walkSpeed = defaultSpeed;
             characterController.rigidBody2D.velocity = Vector2.zero;
             IsDashing = false;
+        }
+
+        private IEnumerator DisableOneWayPlatform()
+        {
+            if (temporaryOneWayPlatform)
+            {
+                isOnOneWayPlatform = true;
+                temporaryOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = false;
+                CanGroundSlam = false;
+            }
+
+            yield return new WaitForSeconds(.1f);
+
+            if (temporaryOneWayPlatform)
+            {
+                isOnOneWayPlatform = false;
+                temporaryOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = true;
+                temporaryOneWayPlatform = null;
+                CanGroundSlam = true;
+            }
         }
 
         private IEnumerator EquipGliderFX(float time)
