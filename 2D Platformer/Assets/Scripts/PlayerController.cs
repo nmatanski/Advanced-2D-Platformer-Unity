@@ -84,6 +84,9 @@ namespace Platformer
         [SerializeField]
         private GroundType groundType;
 
+        [SerializeField]
+        private bool hasDoubleJumpedLastAerial = false;
+
 
         //ability toggles
         [Header("ABILITIES")]
@@ -380,6 +383,7 @@ namespace Platformer
             animator.SetBool("isSlopeSliding", IsSliding);
 
             animator.SetBool("isOnOneWayPlatform", isOnOneWayPlatform);
+            animator.SetBool("hasDoubleJumpedLastAerial", hasDoubleJumpedLastAerial);
         }
 
         private void ActivateDoubleJump()
@@ -388,6 +392,8 @@ namespace Platformer
             {
                 ActivateJump(doubleJumpSpeed);
                 HasDoubleJumped = true;
+                hasDoubleJumpedLastAerial = true;
+                StartCoroutine(DoubleJumpAerialCheckDisabler(.3f));
             }
         }
 
@@ -764,6 +770,13 @@ namespace Platformer
                 temporaryOneWayPlatform = null;
                 CanGroundSlam = true;
             }
+        }
+
+        private IEnumerator DoubleJumpAerialCheckDisabler(float delay = 0f)
+        {
+            yield return new WaitForSeconds(delay);
+            hasDoubleJumpedLastAerial = false;
+            //animator.SetBool("hasDoubleJumpedLastAerial", hasDoubleJumpedLastAerial);
         }
 
         private IEnumerator EquipGliderFX(float time)
