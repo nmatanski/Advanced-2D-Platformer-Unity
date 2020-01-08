@@ -18,18 +18,34 @@ namespace Platformer
         [SerializeField]
         private int pointSelection = 1;
 
+        [SerializeField]
+        private Vector3 difference;
+        public Vector3 Difference
+        {
+            get { return difference; }
+            private set { difference = value; }
+        }
+
+
         private Transform currentPoint;
+        private Vector3 lastPosition;
 
 
         // Start is called before the first frame update
         private void Start()
 		{
             currentPoint = points[pointSelection];
+
+            lastPosition =  transform.GetChild(0).position;
 		}
 
 		// Update is called once per frame
 		private void Update()
 		{
+            Difference = platform.transform.position - lastPosition;
+            Difference /= Time.deltaTime;
+            lastPosition = platform.transform.position;
+
             platform.transform.position = Vector3.MoveTowards(platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
 
             if (platform.transform.position == currentPoint.position)

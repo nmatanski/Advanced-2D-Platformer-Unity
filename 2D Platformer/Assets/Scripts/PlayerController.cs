@@ -235,6 +235,7 @@ namespace Platformer
         //private variables
         private GameObject temporaryOneWayPlatform;
         private GameObject temporaryMovingPlatform;
+        private Vector3 temporaryMovingPlatformVelocity = Vector3.zero;
         private Vector3 moveDirection = Vector3.zero;
         private Vector3 slopeGradient = Vector3.zero;
         private Vector2 defaultBoxColliderSize;
@@ -316,6 +317,22 @@ namespace Platformer
 
             TryJumpWithHelper(jumpSpeed);
             ProcessGravity();
+
+
+            if (temporaryMovingPlatform && groundType.Equals(GroundType.MovingPlatform))
+            {
+                temporaryMovingPlatformVelocity = temporaryMovingPlatform.GetComponentInParent<MovingPlatform>().Difference;
+            }
+
+            if (!IsGrounded && !IsGliding && moveDirection.x != 0 && temporaryMovingPlatformVelocity.x != 0)
+            {
+                //moveDirection.x *= 2f; ///TODO: it could multiply by the real velocity but it will be too realistic for a game
+                //moveDirection.x += temporaryMovingPlatformVelocity.x;
+                print("old speed = " + moveDirection.x);
+                moveDirection.x = (moveDirection.x * 3.5f + temporaryMovingPlatformVelocity.x) / 3f;
+                print("new speed = " + moveDirection.x);
+            }
+
 
             characterController.move(moveDirection * Time.deltaTime);
             Flags = characterController.collisionState;
