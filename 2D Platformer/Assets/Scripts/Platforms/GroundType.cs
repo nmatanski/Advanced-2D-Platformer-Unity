@@ -4,6 +4,7 @@
     {
         None,
         RegularPlatform,
-        OneWayPlatform
+        OneWayPlatform,
+        MovingPlatform
     }
 }

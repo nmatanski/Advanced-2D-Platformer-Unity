@@ -3,6 +3,7 @@ using UnityEngine;
 using Prime31;
 using TMPro;
 using static Prime31.CharacterController2D;
+using System;
 
 namespace Platformer
 {
@@ -233,6 +234,7 @@ namespace Platformer
 
         //private variables
         private GameObject temporaryOneWayPlatform;
+        private GameObject temporaryMovingPlatform;
         private Vector3 moveDirection = Vector3.zero;
         private Vector3 slopeGradient = Vector3.zero;
         private Vector2 defaultBoxColliderSize;
@@ -467,21 +469,31 @@ namespace Platformer
                 string layerName = LayerMask.LayerToName(hit.transform.gameObject.layer);
                 switch (layerName)
                 {
-                    case "OneWayPlatform":
-                        groundType = GroundType.OneWayPlatform;
-                        if (!temporaryOneWayPlatform)
-                        {
-                            temporaryOneWayPlatform = hit.transform.gameObject;
-                        }
-                        break;
                     case "Platforms":
                         groundType = GroundType.RegularPlatform;
+                        break;
+                    case "OneWayPlatform":
+                        groundType = GroundType.OneWayPlatform;
+                        HasAssignedTemporaryPlatform(ref temporaryOneWayPlatform, ref hit);
+                        break;
+                    case "MovingPlatform":
+                        groundType = GroundType.MovingPlatform;
+                        if (!HasAssignedTemporaryPlatform(ref temporaryMovingPlatform, ref hit))
+                        {
+                            transform.SetParent(hit.transform);
+                        }
                         break;
                 }
             }
             else
             {
                 groundType = GroundType.None;
+            }
+
+            if (!groundType.Equals(GroundType.MovingPlatform) && temporaryMovingPlatform)
+            {
+                transform.SetParent(null);
+                temporaryMovingPlatform = null;
             }
         }
 
@@ -678,6 +690,17 @@ namespace Platformer
         private void ApplyGravity(float gravity, float bonusGravity = 0)
         {
             moveDirection.y -= gravity * Time.deltaTime + bonusGravity;
+        }
+
+        private bool HasAssignedTemporaryPlatform(ref GameObject temporaryPlatform, ref RaycastHit2D hit)
+        {
+            if (temporaryPlatform)
+            {
+                return true;
+            }
+
+            temporaryPlatform = hit.transform.gameObject;
+            return false;
         }
 
         private void OrientatePlayer()
