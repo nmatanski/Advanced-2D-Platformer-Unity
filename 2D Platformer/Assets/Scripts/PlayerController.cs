@@ -4,6 +4,7 @@ using UnityEngine;
 using Prime31;
 using TMPro;
 using static Prime31.CharacterController2D;
+using UnityEngine.SceneManagement;
 
 namespace Platformer
 {
@@ -272,6 +273,12 @@ namespace Platformer
 
         private void Update()
         {
+            ///TODO: temporarily
+            if (transform.position.y < -80)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
             Run();
             OrientatePlayer();
 
