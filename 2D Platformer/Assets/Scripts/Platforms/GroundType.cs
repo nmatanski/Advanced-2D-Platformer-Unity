@@ -1,10 +1,11 @@
 ﻿namespace Platformer
 {
-    public enum  GroundType
+    public enum GroundType
     {
         None,
         RegularPlatform,
         OneWayPlatform,
-        MovingPlatform
+        MovingPlatform,
+        CollapsablePlatform
     }
 }

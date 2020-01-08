@@ -219,3 +219,4 @@ MonoBehaviour:
   - {fileID: 669130133}
   - {fileID: 1716121693}
   pointSelection: 1
+  difference: {x: 0, y: 0, z: 0}

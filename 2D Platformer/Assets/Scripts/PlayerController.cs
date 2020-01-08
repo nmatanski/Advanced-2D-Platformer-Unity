@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using Prime31;
 using TMPro;
 using static Prime31.CharacterController2D;
-using System;
 
 namespace Platformer
 {
@@ -11,6 +11,9 @@ namespace Platformer
     {
         //config
         [Header("CONFIGURATION")]
+
+        [SerializeField]
+        private GameObject character;
 
         [SerializeField]
         private float walkSpeed = 6f;
@@ -270,7 +273,6 @@ namespace Platformer
         private void Update()
         {
             Run();
-            ManagePlatformBelow();
             OrientatePlayer();
 
             UpdateGliderInfoUI();
@@ -287,6 +289,8 @@ namespace Platformer
                 ResetJump();
                 IsGroundSlamming = false;
                 TrySlopeSliding();
+
+                temporaryMovingPlatformVelocity = Vector3.zero;
 
                 if (Input.GetButtonDown("Jump"))
                 {
@@ -374,6 +378,15 @@ namespace Platformer
 
             IsGrounded = Flags.below;
 
+            if (IsGrounded)
+            {
+                ManagePlatformBelow();
+            }
+            else if (!IsGrounded && !Flags.wasGroundedLastFrame)
+            {
+                ClearGroundType();
+            }
+
             UpdateAnimator();
 
             jumpPressedRemember -= Time.deltaTime;
@@ -382,6 +395,9 @@ namespace Platformer
             {
                 ResetTimer(ref jumpPressedRemember, jumpPressedRememberTime);
             }
+            ///TODO TEST
+            character.transform.localPosition = Vector3.zero;
+            ///
         }
 
         private void UpdateAnimator()
@@ -412,6 +428,12 @@ namespace Platformer
                 ActivateJump(doubleJumpSpeed);
                 HasDoubleJumped = true;
                 hasDoubleJumpedLastAerial = true;
+
+                if (!IsGrounded && groundType.Equals(GroundType.CollapsablePlatform))
+                {
+                    HasDoubleJumped = false;
+                }
+
                 StartCoroutine(DoubleJumpAerialCheckDisabler(.3f));
             }
         }
@@ -500,18 +522,25 @@ namespace Platformer
                             transform.SetParent(hit.transform);
                         }
                         break;
+                    case "CollapsablePlatform":
+                        groundType = GroundType.CollapsablePlatform;
+                        hit.transform.gameObject.GetComponent<CollapsablePlatform>().CollapsePlatform(.3f);
+                        transform.SetParent(hit.transform);
+                        break;
                 }
             }
-            else
-            {
-                groundType = GroundType.None;
-            }
+        }
 
-            if (!groundType.Equals(GroundType.MovingPlatform) && temporaryMovingPlatform)
+        private void ClearGroundType()
+        {
+            groundType = GroundType.None;
+
+            if (temporaryMovingPlatform)
             {
-                transform.SetParent(null);
                 temporaryMovingPlatform = null;
             }
+
+            transform.SetParent(null);
         }
 
         private void TrySlopeSliding()
@@ -722,6 +751,8 @@ namespace Platformer
 
         private void OrientatePlayer()
         {
+            var defaultFacingRight = IsFacingRight;
+
             if (moveDirection.x < 0)
             {
                 transform.eulerAngles = 180 * Vector3.up;
@@ -731,6 +762,14 @@ namespace Platformer
             {
                 transform.eulerAngles = Vector3.zero;
                 IsFacingRight = true;
+            }
+
+            if (defaultFacingRight != IsFacingRight)
+            {
+                ///TODO: temporary fix while flipping and overlapping with walls
+                character.transform.localPosition = Vector3.zero;
+                transform.position += new Vector3((IsFacingRight ? 1 : -1) * 0.28f, 0, 0);
+                ///
             }
         }
 

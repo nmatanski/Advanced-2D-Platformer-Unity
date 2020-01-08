@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platformer
 {
-	public class MovingPlatform : MonoBehaviour
-	{
+    public class MovingPlatform : MonoBehaviour
+    {
+        public Vector3 Difference { get; private set; }
+
+
         [SerializeField]
         private GameObject platform;
 
@@ -18,30 +19,20 @@ namespace Platformer
         [SerializeField]
         private int pointSelection = 1;
 
-        [SerializeField]
-        private Vector3 difference;
-        public Vector3 Difference
-        {
-            get { return difference; }
-            private set { difference = value; }
-        }
-
-
         private Transform currentPoint;
         private Vector3 lastPosition;
 
 
         // Start is called before the first frame update
         private void Start()
-		{
+        {
             currentPoint = points[pointSelection];
+            lastPosition = transform.GetChild(0).position;
+        }
 
-            lastPosition =  transform.GetChild(0).position;
-		}
-
-		// Update is called once per frame
-		private void Update()
-		{
+        // Update is called once per frame
+        private void Update()
+        {
             Difference = platform.transform.position - lastPosition;
             Difference /= Time.deltaTime;
             lastPosition = platform.transform.position;
@@ -52,11 +43,9 @@ namespace Platformer
             {
                 pointSelection++;
                 if (pointSelection == points.Length)
-                {
                     pointSelection = 0;
-                }
                 currentPoint = points[pointSelection];
             }
-		}
-	}
+        }
+    }
 }

@@ -30,7 +30,7 @@ TagManager:
   - Platforms
   - OneWayPlatform
   - MovingPlatform
-  - 
+  - CollapsablePlatform
   - 
   - 
   - 
