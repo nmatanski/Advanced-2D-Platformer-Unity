@@ -251,6 +251,8 @@ namespace Platformer
         private Vector3 backTopCorner;
         private Vector3 frontBottomCorner;
         private Vector3 backBottomCorner;
+        private Vector3 currentEffectorAdjustment = Vector3.zero;
+        private EffectorType currentEffectorType = EffectorType.None;
         private float jumpPressedRemember = 0f;
         private float groundedRemember = 0f;
         private float dashPressedRemember = 0f;
@@ -264,6 +266,7 @@ namespace Platformer
         private bool isGliderEquipped = true;
         private bool isAbleToWallRun; // again
         private bool isOnOneWayPlatform;
+        private bool canGroundSlamDefault;
 
 
 
@@ -274,6 +277,7 @@ namespace Platformer
             animator = GetComponentInChildren<Animator>();
             defaultBoxColliderSize = boxCollider.size;
             defaultJumpSpeed = jumpSpeed;
+            canGroundSlamDefault = CanGroundSlam;
             dashPressedRemember = dashCooldown;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
@@ -308,6 +312,23 @@ namespace Platformer
                 TrySlopeSliding();
 
                 temporaryMovingPlatformVelocity = Vector3.zero;
+
+
+                frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
+                backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
+
+                var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+                var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+
+                if (CanCrouch)
+                {
+                    TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
+                }
+                //else ///TODO: dangerous hotfix (remove asap)
+                //{
+                //    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+                //}
+
 
                 if (Input.GetButtonDown("Jump"))
                 {
@@ -366,24 +387,30 @@ namespace Platformer
                 print("new speed = " + moveDirection.x);
             }
 
+            if (!currentEffectorType.Equals(EffectorType.None))
+            {
+                AdjustEffector();
+            }
+
 
             characterController.move(moveDirection * Time.deltaTime);
             Flags = characterController.collisionState;
 
-            frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
-            backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
 
-            var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, raycastGroundDistance, layerMask);
-            var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+            //frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
+            //backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
 
-            if (CanCrouch)
-            {
-                TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
-            }
-            //else ///TODO: dangerous hotfix (remove asap)
+            //var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+            //var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+
+            //if (CanCrouch)
             //{
-            //    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+            //    TryDuckOrCrouchWalk(hitFrontCeiling, hitBackCeiling);
             //}
+            ////else ///TODO: dangerous hotfix (remove asap)
+            ////{
+            ////    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+            ////}
 
             if (Flags.above) //ceiling
             {
@@ -633,9 +660,9 @@ namespace Platformer
                 ChangeBoxColliderSize(boxCollider, new Vector2(boxCollider.size.x, defaultBoxColliderSize.y / 2));
         }
 
-        private void ActivateJump(float speed)
+        private void ActivateJump(float speed, bool isDefaultJump = true)
         {
-            if (isOnOneWayPlatform)
+            if (isOnOneWayPlatform && isDefaultJump)
             {
                 return;
             }
@@ -733,6 +760,42 @@ namespace Platformer
                 ResetTimer(ref remainingGlideTime, glideDurationCapacity);
                 isGliderEquipped = true;
                 StartCoroutine(EquipGliderFX(.3f));
+            }
+        }
+
+        private void AdjustEffector()
+        {
+            switch (currentEffectorType)
+            {
+                case EffectorType.None:
+                    break;
+                case EffectorType.Ladder:
+                    moveDirection.y = 0;
+                    if (Input.GetAxis("Vertical") > 0)
+                    {
+                        moveDirection.y = currentEffectorAdjustment.y;
+                    }
+                    else if (Input.GetAxis("Vertical") < 0)
+                    {
+                        moveDirection.y = -currentEffectorAdjustment.y;
+                    }
+
+                    if (Input.GetButtonDown("Jump"))
+                    {
+                        ActivateJump(jumpSpeed, false);
+                        isJumping = true;
+                        isAbleToWallRun = true;
+                        currentEffectorType = EffectorType.None;
+                    }
+                    break;
+                case EffectorType.TractorBeam:
+                    moveDirection.y = currentEffectorAdjustment.y;
+                    break;
+                case EffectorType.FloatZone:
+                    moveDirection += currentEffectorAdjustment;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -930,6 +993,34 @@ namespace Platformer
             yield return new WaitForSeconds(time);
             EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
         }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            var effector = collider.gameObject.GetComponent<CustomEffector>();
+
+            if (effector)
+            {
+                currentEffectorType = effector.EffectorType;
+                currentEffectorAdjustment = effector.EffectorAdjustment;
+                if (effector.IsDisabledGroundSlamming)
+                {
+                    CanGroundSlam = false;
+                }
+            }
+        }
+
+        //private void OnTriggerStay2D(Collider2D collider)
+        //{
+
+        //}
+
+        private void OnTriggerExit2D(Collider2D collider)
+        {
+            currentEffectorType = EffectorType.None;
+            currentEffectorAdjustment = Vector3.zero;
+            CanGroundSlam = canGroundSlamDefault;
+        }
+
 
         private static void ResetTimer(ref float currentTimer, float defaultTimer)
         {

@@ -9,4 +9,12 @@
         CollapsablePlatform,
         JumpPad
     }
+
+    public enum EffectorType
+    {
+        None,
+        Ladder,
+        TractorBeam,
+        FloatZone
+    }
 }
