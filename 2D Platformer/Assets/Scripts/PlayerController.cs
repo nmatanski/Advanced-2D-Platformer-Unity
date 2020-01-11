@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine;
 using Prime31;
 using TMPro;
-using static Prime31.CharacterController2D;
 using UnityEngine.SceneManagement;
+using static Prime31.CharacterController2D;
+
 
 namespace Platformer
 {
@@ -251,6 +252,8 @@ namespace Platformer
         private float slopeAngle;
         private float remainingGlideTime;
         private float defaultJumpSpeed;
+        private float jumpPadSpeed;
+        private float tempJumpSpeed;
         private bool wasLastJumpLeft;
         private bool hasStartedGliding;
         private bool isGliderEquipped = true;
@@ -289,6 +292,8 @@ namespace Platformer
 
             TryDash();
 
+            bool hasUsedJumpPad = false;
+
             if (IsGrounded)
             {
                 ResetTimer(ref groundedRemember, groundedRememberTime);
@@ -318,6 +323,11 @@ namespace Platformer
                     //IsWallRunning = true;
                     isAbleToWallRun = true;
                 }
+
+                if (groundType.Equals(GroundType.JumpPad))
+                {
+                    hasUsedJumpPad = true;
+                }
             }
             else
             {
@@ -326,7 +336,14 @@ namespace Platformer
                 ActivateDoubleJump();
             }
 
-            TryJumpWithHelper(jumpSpeed);
+            if (hasUsedJumpPad)
+            {
+                JumpWithJumpPad(jumpPadSpeed);
+            }
+            else
+            {
+                TryJumpWithHelper(jumpSpeed);
+            }
             ProcessGravity();
 
 
@@ -534,6 +551,10 @@ namespace Platformer
                         hit.transform.gameObject.GetComponent<CollapsablePlatform>().CollapsePlatform(.3f);
                         transform.SetParent(hit.transform);
                         break;
+                    case "JumpPad":
+                        groundType = GroundType.JumpPad;
+                        jumpPadSpeed = hit.transform.gameObject.GetComponent<JumpPad>().JumpPadSpeed;
+                        break;
                 }
             }
         }
@@ -624,6 +645,20 @@ namespace Platformer
                 return true;
             }
             return false;
+        }
+
+        private void JumpWithJumpPad(float speed)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = tempJumpSpeed + speed;
+                tempJumpSpeed = moveDirection.y / 2;
+            }
+            else
+            {
+                tempJumpSpeed = 0f;
+                moveDirection.y = speed;
+            }
         }
 
         private bool TryWallJump()

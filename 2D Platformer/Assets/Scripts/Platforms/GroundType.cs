@@ -6,6 +6,7 @@
         RegularPlatform,
         OneWayPlatform,
         MovingPlatform,
-        CollapsablePlatform
+        CollapsablePlatform,
+        JumpPad
     }
 }
