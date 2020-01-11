@@ -91,6 +91,9 @@ namespace Platformer
         private GroundType groundType;
 
         [SerializeField]
+        private float raycastGroundDistance = 2f;
+
+        [SerializeField]
         private bool hasDoubleJumpedLastAerial = false;
 
 
@@ -246,6 +249,8 @@ namespace Platformer
         private Vector2 defaultBoxColliderSize;
         private Vector3 frontTopCorner;
         private Vector3 backTopCorner;
+        private Vector3 frontBottomCorner;
+        private Vector3 backBottomCorner;
         private float jumpPressedRemember = 0f;
         private float groundedRemember = 0f;
         private float dashPressedRemember = 0f;
@@ -368,8 +373,8 @@ namespace Platformer
             frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
             backTopCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
 
-            var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, 2f, layerMask);
-            var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, 2f, layerMask);
+            var hitFrontCeiling = Physics2D.Raycast(frontTopCorner, Vector2.up, raycastGroundDistance, layerMask);
+            var hitBackCeiling = Physics2D.Raycast(backTopCorner, Vector2.up, raycastGroundDistance, layerMask);
 
             if (CanCrouch)
             {
@@ -514,7 +519,25 @@ namespace Platformer
 
         private void ManagePlatformBelow()
         {
-            var hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, layerMask);
+            var hit = Physics2D.Raycast(transform.position, Vector3.down, raycastGroundDistance, layerMask);
+
+            if (!hit.collider)
+            {
+                frontBottomCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y, 0);
+                backBottomCorner = new Vector3(transform.position.x - boxCollider.size.x / 2, transform.position.y, 0);
+                var hitFrontFloor = Physics2D.Raycast(frontBottomCorner, Vector2.down, raycastGroundDistance, layerMask);
+                var hitBackFloor = Physics2D.Raycast(backBottomCorner, Vector2.down, raycastGroundDistance, layerMask);
+
+                if (hitFrontFloor.collider && !hitBackFloor.collider)
+                {
+                    hit = hitFrontFloor;
+                }
+                else if (!hitFrontFloor.collider && hitBackFloor.collider)
+                {
+                    hit = hitBackFloor;
+                }
+            }
+
             if (hit)
             {
                 slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
