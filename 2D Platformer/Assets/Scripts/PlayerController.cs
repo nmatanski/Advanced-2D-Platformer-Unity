@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 using static Prime31.CharacterController2D;
 
 
-namespace Platformer
+namespace Platformer.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Character
     {
         //config
         [Header("CONFIGURATION")]
@@ -34,6 +34,12 @@ namespace Platformer
 
         [SerializeField]
         private float jumpSpeed = 8f;
+        public override float JumpSpeed
+        {
+            get { return jumpSpeed; }
+            set { jumpSpeed = value; }
+        }
+
 
         [SerializeField]
         private float doubleJumpSpeed = 4f;
@@ -174,7 +180,7 @@ namespace Platformer
 
         [SerializeField]
         private bool isFacingRight;
-        public bool IsFacingRight { get => isFacingRight; private set => isFacingRight = value; }
+        public override bool IsFacingRight { get => isFacingRight; protected set => isFacingRight = value; }
 
         [SerializeField]
         private bool hasDoubleJumped;
@@ -233,10 +239,14 @@ namespace Platformer
         }
 
 
-        public CharacterCollisionState2D Flags { get; private set; }
+        public override CharacterCollisionState2D Flags { get; protected set; }
+
+        protected override CharacterController2D CharacterController { get; set; }
+
 
         //cached components
-        private CharacterController2D characterController;
+        ///TODO: Check this
+        ///private CharacterController2D characterController;
         private BoxCollider2D boxCollider;
         private Animator animator;
 
@@ -244,6 +254,7 @@ namespace Platformer
         private GameObject temporaryOneWayPlatform;
         private GameObject temporaryMovingPlatform;
         private Vector3 temporaryMovingPlatformVelocity = Vector3.zero;
+        ///TODO: check this
         private Vector3 moveDirection = Vector3.zero;
         private Vector3 slopeGradient = Vector3.zero;
         private Vector2 defaultBoxColliderSize;
@@ -272,11 +283,11 @@ namespace Platformer
 
         private void Start()
         {
-            characterController = GetComponent<CharacterController2D>();
+            CharacterController = GetComponent<CharacterController2D>();
             boxCollider = GetComponent<BoxCollider2D>();
             animator = GetComponentInChildren<Animator>();
             defaultBoxColliderSize = boxCollider.size;
-            defaultJumpSpeed = jumpSpeed;
+            defaultJumpSpeed = JumpSpeed;
             canGroundSlamDefault = CanGroundSlam;
             dashPressedRemember = dashCooldown;
 
@@ -292,7 +303,7 @@ namespace Platformer
             }
 
             Run();
-            OrientatePlayer();
+            OrientateCharacter();
 
             UpdateGliderInfoUI();
 
@@ -326,7 +337,7 @@ namespace Platformer
                 }
                 //else ///TODO: dangerous hotfix (remove asap)
                 //{
-                //    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+                //    IsDucking = Input.GetAxis("Vertical") < 0 && MoveDirection.x == 0;
                 //}
 
 
@@ -334,7 +345,7 @@ namespace Platformer
                 {
                     if (CanPowerJump && (IsDucking || IsCrouchWalking) && !groundType.Equals(GroundType.OneWayPlatform))
                     {
-                        jumpSpeed += powerJumpSpeed;
+                        JumpSpeed += powerJumpSpeed;
                         StartCoroutine(PowerJumpWaiter(1f));
                     }
                     else if (Input.GetAxis("Vertical") < 0 && groundType.Equals(GroundType.OneWayPlatform)) ///TODO: add ISDucking when the animation is fixed
@@ -357,7 +368,7 @@ namespace Platformer
             }
             else
             {
-                jumpSpeed = defaultJumpSpeed;
+                JumpSpeed = defaultJumpSpeed;
                 ActivateSmartJumpWithHeightCut();
                 ActivateDoubleJump();
             }
@@ -368,7 +379,7 @@ namespace Platformer
             }
             else
             {
-                TryJumpWithHelper(jumpSpeed);
+                TryJumpWithHelper(JumpSpeed);
             }
             ProcessGravity();
 
@@ -380,8 +391,8 @@ namespace Platformer
 
             if (!IsGrounded && !IsGliding && moveDirection.x != 0 && temporaryMovingPlatformVelocity.x != 0)
             {
-                //moveDirection.x *= 2f; ///TODO: it could multiply by the real velocity but it will be too realistic for a game
-                //moveDirection.x += temporaryMovingPlatformVelocity.x;
+                //MoveDirection.x *= 2f; ///TODO: it could multiply by the real velocity but it will be too realistic for a game
+                //MoveDirection.x += temporaryMovingPlatformVelocity.x;
                 print("old speed = " + moveDirection.x);
                 moveDirection.x = (moveDirection.x * 3.5f + temporaryMovingPlatformVelocity.x) / 3f;
                 print("new speed = " + moveDirection.x);
@@ -393,8 +404,8 @@ namespace Platformer
             }
 
 
-            characterController.move(moveDirection * Time.deltaTime);
-            Flags = characterController.collisionState;
+            CharacterController.move(moveDirection * Time.deltaTime);
+            Flags = CharacterController.collisionState;
 
 
             //frontTopCorner = new Vector3(transform.position.x + boxCollider.size.x / 2, transform.position.y + boxCollider.size.y / 2, 0);
@@ -409,7 +420,7 @@ namespace Platformer
             //}
             ////else ///TODO: dangerous hotfix (remove asap)
             ////{
-            ////    IsDucking = Input.GetAxis("Vertical") < 0 && moveDirection.x == 0;
+            ////    IsDucking = Input.GetAxis("Vertical") < 0 && MoveDirection.x == 0;
             ////}
 
             if (Flags.above) //ceiling
@@ -477,6 +488,31 @@ namespace Platformer
             animator.SetBool("hasDoubleJumpedLastAerial", hasDoubleJumpedLastAerial);
         }
 
+        protected override void OrientateCharacter()
+        {
+            var defaultFacingRight = IsFacingRight;
+
+            if (moveDirection.x < 0)
+            {
+                transform.eulerAngles = 180 * Vector3.up;
+                IsFacingRight = false;
+            }
+            else if (moveDirection.x > 0)
+            {
+                transform.eulerAngles = Vector3.zero;
+                IsFacingRight = true;
+            }
+
+            if (defaultFacingRight != IsFacingRight)
+            {
+                ///TODO: temporary fix while flipping and overlapping with walls
+                character.transform.localPosition = Vector3.zero;
+                transform.position += new Vector3((IsFacingRight ? 1 : -1) * 0.28f, (float)0, (float)0);
+                ///
+            }
+        }
+
+
         private void ActivateDoubleJump()
         {
             if (Input.GetButtonDown("Jump") && CanDoubleJump && !HasDoubleJumped)
@@ -510,7 +546,7 @@ namespace Platformer
         {
             if (CanWallRun && Input.GetAxis("Vertical") > 0 && isAbleToWallRun && !IsGrounded) //IsWallRunning
             {
-                moveDirection.y = jumpSpeed / wallRunSpeed;
+                moveDirection.y = JumpSpeed / wallRunSpeed;
                 StartCoroutine(WallRunDurationTimer(wallRunDuration));
 
                 if (Flags.left)
@@ -570,7 +606,7 @@ namespace Platformer
                 slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 slopeGradient = hit.normal;
 
-                if (slopeAngle > characterController.slopeLimit)
+                if (slopeAngle > CharacterController.slopeLimit)
                 {
                     IsSliding = true;
                 }
@@ -715,8 +751,8 @@ namespace Platformer
         {
             if (CanWallJump && Input.GetButtonDown("Jump") && !HasWallJumped && !IsGrounded)
             {
-                float totalSpeedX = jumpSpeed * wallJumpSpeedMultiplierX;
-                float totalSpeedY = jumpSpeed * wallJumpSpeedMultiplierY;
+                float totalSpeedX = JumpSpeed * wallJumpSpeedMultiplierX;
+                float totalSpeedY = JumpSpeed * wallJumpSpeedMultiplierY;
 
                 if (!TryJumpWithHelper(totalSpeedY)) ///TODO: bug: not applying the assist method
                 {
@@ -782,7 +818,7 @@ namespace Platformer
 
                     if (Input.GetButtonDown("Jump"))
                     {
-                        ActivateJump(jumpSpeed, false);
+                        ActivateJump(JumpSpeed, false);
                         isJumping = true;
                         isAbleToWallRun = true;
                         currentEffectorType = EffectorType.None;
@@ -803,7 +839,7 @@ namespace Platformer
         {
             float gravityType;
 
-            if (CanGlide && Input.GetAxis("Vertical") > .5f && characterController.velocity.y < .2f && !IsGrounded) ///TODO: Change key
+            if (CanGlide && Input.GetAxis("Vertical") > .5f && CharacterController.velocity.y < .2f && !IsGrounded) ///TODO: Change key
             {
                 if (remainingGlideTime > 0)
                 {
@@ -877,36 +913,12 @@ namespace Platformer
             return false;
         }
 
-        private void OrientatePlayer()
-        {
-            var defaultFacingRight = IsFacingRight;
-
-            if (moveDirection.x < 0)
-            {
-                transform.eulerAngles = 180 * Vector3.up;
-                IsFacingRight = false;
-            }
-            else if (moveDirection.x > 0)
-            {
-                transform.eulerAngles = Vector3.zero;
-                IsFacingRight = true;
-            }
-
-            if (defaultFacingRight != IsFacingRight)
-            {
-                ///TODO: temporary fix while flipping and overlapping with walls
-                character.transform.localPosition = Vector3.zero;
-                transform.position += new Vector3((IsFacingRight ? 1 : -1) * 0.28f, 0, 0);
-                ///
-            }
-        }
-
         private void ChangeBoxColliderSize(BoxCollider2D collider, Vector2 newSize, bool isCrouching = false)
         {
             var multiplier = isCrouching ? 1 : -1;
             collider.size = newSize;
             transform.position = new Vector3(transform.position.x, transform.position.y + multiplier * (defaultBoxColliderSize.y / 4), transform.position.z);
-            characterController.recalculateDistanceBetweenRays();
+            CharacterController.recalculateDistanceBetweenRays();
         }
 
         private void UpdateGliderInfoUI()
@@ -945,7 +957,7 @@ namespace Platformer
 
             if (moveDirection.x == 0)
             {
-                characterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
+                CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, (float)0);
             }
             else
             {
@@ -955,7 +967,7 @@ namespace Platformer
             yield return new WaitForSeconds(dashTime);
 
             walkSpeed = defaultSpeed;
-            characterController.rigidBody2D.velocity = Vector2.zero;
+            CharacterController.rigidBody2D.velocity = Vector2.zero;
             IsDashing = false;
         }
 
