@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Platformer.AI
+﻿namespace Platformer.AI
 {
     public enum GroundMovementState
     {
@@ -12,6 +6,7 @@ namespace Platformer.AI
         MoveForward,
         Jump,
         Patrol,
-        Dash
+        Dash,
+        //Chase
     }
 }

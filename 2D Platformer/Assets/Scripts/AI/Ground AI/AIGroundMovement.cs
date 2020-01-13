@@ -39,7 +39,10 @@ namespace Platformer.AI
         private float gravity = 20f;
 
         [SerializeField]
-        private float jumpDelay = 0f;
+        private float jumpDelay = 2f;
+
+        [SerializeField]
+        private float arriveDelay = 2f;
 
         [SerializeField]
         private bool canAutoFlipDirection = true;
@@ -50,16 +53,26 @@ namespace Platformer.AI
         [SerializeField]
         private bool hasStartedFacingRight = false;
 
+        [SerializeField]
+        private Transform[] waypoints;
 
+        //private GameObject player;
+        private Transform currentWaypoint;
         private Vector3 moveDirection = Vector3.zero;
+        private GroundMovementState defaultGroundMovementState;
+        private int waypointIndex = 0;
         private bool isGrounded;
+        //private bool hasChased = false;
 
 
 
         // Start is called before the first frame update
         private void Start()
         {
+            //player = GameObject.FindGameObjectWithTag("Player");
             CharacterController = gameObject.GetComponent<CharacterController2D>();
+            defaultGroundMovementState = GroundMovementState;
+
             if (!hasStartedFacingRight)
             {
                 transform.eulerAngles = 180 * Vector3.up;
@@ -94,9 +107,39 @@ namespace Platformer.AI
                         }
                         break;
                     case GroundMovementState.Patrol:
+                        if (!currentWaypoint)
+                            currentWaypoint = waypoints[waypointIndex];
+
+                        var difference = currentWaypoint.position - transform.position;
+                        float distanceX = Mathf.Abs(difference.x);
+
+                        if (distanceX > .1f && difference.x != 0)
+                        {
+                            moveDirection.x = Mathf.Sign(difference.x) * moveSpeed;
+                            transform.eulerAngles = difference.x > 0f ? Vector3.zero : 180 * Vector3.up;
+                        }
+                        else
+                        {
+                            StartCoroutine(ArriveAtWaypoint(arriveDelay));
+                        }
                         break;
                     case GroundMovementState.Dash:
                         break;
+                    //case GroundMovementState.Chase:
+                    //    //var tempFacingMultiplier = player.transform.position.x > transform.position.x ? (sbyte)1 : (sbyte)-1;
+                    //    //IsFacingRight = facingMultiplier == tempFacingMultiplier ? IsFacingRight : !IsFacingRight;
+                    //    //facingMultiplier = IsFacingRight ? (sbyte)1 : (sbyte)-1;
+                    //    //OrientateCharacter();
+                    //    //moveDirection.x = facingMultiplier * moveSpeed;
+                    //    if (!hasChased)
+                    //    {
+                    //        facingMultiplier = player.transform.position.x > transform.position.x ? (sbyte)1 : (sbyte)-1;
+                    //        moveDirection.x = facingMultiplier * moveSpeed;
+                    //        hasChased = true;
+                    //    }
+                        
+                    //    //transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), moveSpeed * Time.deltaTime / 2);
+                    //    break;
                     default:
                         break;
                 }
@@ -138,9 +181,43 @@ namespace Platformer.AI
 
         private IEnumerator JumpWaiter(float jumpDelay)
         {
-            groundMovementState = GroundMovementState.Stop;
+            GroundMovementState = GroundMovementState.Stop;
             yield return new WaitForSeconds(jumpDelay);
-            groundMovementState = GroundMovementState.Jump;
+            GroundMovementState = GroundMovementState.Jump;
         }
+
+        private IEnumerator ArriveAtWaypoint(float arriveDelay)
+        {
+            GroundMovementState = GroundMovementState.Stop;
+            yield return new WaitForSeconds(arriveDelay);
+            if (++waypointIndex > waypoints.Length - 1)
+                waypointIndex = 0;
+
+            currentWaypoint = waypoints[waypointIndex];
+            GroundMovementState = GroundMovementState.Patrol;
+        }
+
+        //private IEnumerator ChaseWaiter(float delay)
+        //{
+        //    yield return new WaitForSeconds(delay);
+        //    GroundMovementState = defaultGroundMovementState;
+        //    hasChased = false;
+        //}
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.tag == "Player")
+            {
+                //GroundMovementState = GroundMovementState.Chase;
+            }
+        }
+
+        //private void OnTriggerExit2D(Collider2D collider)
+        //{
+        //    if (collider.tag == "Player")
+        //    {
+        //        StartCoroutine(ChaseWaiter(2));
+        //    }
+        //}
     }
 }
