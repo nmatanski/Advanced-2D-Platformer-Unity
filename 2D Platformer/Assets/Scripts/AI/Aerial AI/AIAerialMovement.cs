@@ -24,9 +24,36 @@ namespace Platformer.AI
         [SerializeField]
         private bool isAutoTargetingPlayer = true;
 
+        [SerializeField]
+        private LayerMask layerMask;
+
+        [SerializeField]
+        private float dashSpeed = 5f;
+
+        [SerializeField]
+        private float dashDelay = 1f;
+
+        [SerializeField]
+        private float floatUpwardsTime = 2f;
+
+        [SerializeField]
+        private float floatCooldownTime = 4f;
+
+        [SerializeField]
+        private Transform[] waypoints;
+
+        [SerializeField]
+        private float distanceThreshold = .1f;
+
 
         private Rigidbody2D rigidbody;
         private Transform target;
+        private Transform currentWaypoint;
+        private float floatTimer;
+        private float defaultThrust;
+        private int waypointIndex = 0;
+        private bool isFloatingUpwards;
+        private bool isTracking = true;
 
 
         // Start is called before the first frame update
@@ -38,6 +65,9 @@ namespace Platformer.AI
             {
                 target = GameObject.FindGameObjectWithTag("Player").transform;
             }
+
+            floatTimer = floatUpwardsTime;
+            defaultThrust = thrust;
         }
 
         // Update is called once per frame
@@ -55,8 +85,30 @@ namespace Platformer.AI
                     rigidbody.angularVelocity = 0f;
                     break;
                 case AerialMovementState.Dash:
+                    if (isTracking)
+                    {
+                        LookAt(target);
+                    }
+
+                    var hit = Physics2D.Raycast(transform.position, transform.right, 100f, layerMask);
+                    if (hit && hit.collider.tag == "Player" && isTracking)
+                    {
+                        StartCoroutine(Dash(dashDelay, 2 * dashDelay));
+                    }
                     break;
                 case AerialMovementState.Float:
+                    thrust = (isUsingPhysics ? 2.48f : 0.44f) * defaultThrust;
+                    rigidbody.gravityScale = 1f;
+
+                    if (isFloatingUpwards)
+                        Move(Vector3.up);
+
+                    floatTimer -= Time.deltaTime;
+                    if (floatTimer < 0f)
+                    {
+                        floatTimer = isFloatingUpwards ? floatCooldownTime : floatUpwardsTime;
+                        isFloatingUpwards = !isFloatingUpwards;
+                    }
                     break;
                 case AerialMovementState.MoveTowards:
                     MoveTowards(target);
@@ -65,11 +117,27 @@ namespace Platformer.AI
                     Move(transform.right);
                     break;
                 case AerialMovementState.Patrol:
+                    if (!currentWaypoint)
+                        currentWaypoint = waypoints[waypointIndex];
+                    float distance = Vector3.Distance(currentWaypoint.position, transform.position);
+                    if (distance > distanceThreshold)
+                    {
+                        MoveTowards(currentWaypoint);
+                    }
+                    else
+                    {
+                        StartCoroutine(ArriveAtWaypoint());
+                    }
                     break;
                 case AerialMovementState.Animated:
                     break;
                 default:
                     break;
+            }
+
+            if (!aerialMovementState.Equals(AerialMovementState.Float))
+            {
+                thrust = defaultThrust;
             }
         }
 
@@ -81,6 +149,8 @@ namespace Platformer.AI
             }
             else
             {
+                rigidbody.velocity = Vector2.zero;
+                rigidbody.angularDrag = 0f;
                 rigidbody.MovePosition(transform.position + moveDirection * thrust * Time.deltaTime);
             }
         }
@@ -94,9 +164,30 @@ namespace Platformer.AI
         private void LookAt(Transform target)
         {
             var direction = target.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.y) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             var quaternion = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, quaternion, rotationSpeed * Time.deltaTime);
+        }
+
+        private IEnumerator Dash(float delayBeforeDash = 1f, float delayAfterDash = 2f)
+        {
+            isTracking = false;
+            yield return new WaitForSeconds(delayBeforeDash);
+            rigidbody.AddForce(transform.right * dashSpeed, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(delayAfterDash);
+            rigidbody.velocity = Vector2.zero;
+            rigidbody.angularVelocity = 0f;
+            isTracking = true;
+        }
+
+        private IEnumerator ArriveAtWaypoint(float delay = 2f)
+        {
+            aerialMovementState = AerialMovementState.Stop;
+            yield return new WaitForSeconds(delay);
+            if (++waypointIndex > waypoints.Length - 1)
+                waypointIndex = 0;
+            currentWaypoint = waypoints[waypointIndex];
+            aerialMovementState = AerialMovementState.Patrol;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
