@@ -7,7 +7,8 @@
         Jump,
         Patrol,
         Dash,
-        //Chase
+        Chase,
+        Attack
     }
 
     public enum AerialMovementState

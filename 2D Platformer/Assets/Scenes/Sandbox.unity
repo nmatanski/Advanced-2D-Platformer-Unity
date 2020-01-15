@@ -2797,6 +2797,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1291d907205af4b85e5b0150e6ee01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1053388923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2908743668959664078, guid: 0d8feb1602c0374488a8c0840a68d884,
+    type: 3}
+  m_PrefabInstance: {fileID: 1418414565121491339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1053388926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053388923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152450e39208f154295487b36523ada8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundMovementState: 3
+  jumpSpeed: 10
+  moveSpeed: 5
+  gravity: 20
+  jumpDelay: 2
+  arriveDelay: 2
+  canAutoFlipDirection: 1
+  canJumpForward: 1
+  hasStartedFacingRight: 0
+  waypoints:
+  - {fileID: 1998944434}
+  - {fileID: 1993559259}
 --- !u!1 &1059877380
 GameObject:
   m_ObjectHideFlags: 0
@@ -4616,6 +4646,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointOfInterestTriggerEnteredData: {fileID: 0}
   achievementData: {fileID: 11400000, guid: aacd0fa50c7914949a2db03e6ccf9c84, type: 2}
+--- !u!4 &1993559259 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1418414565591218705, guid: 0d8feb1602c0374488a8c0840a68d884,
+    type: 3}
+  m_PrefabInstance: {fileID: 1418414565121491339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1998944434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1418414565924201969, guid: 0d8feb1602c0374488a8c0840a68d884,
+    type: 3}
+  m_PrefabInstance: {fileID: 1418414565121491339}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2020717599
 GameObject:
   m_ObjectHideFlags: 0
@@ -5137,7 +5179,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1418414565591218705, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: waypoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: groundMovementState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: gravity
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: jumpDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: arriveDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: hasStartedFacingRight
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d8feb1602c0374488a8c0840a68d884, type: 3}
 --- !u!1001 &2415736221531024022
 PrefabInstance:
