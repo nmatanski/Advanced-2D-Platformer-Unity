@@ -45,12 +45,22 @@ namespace Platformer.AI
         [SerializeField]
         private float distanceThreshold = .1f;
 
+        [SerializeField]
+        private bool isRotatingToAttachPoint;
+
+        [SerializeField]
+        private bool isRotatinToPlayer;
+
+        [SerializeField]
+        private Transform attachPoint;
+
 
         private Rigidbody2D rigidbody;
         private Transform target;
         private Transform currentWaypoint;
         private float floatTimer;
         private float defaultThrust;
+        private float defaultDistanceThreshold;
         private int waypointIndex = 0;
         private bool isFloatingUpwards;
         private bool isTracking = true;
@@ -68,6 +78,7 @@ namespace Platformer.AI
 
             floatTimer = floatUpwardsTime;
             defaultThrust = thrust;
+            defaultDistanceThreshold = distanceThreshold;
         }
 
         // Update is called once per frame
@@ -130,6 +141,38 @@ namespace Platformer.AI
                     }
                     break;
                 case AerialMovementState.Animated:
+                    if (attachPoint)
+                    {
+                        transform.parent = null;
+                        float distanceToAttachPoint = Vector3.Distance(attachPoint.position, transform.position);
+                        if (distanceToAttachPoint > distanceThreshold)
+                        {
+                            MoveTowards(attachPoint);
+                        }
+                        else
+                        {
+                            rigidbody.velocity = Vector2.zero;
+                            rigidbody.angularVelocity = 0f;
+                            transform.position = attachPoint.position;
+                            if (isRotatingToAttachPoint)
+                            {
+                                transform.rotation = attachPoint.rotation;
+                            }
+                            else if (isRotatinToPlayer)
+                            {
+                                LookAt(target);
+                            }
+                            else
+                            {
+                                transform.rotation = Quaternion.identity;
+                            }
+                        }
+                        distanceThreshold = distanceToAttachPoint < 10 ? 50 * defaultDistanceThreshold : defaultDistanceThreshold;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("No attachment point selected.");
+                    }
                     break;
                 default:
                     break;
