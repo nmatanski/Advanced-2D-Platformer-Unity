@@ -10,6 +10,14 @@ namespace Platformer.Managers
 
         public int MaxHealth { get; private set; }
 
+        [SerializeField]
+        private SelectedObject lastSelectedObject;
+        public SelectedObject LastSelectedObject
+        {
+            get { return lastSelectedObject; }
+            set { lastSelectedObject = value; }
+        }
+
 
         public void Startup()
         {
@@ -21,6 +29,15 @@ namespace Platformer.Managers
             Status = ManagerStatus.Started;
             ///long-runing startups tasks here
         }
+
+        private void Update()
+        {
+            if (!LastSelectedObject.HasSelectedObject)
+            {
+                LastSelectedObject.SelectedGameObject = null;
+            }
+        }
+
 
         /// <param name="value">Could be both positive and negative value</param>
         public void AddHealth(int value)
