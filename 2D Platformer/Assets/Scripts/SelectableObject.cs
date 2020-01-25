@@ -1,4 +1,5 @@
-﻿using Platformer.Managers;
+﻿using DG.Tweening;
+using Platformer.Managers;
 using UnityEngine;
 
 namespace Platformer
@@ -7,14 +8,6 @@ namespace Platformer
     {
         [SerializeField]
         private Material selectedMaterial;
-
-        [SerializeField]
-        private bool isSelected = false;
-        public bool IsSelected
-        {
-            get { return isSelected; }
-            private set { isSelected = value; }
-        }
 
         [SerializeField]
         private Color selectedColor;
@@ -26,9 +19,13 @@ namespace Platformer
         [SerializeField]
         private bool isMaxThick = false;
 
-
         private GameObject selectedObject;
+        private GameObject hoveredObject;
         private PlayerManager playerManager;
+
+        public bool IsSelected { get; private set; } = false;
+
+        public bool IsHovered { get; private set; } = false;
 
 
         private void Start()
@@ -36,38 +33,62 @@ namespace Platformer
             playerManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
         }
 
-        // Update is called once per frame
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-                if (hit.collider && hit.collider.gameObject == gameObject)
+            if (hit.collider && hit.collider.gameObject == gameObject)
+            {
+                hoveredObject = gameObject;
+
+                if (Input.GetMouseButtonDown(0))
                 {
-                    selectedObject = hit.collider.gameObject;
+                    selectedObject = gameObject;
                 }
-                else
+            }
+            else
+            {
+                hoveredObject = null;
+
+                if (Input.GetMouseButtonDown(0))
                 {
                     selectedObject = null;
                 }
             }
 
-            if (selectedObject)
+
+            if (hoveredObject)
             {
-                playerManager.LastSelectedObject.SelectedGameObject = gameObject;
-                IsSelected = true;
-                outlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1);
-                selectedMaterial.SetFloat("_OutlineThickness", outlineThickness);
+                IsHovered = true;
                 selectedMaterial.SetColor("_OutlineColour", selectedColor);
+
+                var tempOutlineThickness = outlineThickness / 2f;
+
+                if (selectedObject)
+                {
+                    playerManager.LastSelectedObject.SelectedGameObject = selectedObject;
+                    IsSelected = true;
+
+                    tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1);
+                    selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", .4f).SetEase(Ease.OutCubic);
+                }
+                else
+                {
+                    selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", .1f);
+                }
             }
             else
+            {
+                IsHovered = false;
+            }
+
+            if (!selectedObject)
             {
                 IsSelected = false;
             }
 
-            selectedMaterial.SetInt("_ShowOutline", IsSelected ? 1 : 0);
+            selectedMaterial.SetInt("_ShowOutline", IsHovered || IsSelected ? 1 : 0);
         }
     }
 }
