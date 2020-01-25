@@ -6058,6 +6058,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6098664093678605611, guid: b5511fef30fcb7640a804d06546be0f5,
+        type: 3}
+      propertyPath: hoverOutlineThicknessDecreaseMultiplier
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098664093678605611, guid: b5511fef30fcb7640a804d06546be0f5,
+        type: 3}
+      propertyPath: isMaxThick
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5511fef30fcb7640a804d06546be0f5, type: 3}
 --- !u!1001 &8475495114184272751

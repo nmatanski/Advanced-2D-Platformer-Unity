@@ -17,6 +17,10 @@ namespace Platformer
         private float outlineThickness = 1f;
 
         [SerializeField]
+        [Range(0, 100)]
+        private float hoverOutlineThicknessDecreaseMultiplier = 50f;
+
+        [SerializeField]
         private bool isMaxThick = false;
 
         private GameObject selectedObject;
@@ -63,7 +67,7 @@ namespace Platformer
                 IsHovered = true;
                 selectedMaterial.SetColor("_OutlineColour", selectedColor);
 
-                var tempOutlineThickness = outlineThickness / 2f;
+                var tempOutlineThickness = (isMaxThick ? 6.3f : outlineThickness) * hoverOutlineThicknessDecreaseMultiplier / 100f;
 
                 if (selectedObject)
                 {
@@ -71,7 +75,9 @@ namespace Platformer
                     IsSelected = true;
 
                     tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1);
-                    selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", .4f).SetEase(Ease.OutCubic);
+                    float duration = isMaxThick ? .3f : .4f;
+
+                    selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", duration).SetEase(Ease.OutCubic);
                 }
                 else
                 {
@@ -88,7 +94,13 @@ namespace Platformer
                 IsSelected = false;
             }
 
-            selectedMaterial.SetInt("_ShowOutline", IsHovered || IsSelected ? 1 : 0);
+            bool hasOutline = IsHovered || IsSelected;
+            if (!hasOutline)
+            {
+                selectedMaterial.DOFloat(0, "_OutlineThickness", .05f);
+            }
+
+            selectedMaterial.SetInt("_ShowOutline", hasOutline ? 1 : 0);
         }
     }
 }
