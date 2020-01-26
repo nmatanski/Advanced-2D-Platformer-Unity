@@ -253,6 +253,8 @@ namespace Platformer.Player
         //private variables
         private GameObject temporaryOneWayPlatform;
         private GameObject temporaryMovingPlatform;
+        private GameObject gliderGameObject;
+        private TextMeshProUGUI gliderChargesTextUI;
         private Vector3 temporaryMovingPlatformVelocity = Vector3.zero;
         ///TODO: check this
         private Vector3 moveDirection = Vector3.zero;
@@ -290,6 +292,8 @@ namespace Platformer.Player
             defaultJumpSpeed = JumpSpeed;
             canGroundSlamDefault = CanGroundSlam;
             dashPressedRemember = dashCooldown;
+            gliderGameObject = GameObject.FindGameObjectWithTag("Glider");
+            gliderChargesTextUI = GameObject.FindGameObjectWithTag("GliderChargesText").GetComponent<TextMeshProUGUI>();
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
@@ -853,7 +857,7 @@ namespace Platformer.Player
 
                     gravityType = glideGravity;
 
-                    EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"));
+                    EnableSpriteOfObject(gliderGameObject);
 
                     remainingGlideTime -= Time.deltaTime; ///TODO: Visualize glider remaining time in UI
                 }
@@ -867,7 +871,7 @@ namespace Platformer.Player
 
                         if (remainingGlideTime <= 0)
                         {
-                            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+                            EnableSpriteOfObject(gliderGameObject, false);
                         }
                     }
 
@@ -880,7 +884,7 @@ namespace Platformer.Player
                 gravityType = 0;
                 ApplyGravity(gravity, groundSlamSpeed);
                 IsGroundSlamming = true;
-                EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+                EnableSpriteOfObject(gliderGameObject, false);
             }
             else
             {
@@ -888,7 +892,7 @@ namespace Platformer.Player
                 hasStartedGliding = true;
 
                 gravityType = gravity;
-                EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+                EnableSpriteOfObject(gliderGameObject, false);
             }
 
             if (gravityType != 0)
@@ -923,7 +927,7 @@ namespace Platformer.Player
 
         private void UpdateGliderInfoUI()
         {
-            GameObject.FindGameObjectWithTag("GliderChargesText").GetComponent<TextMeshProUGUI>().text = glideCharges.ToString() + " gliders (" + (int)((remainingGlideTime < 0 ? 0 : remainingGlideTime) * 100 / 2) + "%)";
+            gliderChargesTextUI.text = glideCharges.ToString() + " gliders (" + (int)((remainingGlideTime < 0 ? 0 : remainingGlideTime) * 100 / 2) + "%)";
         }
 
         private IEnumerator WallJumpRecoveryTimer(float waitTime)
@@ -1001,9 +1005,9 @@ namespace Platformer.Player
 
         private IEnumerator EquipGliderFX(float time)
         {
-            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"));
+            EnableSpriteOfObject(gliderGameObject);
             yield return new WaitForSeconds(time);
-            EnableSpriteOfObject(GameObject.FindGameObjectWithTag("Glider"), false);
+            EnableSpriteOfObject(gliderGameObject, false);
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
