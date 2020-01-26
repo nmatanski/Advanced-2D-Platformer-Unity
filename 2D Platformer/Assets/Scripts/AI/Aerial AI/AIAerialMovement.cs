@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Platformer.AI
@@ -14,6 +13,9 @@ namespace Platformer.AI
 
         [SerializeField]
         private bool isUsingPhysics = true;
+
+        [SerializeField]
+        private bool isAlwaysUp = true;
 
         [SerializeField]
         private float thrust = 10f;
@@ -55,6 +57,7 @@ namespace Platformer.AI
         private Transform attachPoint;
 
 
+        private SpriteRenderer spriteRenderer;
         private Rigidbody2D rigidbody;
         private Transform target;
         private Transform currentWaypoint;
@@ -64,11 +67,13 @@ namespace Platformer.AI
         private int waypointIndex = 0;
         private bool isFloatingUpwards;
         private bool isTracking = true;
+        private bool isMoving = true;
 
 
         // Start is called before the first frame update
         private void Start()
         {
+            spriteRenderer = GetComponent<SpriteRenderer>();
             rigidbody = gameObject.GetComponent<Rigidbody2D>();
 
             if (isAutoTargetingPlayer)
@@ -81,19 +86,23 @@ namespace Platformer.AI
             defaultDistanceThreshold = distanceThreshold;
         }
 
-        // Update is called once per frame
-        private void Update()
-        {
-
-        }
-
         private void FixedUpdate()
         {
+            if (target && isAlwaysUp)
+            {
+                var direction = transform.position - target.position;
+                spriteRenderer.flipY = direction.x > 0;
+            }
+
             switch (aerialMovementState)
             {
                 case AerialMovementState.Stop:
-                    rigidbody.velocity = Vector2.zero;
-                    rigidbody.angularVelocity = 0f;
+                    if (isMoving)
+                    {
+                        rigidbody.velocity = Vector2.zero;
+                        rigidbody.angularVelocity = 0f;
+                        isMoving = false;
+                    }
                     break;
                 case AerialMovementState.Dash:
                     if (isTracking)
@@ -235,7 +244,31 @@ namespace Platformer.AI
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-
+            switch (collisionBehaviour)
+            {
+                case CollisionBehaviour.None:
+                    return;
+                case CollisionBehaviour.Rebound:
+                    var reflectedPosition = Vector2.Reflect(transform.right, collision.contacts[0].normal);
+                    rigidbody.velocity = reflectedPosition.normalized * thrust;
+                    Vector3 direction = rigidbody.velocity;
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    rigidbody.freezeRotation = false;
+                    rigidbody.MoveRotation(angle);
+                    rigidbody.angularVelocity = 0f;
+                    print("collided and rebound, angle: " + angle);
+                    break;
+                case CollisionBehaviour.Fall:
+                    rigidbody.gravityScale = 9.81f;
+                    aerialMovementState = AerialMovementState.Stop;
+                    break;
+                case CollisionBehaviour.Explode:
+                    Destroy(gameObject); ///TODO: Add Explode effect/particles + change this with object pooling
+                    break;
+                case CollisionBehaviour.Disappear:
+                    Destroy(gameObject); ///TODO: Change this with object pooling
+                    break;
+            }
         }
     }
 }

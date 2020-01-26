@@ -6430,6 +6430,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flying Enemy Container
       objectReference: {fileID: 0}
+    - target: {fileID: 8815697545131973792, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 8815697545131973793, guid: 44b99e640ca13ef4496f74b9de52371a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6483,6 +6488,86 @@ PrefabInstance:
     - target: {fileID: 8815697545131973793, guid: 44b99e640ca13ef4496f74b9de52371a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697545341101381, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161498, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161498, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.1722204
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161498, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9850584
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161498, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -19.834002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697545278382833, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697545359624444, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161503, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546198787914, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161500, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161500, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161500, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161500, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: aerialMovementState
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: collisionBehaviour
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
+        type: 3}
+      propertyPath: isUsingPhysics
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
