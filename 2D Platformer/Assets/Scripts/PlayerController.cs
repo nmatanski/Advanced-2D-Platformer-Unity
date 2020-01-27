@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using Prime31;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Prime31;
 using static Prime31.CharacterController2D;
 
 
@@ -300,6 +299,11 @@ namespace Platformer.Player
 
         private void Update()
         {
+            //if (IsDashing)
+            //{
+            //    return;
+            //}
+
             ///TODO: temporarily
             if (transform.position.y < -80)
             {
@@ -407,6 +411,9 @@ namespace Platformer.Player
                 AdjustEffector();
             }
 
+            ///TODO: test
+            //TryDash();
+            ///TODO: test
 
             CharacterController.move(moveDirection * Time.deltaTime);
             Flags = CharacterController.collisionState;
@@ -470,6 +477,15 @@ namespace Platformer.Player
             character.transform.localPosition = Vector3.zero;
             ///
         }
+
+        //private void FixedUpdate()
+        //{
+        //    TryDash();
+        //    if (IsDashing)
+        //    {
+        //        CharacterController.move(moveDirection * Time.deltaTime);
+        //    }
+        //}
 
         private void UpdateAnimator()
         {
@@ -703,6 +719,11 @@ namespace Platformer.Player
         private void ActivateJump(float speed, bool isDefaultJump = true)
         {
             if (isOnOneWayPlatform && isDefaultJump)
+            {
+                return;
+            }
+
+            if (IsDashing)
             {
                 return;
             }
@@ -956,17 +977,28 @@ namespace Platformer.Player
 
         private IEnumerator Dash(float dashTime)
         {
+            if (IsGrounded)
+            {
+                yield break;
+            }
+
             var defaultSpeed = walkSpeed;
             IsDashing = true;
 
-            if (moveDirection.x == 0)
-            {
-                CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
-            }
-            else
-            {
-                walkSpeed = dashSpeed;
-            }
+            // if (moveDirection.x == 0)
+            // {
+            CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
+            walkSpeed = 0;
+            // }
+            //else
+            //{
+            //    walkSpeed = dashSpeed;
+            //}
+
+            ///TODO: cut jump test 
+            moveDirection.y = 0;
+            //JumpSpeed = 0;
+            ///TODO: cut jump test
 
             yield return new WaitForSeconds(dashTime);
 
