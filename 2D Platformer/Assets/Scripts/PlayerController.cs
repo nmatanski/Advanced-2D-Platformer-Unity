@@ -511,7 +511,7 @@ namespace Platformer.Player
             {
                 ///TODO: temporary fix while flipping and overlapping with walls
                 character.transform.localPosition = Vector3.zero;
-                transform.position += new Vector3((IsFacingRight ? 1 : -1) * 0.28f, (float)0, (float)0);
+                transform.position += new Vector3((IsFacingRight ? 1 : -1) * 0.28f, 0, 0);
                 ///
             }
         }
@@ -961,7 +961,7 @@ namespace Platformer.Player
 
             if (moveDirection.x == 0)
             {
-                CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, (float)0);
+                CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
             }
             else
             {

@@ -256,7 +256,6 @@ namespace Platformer.AI
                     rigidbody.freezeRotation = false;
                     rigidbody.MoveRotation(angle);
                     rigidbody.angularVelocity = 0f;
-                    print("collided and rebound, angle: " + angle);
                     break;
                 case CollisionBehaviour.Fall:
                     rigidbody.gravityScale = 9.81f;

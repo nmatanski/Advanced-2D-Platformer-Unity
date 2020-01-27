@@ -1,14 +1,74 @@
-﻿using UnityEngine;
+﻿using Anima2D;
+using Platformer.Player;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Platformer.Managers
 {
     public class PlayerManager : MonoBehaviour, IManager
     {
         public ManagerStatus Status { get; private set; }
+        public Vector3 LastAttackDirection { get; set; }
 
-        public int Health { get; private set; }
+        [SerializeField]
+        private int health;
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
 
-        public int MaxHealth { get; private set; }
+        [SerializeField]
+        private int maxHealth = 100;
+        public int MaxHealth
+        {
+            get { return maxHealth; }
+            private set { maxHealth = value; }
+        }
+
+
+        [SerializeField]
+        private int gold;
+
+        public int Gold
+        {
+            get { return gold; }
+            set { gold = value; }
+        }
+
+        [SerializeField]
+        private bool isDead = false;
+        public bool IsDead
+        {
+            get { return isDead; }
+            private set { isDead = value; }
+        }
+
+        [SerializeField]
+        private bool isInvulnerable;
+        public bool IsInvulnerable
+        {
+            get { return isInvulnerable; }
+            private set { isInvulnerable = value; }
+        }
+
+        [SerializeField]
+        private float invulnerabilityDuration = 1f;
+
+        [SerializeField]
+        private Color invulnerabilityColorAndAlpha = new Color(1f, 1f, 1f, 0.25f);
+
+        [SerializeField]
+        private int invulnerabilityFlickerCount = 10;
+
+        [SerializeField]
+        private GameObject deathEffect;
+        public GameObject DeathEffect
+        {
+            get { return deathEffect; }
+            private set { deathEffect = value; }
+        }
 
         [SerializeField]
         private SelectedObject lastSelectedObject;
@@ -19,15 +79,33 @@ namespace Platformer.Managers
         }
 
 
+        private PlayerController playerController;
+        private SpriteMeshInstance[] playerSprites;
+        private GameObject playerGO;
+        public Rigidbody2D playerRigidBody;
+        private BoxCollider2D playerCollider;
+        private Scene scene;
+
+
         public void Startup()
         {
             Debug.Log("Player Manager is starting...");
 
-            Health = 100; ///TODO: load this from savefile
-            MaxHealth = 100; ///TODO: load this from savefile
+            Health = MaxHealth;
+            //Health = 100; ///TODO: load this from savefile
+            //MaxHealth = 100; ///TODO: load this from savefile
 
             Status = ManagerStatus.Started;
+
             ///long-runing startups tasks here
+
+            playerGO = GameObject.FindGameObjectWithTag("Player");
+            playerController = playerGO.GetComponent<PlayerController>();
+            playerCollider = playerGO.GetComponent<BoxCollider2D>();
+            scene = SceneManager.GetActiveScene();
+            playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
+            ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
+            playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
         }
 
         private void Update()
@@ -42,9 +120,71 @@ namespace Platformer.Managers
         /// <param name="value">Could be both positive and negative value</param>
         public void AddHealth(int value)
         {
-            Health = Mathf.Clamp(Health + value, 0, MaxHealth);
+            if (value < 0) // taking damage
+            {
+                if (!IsInvulnerable)
+                {
+                    Health = Mathf.Clamp(Health + value, 0, MaxHealth);
+                }
+
+                if (Health == 0 && !IsDead)
+                {
+                    IsDead = true;
+                }
+                else if (Health != 0)
+                {
+                    ///TODO: Play sound of taking damage
+                    StartCoroutine(MakeInvulnerable(invulnerabilityDuration, invulnerabilityFlickerCount));
+                }
+            }
+            else if (value > 0) // healing
+            {
+                Health = Mathf.Clamp(Health + value, 0, MaxHealth);
+                ///TODO: Play sound of healing
+                ///TODO: Play healing effect
+            }
 
             Debug.Log($"Health: {Health}/{MaxHealth}");
+        }
+
+        /// <param name="value">Could be both positive and negative value</param>
+        public void AddGold(int value)
+        {
+            Gold = Mathf.Clamp(Gold + value, 0, int.MaxValue);
+
+            Debug.Log($"Gold: {Gold}");
+        }
+
+        public void KillPlayer()
+        {
+
+        }
+
+
+        private IEnumerator MakeInvulnerable(float invulnerabilityDuration, int flickerCount = 10)
+        {
+            IsInvulnerable = true;
+
+            ///TODO: make better knockback effect
+            playerRigidBody.MovePosition(playerRigidBody.position + new Vector2(Mathf.Sign(LastAttackDirection.x) * .25f, .125f));
+
+            for (int i = 0; i < flickerCount; i++)
+            {
+                ChangeSpritesColor(playerSprites, invulnerabilityColorAndAlpha);
+                yield return new WaitForSeconds(invulnerabilityDuration / (2 * flickerCount));
+                ChangeSpritesColor(playerSprites, Color.white); ///TODO: get the original color of the sprites and remove it from the Startup
+                yield return new WaitForSeconds(invulnerabilityDuration / (2 * flickerCount));
+            }
+
+            IsInvulnerable = false;
+        }
+
+        private void ChangeSpritesColor(SpriteMeshInstance[] sprites, Color color)
+        {
+            foreach (var sprite in sprites)
+            {
+                sprite.color = color;
+            }
         }
     }
 }

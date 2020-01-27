@@ -1866,6 +1866,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &796082414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6086298965239100550, guid: 76b26d457094b6c44bd254063d092990,
+    type: 3}
+  m_PrefabInstance: {fileID: 6086298965285987303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &796082420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796082414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb508551808e7a349802f56e22150411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  isCollider: 1
 --- !u!1 &798018042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2649,7 @@ GameObject:
   - component: {fileID: 1052158679}
   - component: {fileID: 1052158676}
   - component: {fileID: 1052158675}
+  - component: {fileID: 1052158680}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Managers
@@ -2673,8 +2694,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2f8833bde931a4e904e6f5e67da088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1000
+  maxHealth: 1000
+  gold: 0
+  isDead: 0
+  isInvulnerable: 0
+  invulnerabilityDuration: 0.2
+  invulnerabilityColorAndAlpha: {r: 1, g: 0.55, b: 0.61153847, a: 0.29803923}
+  invulnerabilityFlickerCount: 4
+  deathEffect: {fileID: 0}
   lastSelectedObject:
     selectedGameObject: {fileID: 0}
+  playerRigidBody: {fileID: 0}
 --- !u!4 &1052158678
 Transform:
   m_ObjectHideFlags: 0
@@ -2702,6 +2733,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1291d907205af4b85e5b0150e6ee01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1052158680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052158674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5451333988c1e9248a5faa09700f576c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newTime: 0.05
+  restoreSpeed: 5
+  delay: 0.3
 --- !u!1 &1053388923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2908743668959664078, guid: 0d8feb1602c0374488a8c0840a68d884,
@@ -2732,6 +2778,20 @@ MonoBehaviour:
   waypoints:
   - {fileID: 1998944434}
   - {fileID: 1993559259}
+--- !u!114 &1053388931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053388923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb508551808e7a349802f56e22150411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  isCollider: 1
 --- !u!1 &1059877380
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3751,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1506574608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8815697546172161503, guid: 44b99e640ca13ef4496f74b9de52371a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8815697546416577174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1506574614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506574608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb508551808e7a349802f56e22150411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  isCollider: 1
 --- !u!1 &1508054827
 GameObject:
   m_ObjectHideFlags: 0
@@ -5147,6 +5227,15 @@ PrefabInstance:
       propertyPath: hasStartedFacingRight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2908743668959664065, guid: 0d8feb1602c0374488a8c0840a68d884,
+        type: 3}
+      propertyPath: m_UseFullKinematicContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083854991, guid: 0d8feb1602c0374488a8c0840a68d884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2908743668959664077, guid: 0d8feb1602c0374488a8c0840a68d884, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d8feb1602c0374488a8c0840a68d884, type: 3}
@@ -6347,6 +6436,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8475495114544363460, guid: 480f63dca011d7a43bfe293d7cff7a3c,
+        type: 3}
+      propertyPath: triggerMask.m_Bits
+      value: 721409
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 480f63dca011d7a43bfe293d7cff7a3c, type: 3}
 --- !u!1001 &8794529491304799436
@@ -6558,12 +6652,12 @@ PrefabInstance:
     - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
         type: 3}
       propertyPath: aerialMovementState
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
         type: 3}
       propertyPath: collisionBehaviour
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8815697546172161496, guid: 44b99e640ca13ef4496f74b9de52371a,
         type: 3}
