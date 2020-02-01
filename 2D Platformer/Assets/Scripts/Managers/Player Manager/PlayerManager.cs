@@ -71,6 +71,9 @@ namespace Platformer.Managers
         }
 
         [SerializeField]
+        private float respawnDelay = 3f;
+
+        [SerializeField]
         private SelectedObject lastSelectedObject;
         public SelectedObject LastSelectedObject
         {
@@ -82,7 +85,7 @@ namespace Platformer.Managers
         private PlayerController playerController;
         private SpriteMeshInstance[] playerSprites;
         private GameObject playerGO;
-        public Rigidbody2D playerRigidBody;
+        private Rigidbody2D playerRigidBody;
         private BoxCollider2D playerCollider;
         private Scene scene;
 
@@ -130,6 +133,7 @@ namespace Platformer.Managers
                 if (Health == 0 && !IsDead)
                 {
                     IsDead = true;
+                    KillPlayer();
                 }
                 else if (Health != 0)
                 {
@@ -157,9 +161,24 @@ namespace Platformer.Managers
 
         public void KillPlayer()
         {
+            ///TODO: player death effect
+            foreach (var sprite in playerSprites)
+            {
+                sprite.enabled = false;
+            }
+            playerController.enabled = false;
+            playerCollider.enabled = false;
 
+            StartCoroutine(RestartLevel(respawnDelay));
         }
 
+        private void ChangeSpritesColor(SpriteMeshInstance[] sprites, Color color)
+        {
+            foreach (var sprite in sprites)
+            {
+                sprite.color = color;
+            }
+        }
 
         private IEnumerator MakeInvulnerable(float invulnerabilityDuration, int flickerCount = 10)
         {
@@ -179,12 +198,13 @@ namespace Platformer.Managers
             IsInvulnerable = false;
         }
 
-        private void ChangeSpritesColor(SpriteMeshInstance[] sprites, Color color)
+        private IEnumerator RestartLevel(float respawnDelay)
         {
-            foreach (var sprite in sprites)
-            {
-                sprite.color = color;
-            }
+            ///TODO: death screen or transition for restarting the level
+            yield return new WaitForSeconds(respawnDelay);
+            SceneManager.LoadScene(scene.name);
+            IsDead = false;
+            health = MaxHealth;
         }
     }
 }

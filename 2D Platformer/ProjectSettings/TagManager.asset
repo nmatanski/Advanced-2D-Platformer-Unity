@@ -53,3 +53,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Platform
+    uniqueID: 1175100991
+    locked: 0
+  - name: SelectableObject
+    uniqueID: 1567321761
+    locked: 0
+  - name: Effector
+    uniqueID: 1753454143
+    locked: 0
+  - name: NoLight
+    uniqueID: 16285069
+    locked: 0
+  - name: GroundEnemy
+    uniqueID: 3953612857
+    locked: 0
+  - name: AerialEnemy
+    uniqueID: 2812658325
+    locked: 0

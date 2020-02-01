@@ -23,6 +23,7 @@ namespace Platformer
         [SerializeField]
         private bool isMaxThick = false;
 
+
         private GameObject selectedObject;
         private GameObject hoveredObject;
         private PlayerManager playerManager;

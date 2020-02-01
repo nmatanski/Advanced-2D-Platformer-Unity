@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Platformer.Managers;
+using System.Collections;
 using UnityEngine;
 
 namespace Platformer.AI
@@ -57,6 +58,7 @@ namespace Platformer.AI
         private Transform attachPoint;
 
 
+        private PlayerManager playerStatus;
         private SpriteRenderer spriteRenderer;
         private Rigidbody2D rigidbody;
         private Transform target;
@@ -73,6 +75,7 @@ namespace Platformer.AI
         // Start is called before the first frame update
         private void Start()
         {
+            playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             rigidbody = gameObject.GetComponent<Rigidbody2D>();
 
@@ -88,6 +91,11 @@ namespace Platformer.AI
 
         private void FixedUpdate()
         {
+            if (playerStatus.IsDead)
+            {
+                return;
+            }
+
             if (target && isAlwaysUp)
             {
                 var direction = transform.position - target.position;
