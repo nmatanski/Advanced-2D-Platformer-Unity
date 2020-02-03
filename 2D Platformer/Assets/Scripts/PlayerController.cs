@@ -273,6 +273,7 @@ namespace Platformer.Player
         private float defaultJumpSpeed;
         private float jumpPadSpeed;
         private float tempJumpSpeed;
+        private float defaultWalkSpeed;
         private bool wasLastJumpLeft;
         private bool hasStartedGliding;
         private bool isGliderEquipped = true;
@@ -293,6 +294,8 @@ namespace Platformer.Player
             dashPressedRemember = dashCooldown;
             gliderGameObject = GameObject.FindGameObjectWithTag("Glider");
             gliderChargesTextUI = GameObject.FindGameObjectWithTag("GliderChargesText").GetComponent<TextMeshProUGUI>();
+
+            defaultWalkSpeed = walkSpeed;
 
             ResetTimer(ref remainingGlideTime, glideDurationCapacity);
         }
@@ -558,7 +561,8 @@ namespace Platformer.Player
             }
 
             moveDirection.x = Input.GetAxis("Horizontal");
-            var tempSpeed = IsCrouchWalking ? crouchWalkSpeed : walkSpeed;
+            var tempSpeed = IsCrouchWalking ? crouchWalkSpeed : defaultWalkSpeed;
+            tempSpeed = IsDashing ? dashSpeed : defaultWalkSpeed;
             moveDirection.x *= tempSpeed * Mathf.Pow(1f - horizontalDamping, Time.deltaTime * 10f);
         }
 
@@ -982,13 +986,15 @@ namespace Platformer.Player
                 yield break;
             }
 
-            var defaultSpeed = walkSpeed;
+            var defaultSpeed = defaultWalkSpeed;
             IsDashing = true;
 
             // if (moveDirection.x == 0)
             // {
-            CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
-            walkSpeed = 0;
+            //CharacterController.rigidBody2D.velocity = new Vector2((IsFacingRight ? Vector2.right : Vector2.left).x * dashSpeed, 0);
+            walkSpeed = dashSpeed;
+            defaultWalkSpeed = dashSpeed;
+            moveDirection.x = Mathf.Sign(Input.GetAxis("Horizontal")) * defaultWalkSpeed;
             // }
             //else
             //{
@@ -1002,7 +1008,8 @@ namespace Platformer.Player
 
             yield return new WaitForSeconds(dashTime);
 
-            walkSpeed = defaultSpeed;
+            defaultWalkSpeed = defaultSpeed;
+            walkSpeed = defaultWalkSpeed;
             CharacterController.rigidBody2D.velocity = Vector2.zero;
             IsDashing = false;
         }
