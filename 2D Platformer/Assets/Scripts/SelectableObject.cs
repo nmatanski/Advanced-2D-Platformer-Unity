@@ -6,14 +6,13 @@ namespace Platformer
 {
     public class SelectableObject : MonoBehaviour
     {
-        [SerializeField]
         private Material selectedMaterial;
 
         [SerializeField]
         private Color selectedColor;
 
         [SerializeField]
-        [Range(0, 1)]
+        //[Range(0, 1)]
         private float outlineThickness = 1f;
 
         [SerializeField]
@@ -36,6 +35,7 @@ namespace Platformer
         private void Start()
         {
             playerManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            selectedMaterial = GetComponent<SpriteRenderer>().material;
         }
 
         private void Update()
@@ -75,7 +75,7 @@ namespace Platformer
                     playerManager.LastSelectedObject.SelectedGameObject = selectedObject;
                     IsSelected = true;
 
-                    tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1);
+                    tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1000);
                     float duration = isMaxThick ? .3f : .4f;
 
                     selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", duration).SetEase(Ease.OutCubic);
