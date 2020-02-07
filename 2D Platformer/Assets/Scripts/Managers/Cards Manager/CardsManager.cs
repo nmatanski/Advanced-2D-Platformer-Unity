@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Platformer.Managers
@@ -18,10 +14,9 @@ namespace Platformer.Managers
         {
             Debug.Log("Cards Manager is starting...");
 
-            Deck = new Deck(); ///TODO: Or load from savefile!!!!!
-
-            Status = ManagerStatus.Started;
+            Status = ManagerStatus.Initializing;
             ///long-runing startups tasks here
+            StartCoroutine(LoadAndCache());
         }
 
         public void ResetDeck()
@@ -32,6 +27,21 @@ namespace Platformer.Managers
         public Card DrawCard()
         {
             return Deck.Draw();
+        }
+
+        public IEnumerator LoadAndCache()
+        {
+            yield return StartCoroutine(Load());
+
+            Status = ManagerStatus.Started;
+            Debug.Log(Status);
+        }
+
+        public IEnumerator Load()
+        {
+            Deck = new Deck(); ///TODO: Or load from savefile!!!!!
+
+            yield return null;
         }
     }
 }

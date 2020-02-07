@@ -1,5 +1,6 @@
 ﻿using Anima2D;
 using Platformer.Player;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -98,17 +99,13 @@ namespace Platformer.Managers
             //Health = 100; ///TODO: load this from savefile
             //MaxHealth = 100; ///TODO: load this from savefile
 
-            Status = ManagerStatus.Started;
+            Status = ManagerStatus.Initializing;
 
-            ///long-runing startups tasks here
+            ///long-runing startups tasks here, set Status to Initializing 
 
-            playerGO = GameObject.FindGameObjectWithTag("Player");
-            playerController = playerGO.GetComponent<PlayerController>();
-            playerCollider = playerGO.GetComponent<BoxCollider2D>();
-            scene = SceneManager.GetActiveScene();
-            playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
-            ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
-            playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
+            StartCoroutine(LoadAndCache());
+
+            Debug.Log(Status);
         }
 
         private void Update()
@@ -205,6 +202,27 @@ namespace Platformer.Managers
             SceneManager.LoadScene(scene.name);
             IsDead = false;
             health = MaxHealth;
+        }
+
+        public IEnumerator LoadAndCache()
+        {
+            yield return StartCoroutine(Load());
+
+            Status = ManagerStatus.Started;
+            Debug.Log(Status);
+        }
+
+        public IEnumerator Load()
+        {
+            playerGO = GameObject.FindGameObjectWithTag("Player");
+            playerController = playerGO.GetComponent<PlayerController>();
+            playerCollider = playerGO.GetComponent<BoxCollider2D>();
+            scene = SceneManager.GetActiveScene();
+            playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
+            ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
+            playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
+
+            yield return null;
         }
     }
 }

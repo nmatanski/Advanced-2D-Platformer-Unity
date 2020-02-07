@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Platformer.Achievements;
 using Platformer.Achievements.UI;
 using UnityEngine;
@@ -29,18 +30,9 @@ namespace Platformer.Managers
         {
             Debug.Log("Achievement Manager is starting...");
 
-            ///TODO: remove this at release
-            PlayerPrefs.DeleteAll();
-            AchievementRequirement.OnTriggerEnteredAchievementRequirement += AchievementRequirement_OnTriggerEnteredAchievementRequirement;
-            AchievementRequirement.OnYKeyPressedAchievementRequirement += AchievementRequirement_OnYKeyPressedAchievementRequirement;
-            AchievementRequirement.OnJumpKeyPressedAchievementRequirement += AchievementRequirement_OnJumpKeyPressedAchievementRequirement;
-            AchievementRequirement.OnLeftRightKeysPressedAchievementRequirement += AchievementRequirement_OnLeftRightKeysPressedAchievementRequirement;
-            //AchievementRequirement.OnCollisionEnteredAchievementRequirement += AchievementRequirement_OnCollisionEnteredAchievementRequirement;
-            ///Attach more requirement events here
+            Status = ManagerStatus.Initializing;
 
-            ///
-
-            Status = ManagerStatus.Started;
+            StartCoroutine(LoadAndCache());
         }
 
 
@@ -99,6 +91,31 @@ namespace Platformer.Managers
             PlayerPrefs.Save();
 
             return false;
+        }
+
+        public IEnumerator LoadAndCache()
+        {
+            yield return StartCoroutine(Load());
+
+            Status = ManagerStatus.Started;
+            Debug.Log(Status);
+        }
+
+        public IEnumerator Load()
+        {
+            ///TODO: remove this at release
+            PlayerPrefs.DeleteAll();
+            AchievementRequirement.OnTriggerEnteredAchievementRequirement += AchievementRequirement_OnTriggerEnteredAchievementRequirement;
+            AchievementRequirement.OnYKeyPressedAchievementRequirement += AchievementRequirement_OnYKeyPressedAchievementRequirement;
+            AchievementRequirement.OnJumpKeyPressedAchievementRequirement += AchievementRequirement_OnJumpKeyPressedAchievementRequirement;
+            AchievementRequirement.OnLeftRightKeysPressedAchievementRequirement += AchievementRequirement_OnLeftRightKeysPressedAchievementRequirement;
+            //AchievementRequirement.OnCollisionEnteredAchievementRequirement += AchievementRequirement_OnCollisionEnteredAchievementRequirement;
+            ///Attach more requirement events here
+
+            ///
+
+
+            yield return null;
         }
     }
 }
