@@ -1,24 +1,38 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Platformer.Managers
 {
     [Serializable]
     public class InventoryItem
     {
-        public Item ItemDetails { get; set; }
+        [SerializeField]
+        private Item itemDetails;
+        public Item ItemDetails { get => itemDetails; set => itemDetails = value; }
 
-        public int Quantity { get; set; }
+        [SerializeField]
+        [Range(0, 200)]
+        private int quantity;
+        public int Quantity { get => quantity; set => quantity = value; }
 
-        public bool IsOverflowed { get; set; } = false;
+        [SerializeField]
+        private bool isEquipped;
+        public bool IsEquipped
+        {
+            get { return isEquipped; }
+            set { isEquipped = value && ItemDetails.IsEquippable; }
+        }
+
+        public bool IsOverflowed { get { return Quantity > ItemDetails.MaxStackedCount; } }
 
         public int Overflow { get { return Quantity - ItemDetails.MaxStackedCount; } }
 
 
-        public InventoryItem(Item itemDetails, int quantity, bool isOverflowed)
+        public InventoryItem(Item item, int quantity, bool isEquipped = false)
         {
-            ItemDetails = itemDetails;
+            ItemDetails = item;
             Quantity = quantity;
-            IsOverflowed = isOverflowed;
+            IsEquipped = isEquipped;
         }
     }
 }

@@ -1,18 +1,28 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace Platformer.Managers
 {
-    [Serializable]
-    public class Item
+    [CreateAssetMenu(fileName = "Item", menuName = "Items/Item", order = 1)]
+    public class Item : ScriptableObject
     {
-        public string Name { get; set; }
+        [SerializeField]
+        private new string name;
+        public string Name { get => name; set => name = value; }
 
-        public string NamePlural { get; set; }
+        [SerializeField]
+        private string namePlural;
+        public string NamePlural { get => namePlural; set => namePlural = value; }
 
-        public string Description { get; set; }
+        [SerializeField]
+        private string description;
+        public string Description { get => description; set => description = value; }
 
-        public int MaxStackedCount { get; set; }
+        [SerializeField]
+        private int maxStackedCount;
+        public int MaxStackedCount { get => maxStackedCount; set => maxStackedCount = value; }
 
-        public bool IsEquipped { get; set; }
+        [SerializeField]
+        private bool isEquippable;
+        public bool IsEquippable { get => isEquippable; set => isEquippable = value; }
     }
 }
