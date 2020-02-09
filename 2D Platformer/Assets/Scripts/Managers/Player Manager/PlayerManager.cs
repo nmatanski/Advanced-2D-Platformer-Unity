@@ -2,6 +2,7 @@
 using Platformer.Player;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -89,6 +90,8 @@ namespace Platformer.Managers
         private Rigidbody2D playerRigidBody;
         private BoxCollider2D playerCollider;
         private Scene scene;
+        private InventoryManager inventoryManager;
+        private Managers managers;
 
 
         public void Startup()
@@ -110,15 +113,26 @@ namespace Platformer.Managers
 
         private void Update()
         {
+            if (!managers.AreReady)
+            {
+                Debug.LogWarning("Managers not ready yet.");
+                return;
+            }
+
             if (!LastSelectedObject.HasSelectedObject)
             {
                 LastSelectedObject.SelectedGameObject = null;
             }
+
+            //if (Input.anyKey) // key down for heal?
+            //{
+            //    inventoryManager.UseItem(item?); ///TODO: check if UseItem is returning true or false
+            //}
         }
 
 
         /// <param name="value">Could be both positive and negative value</param>
-        public void AddHealth(int value)
+        public void AddHealth(short value)
         {
             if (value < 0) // taking damage
             {
@@ -221,6 +235,8 @@ namespace Platformer.Managers
             playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
             ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
             playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
+            managers = GetComponent<Managers>();
+            inventoryManager = GetComponent<InventoryManager>();
 
             yield return null;
         }

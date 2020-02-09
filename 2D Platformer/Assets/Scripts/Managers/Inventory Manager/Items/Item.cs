@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Platformer.Managers
+namespace Platformer.Managers.Items
 {
     [CreateAssetMenu(fileName = "Item", menuName = "Items/Item", order = 1)]
     public class Item : ScriptableObject
@@ -22,7 +22,23 @@ namespace Platformer.Managers
         public int MaxStackedCount { get => maxStackedCount; set => maxStackedCount = value; }
 
         [SerializeField]
-        private bool isEquippable;
+        private bool isEquippable = false;
         public bool IsEquippable { get => isEquippable; set => isEquippable = value; }
+
+        [SerializeField]
+        private bool isUsable = false;
+        public bool IsUsable { get => isUsable; set => isUsable = value; }
+
+
+        public virtual void Use(PlayerManager player = null)
+        {
+            if (!IsUsable)
+            {
+                Debug.LogWarning("This item is set to not usable (isUsable=false). No effects have been applied.");
+                return;
+            }
+
+            Debug.Log("You can't use the default Item type. No effects applied.");
+        }
     }
 }

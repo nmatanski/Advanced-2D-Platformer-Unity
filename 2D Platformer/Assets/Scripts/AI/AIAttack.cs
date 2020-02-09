@@ -6,7 +6,7 @@ namespace Platformer.AI
     public class AIAttack : MonoBehaviour
     {
         [SerializeField]
-        private int attackDamage = 10;
+        private short attackDamage = 10;
 
         [SerializeField]
         private bool isCollider = true;
@@ -24,7 +24,7 @@ namespace Platformer.AI
         {
             if (collision.gameObject.CompareTag("Player") && isCollider)
             {
-                playerStatus.AddHealth(-attackDamage);
+                playerStatus.AddHealth((short)-attackDamage);
 
                 playerStatus.GetComponent<ModifyTime>().StopTime();
                 playerStatus.LastAttackDirection = collision.gameObject.transform.position - transform.position;
@@ -35,7 +35,7 @@ namespace Platformer.AI
         {
             if (collision.gameObject.CompareTag("Player") && !isCollider)
             {
-                playerStatus.AddHealth(-attackDamage);
+                playerStatus.AddHealth((short)-attackDamage);
 
                 playerStatus.GetComponent<ModifyTime>().StopTime();
                 playerStatus.LastAttackDirection = collision.gameObject.transform.position - transform.position;

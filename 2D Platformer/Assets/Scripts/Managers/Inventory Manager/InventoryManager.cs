@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Platformer.Managers.Items;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Platformer.Managers
         [SerializeField]
         private List<InventoryItem> items;
 
+        private PlayerManager player;
+
 
         public void Startup()
         {
@@ -40,7 +43,11 @@ namespace Platformer.Managers
 
         public bool CollectItem(Item item, int quantity = 1) // to backpack
         {
-            ///TODO: check if enough backpack slots and return false
+            if (item == null)
+            {
+                Debug.LogWarning("Error: CollectItem(null).");
+                return false;
+            }
 
             var backpackInventoryItem = new InventoryItem(item, quantity);
             var backpackItem = Backpack.SingleOrDefault(i => i.Key.ItemDetails.Name.Equals(item.Name)).Key;
@@ -75,6 +82,12 @@ namespace Platformer.Managers
 
         public bool DiscardItem(Item item, int quantity = 1) // from backpack or inventory
         {
+            if (item == null)
+            {
+                Debug.LogWarning("Error: DiscardItem(null).");
+                return false;
+            }
+
             var backpackItem = Backpack.SingleOrDefault(i => i.Key.ItemDetails.Name.Equals(item.Name)).Key;
             var inventoryItem = Inventory.SingleOrDefault(i => i.ItemDetails.Name.Equals(item.Name));
 
@@ -102,6 +115,12 @@ namespace Platformer.Managers
 
         public bool EquipItem(InventoryItem item) ///TODO: equip on a slot type - helmet, charm, trinket, chest, weapon, shield, etc.
         {
+            if (item == null)
+            {
+                Debug.LogWarning("Error: EquipItem(null).");
+                return false;
+            }
+
             bool isInInventory = Inventory.SingleOrDefault(i => i.ItemDetails.Name.Equals(item.ItemDetails.Name)) != null;
 
             if (isInInventory)
@@ -137,7 +156,11 @@ namespace Platformer.Managers
 
         public bool UnequipItem(InventoryItem item)
         {
-            ///TODO: check if enough backpack slots
+            if (item == null)
+            {
+                Debug.LogWarning("Error: UnequipItem(null).");
+                return false;
+            }
 
             var inventoryItem = Inventory.SingleOrDefault(i => i.ItemDetails.Name.Equals(item.ItemDetails.Name));
             bool isInInventory = Inventory.SingleOrDefault(i => i.ItemDetails.Name.Equals(item.ItemDetails.Name)) != null;
@@ -154,10 +177,6 @@ namespace Platformer.Managers
             if (isInBackpack)
             {
                 Backpack[backpackItem.Key]++;
-                if (Backpack[backpackItem.Key] > backpackItem.Key.ItemDetails.MaxStackedCount)
-                {
-                    //backpackItem.Key.IsOverflowed = true;
-                }
             }
             else
             {
@@ -169,6 +188,34 @@ namespace Platformer.Managers
             DisplayItems();
 
             return true;
+        }
+
+        public bool UseItem(Item item)
+        {
+            if (item == null)
+            {
+                Debug.LogWarning("Error: UseItem(null).");
+                return false;
+            }
+
+            if (!item.IsUsable)
+            {
+                Debug.LogWarning($"{item.Name} is not usable.");
+                return false;
+            }
+
+            var inventoryItem = Inventory.SingleOrDefault(i => i.ItemDetails.Name.Equals(item.Name));
+            var backpackItem = Backpack.SingleOrDefault(kvp => kvp.Key.ItemDetails.Name.Equals(item.Name)).Key;
+
+            if (inventoryItem == null && backpackItem == null)
+            {
+                Debug.LogWarning($"{item.Name} is missing from the backpack and the inventory.");
+                return false;
+            }
+
+            item.Use(player);
+
+            return DiscardItem(item);
         }
 
         private void AddItemToBackpack(InventoryItem inventoryItem, Dictionary<InventoryItem, int> backpack = null)
@@ -198,7 +245,7 @@ namespace Platformer.Managers
                 backpack = Backpack;
             }
 
-            bool hasOverflowedItem = backpack.FirstOrDefault(kvp => kvp.Key.IsOverflowed).Key != null;
+            bool hasOverflowedItem = backpack.SingleOrDefault(kvp => kvp.Key.IsOverflowed).Key != null;
 
             if (hasOverflowedItem)
             {
@@ -281,6 +328,8 @@ namespace Platformer.Managers
 
         public IEnumerator Load()
         {
+            player = GetComponent<PlayerManager>();
+
             if (items == null || items.Count < 1)
             {
                 ///TODO: try load List of InventoryItem from savefile

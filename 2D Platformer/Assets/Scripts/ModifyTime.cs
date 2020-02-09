@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Platformer.Managers
+namespace Platformer
 {
     public class ModifyTime : MonoBehaviour
     {

@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d90727e534aa74c98a420a42f931ad, type: 3}
-  m_Name: Rock
+  m_Script: {fileID: 11500000, guid: 41f5ca26534379e45997b9c8ddf8f142, type: 3}
+  m_Name: Loot Healing Potion
   m_EditorClassIdentifier: 
-  name: Rock
-  namePlural: Rocks
-  description: A piece of rock
-  maxStackedCount: 100
-  isEquippable: 0
-  isUsable: 0
+  item: {fileID: 11400000, guid: f26cba1ed0ebb5f479f19536341f2360, type: 2}
+  quantity: 3
+  dropPercentage: 60
