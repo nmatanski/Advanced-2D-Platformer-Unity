@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Black Tile 8x8
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 144a754ede5673e42826f475435a5073, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_Transform:
     e00: 1
     e01: 0
