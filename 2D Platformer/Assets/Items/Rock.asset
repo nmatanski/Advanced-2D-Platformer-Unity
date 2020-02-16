@@ -18,3 +18,4 @@ MonoBehaviour:
   maxStackedCount: 100
   isEquippable: 0
   isUsable: 0
+  icon: {fileID: 0}

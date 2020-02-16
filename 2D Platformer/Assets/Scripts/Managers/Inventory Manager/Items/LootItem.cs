@@ -23,7 +23,6 @@ namespace Platformer.Managers.Items
         }
 
 
-
         [SerializeField]
         [Tooltip("For quantity=2 the 2nd item has Drop%/2 chance, for quantity=3 the 3rd item has Drop%/3 chance, etc.")]
         [Range(0, 1000)]
@@ -48,12 +47,7 @@ namespace Platformer.Managers.Items
 
             Quantity = droppedQuantity;
 
-            if (Quantity > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return Quantity > 0;
         }
     }
 }

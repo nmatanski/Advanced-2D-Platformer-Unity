@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Platformer.Managers.Items
 {
@@ -6,19 +7,19 @@ namespace Platformer.Managers.Items
     public class Item : ScriptableObject
     {
         [SerializeField]
-        private new string name;
+        private new string name = "New item";
         public string Name { get => name; set => name = value; }
 
         [SerializeField]
-        private string namePlural;
+        private string namePlural = "New items";
         public string NamePlural { get => namePlural; set => namePlural = value; }
 
         [SerializeField]
-        private string description;
+        private string description = "Item description";
         public string Description { get => description; set => description = value; }
 
         [SerializeField]
-        private int maxStackedCount;
+        private int maxStackedCount = 1;
         public int MaxStackedCount { get => maxStackedCount; set => maxStackedCount = value; }
 
         [SerializeField]
@@ -28,6 +29,11 @@ namespace Platformer.Managers.Items
         [SerializeField]
         private bool isUsable = false;
         public bool IsUsable { get => isUsable; set => isUsable = value; }
+
+        [SerializeField]
+        private Sprite icon = null;
+        public Sprite Icon { get => icon; set => icon = value; }
+
 
 
         public virtual void Use(PlayerManager player = null)

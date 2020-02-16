@@ -18,4 +18,5 @@ MonoBehaviour:
   maxStackedCount: 20
   isEquippable: 0
   isUsable: 1
+  icon: {fileID: 0}
   healAmount: 100

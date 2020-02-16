@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Platformer.Extensions;
 
 namespace Platformer.Managers
 {
@@ -38,7 +39,7 @@ namespace Platformer.Managers
 
         private IEnumerator StartupManagers()
         {
-            foreach (IManager manager in _startSequence)
+            foreach (var manager in _startSequence)
             {
                 try
                 {
@@ -46,7 +47,7 @@ namespace Platformer.Managers
                 }
                 catch (NullReferenceException)
                 {
-                    Debug.LogWarning($"NullReferenceException: One of the managers is missing!");
+                    Debug.LogWarning("NullReferenceException: One of the managers is missing!");
                 }
             }
 

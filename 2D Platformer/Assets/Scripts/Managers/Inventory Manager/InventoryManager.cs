@@ -8,12 +8,17 @@ namespace Platformer.Managers
 {
     public class InventoryManager : MonoBehaviour, IManager
     {
+        public static InventoryManager Instance { get; set; }
+
+        public delegate void OnItemChanged();
+
+        public OnItemChanged OnItemChangedCallback { get; private set; }
+
         public ManagerStatus Status { get; private set; }
 
         public Dictionary<InventoryItem, int> Backpack { get; private set; }
 
         public List<InventoryItem> Inventory { get; private set; }
-
 
         [SerializeField]
         private int inventoryCapacity = 4;
@@ -23,6 +28,19 @@ namespace Platformer.Managers
 
         private PlayerManager player;
 
+        private Managers managers;
+
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Debug.LogWarning("More than 1 instance of InventoryManager");
+                return;
+            }
+
+            Instance = this;
+        }
 
         public void Startup()
         {
@@ -46,6 +64,12 @@ namespace Platformer.Managers
             if (item == null)
             {
                 Debug.LogWarning("Error: CollectItem(null).");
+                return false;
+            }
+
+            if (quantity < 1)
+            {
+                Debug.LogWarning("Error: Trying to add 0 items.");
                 return false;
             }
 
@@ -75,6 +99,8 @@ namespace Platformer.Managers
 
             AddItemToBackpack(itemToAdd);
 
+            OnItemChangedCallback?.Invoke();
+
             DisplayItems();
 
             return true;
@@ -93,7 +119,13 @@ namespace Platformer.Managers
 
             if (backpackItem == null && inventoryItem != null)
             {
-                return UnequipItem(inventoryItem);
+                var hasUnequipped = UnequipItem(inventoryItem);
+                if (hasUnequipped)
+                {
+                    OnItemChangedCallback?.Invoke();
+                }
+
+                return hasUnequipped;
             }
             else if (backpackItem == null)
             {
@@ -107,6 +139,8 @@ namespace Platformer.Managers
             {
                 Backpack.Remove(backpackItem);
             }
+
+            OnItemChangedCallback?.Invoke();
 
             DisplayItems();
 
@@ -149,6 +183,8 @@ namespace Platformer.Managers
                 Backpack.Remove(backpackItem);
             }
 
+            OnItemChangedCallback?.Invoke();
+
             DisplayItems();
 
             return true;
@@ -185,6 +221,8 @@ namespace Platformer.Managers
 
             Inventory.Remove(inventoryItem);
 
+            OnItemChangedCallback?.Invoke();
+
             DisplayItems();
 
             return true;
@@ -192,6 +230,12 @@ namespace Platformer.Managers
 
         public bool UseItem(Item item)
         {
+            if (player == null || player.Status != ManagerStatus.Started)
+            {
+                Debug.LogWarning("Error: Inventory.UseItem: PlayerManager not ready yet.");
+                return false;
+            }
+
             if (item == null)
             {
                 Debug.LogWarning("Error: UseItem(null).");
@@ -215,7 +259,14 @@ namespace Platformer.Managers
 
             item.Use(player);
 
-            return DiscardItem(item);
+            var hasDiscarded = DiscardItem(item);
+
+            if (hasDiscarded)
+            {
+                OnItemChangedCallback?.Invoke();
+            }
+
+            return hasDiscarded;
         }
 
         private void AddItemToBackpack(InventoryItem inventoryItem, Dictionary<InventoryItem, int> backpack = null)
@@ -328,7 +379,14 @@ namespace Platformer.Managers
 
         public IEnumerator Load()
         {
+            managers = GetComponent<Managers>();
             player = GetComponent<PlayerManager>();
+
+            //do
+            //{
+            //    player = GetComponent<PlayerManager>();
+            //}
+            //while (player == null);
 
             if (items == null || items.Count < 1)
             {

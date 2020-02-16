@@ -1,8 +1,6 @@
 ﻿using Anima2D;
 using Platformer.Player;
-using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -32,7 +30,6 @@ namespace Platformer.Managers
 
         [SerializeField]
         private int gold;
-
         public int Gold
         {
             get { return gold; }
@@ -228,6 +225,8 @@ namespace Platformer.Managers
 
         public IEnumerator Load()
         {
+            managers = GetComponent<Managers>();
+
             playerGO = GameObject.FindGameObjectWithTag("Player");
             playerController = playerGO.GetComponent<PlayerController>();
             playerCollider = playerGO.GetComponent<BoxCollider2D>();
@@ -236,7 +235,6 @@ namespace Platformer.Managers
             ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
             playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
             managers = GetComponent<Managers>();
-            inventoryManager = GetComponent<InventoryManager>();
 
             yield return null;
         }
