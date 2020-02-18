@@ -2,7 +2,7 @@
 using Platformer.Managers;
 using UnityEngine;
 
-namespace Platformer
+namespace Platformer.Interactables
 {
     public class SelectableObject : MonoBehaviour
     {
@@ -14,6 +14,7 @@ namespace Platformer
         [SerializeField]
         //[Range(0, 1)]
         private float outlineThickness = 1f;
+        public float OutlineThickness { get => outlineThickness; set => outlineThickness = value; }
 
         [SerializeField]
         [Range(0, 100)]
@@ -68,14 +69,14 @@ namespace Platformer
                 IsHovered = true;
                 selectedMaterial.SetColor("_OutlineColour", selectedColor);
 
-                var tempOutlineThickness = (isMaxThick ? 6.3f : outlineThickness) * hoverOutlineThicknessDecreaseMultiplier / 100f;
+                var tempOutlineThickness = (isMaxThick ? 6.3f : OutlineThickness) * hoverOutlineThicknessDecreaseMultiplier / 100f;
 
                 if (selectedObject)
                 {
                     playerManager.LastSelectedObject.SelectedGameObject = selectedObject;
                     IsSelected = true;
 
-                    tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(outlineThickness, 0, 1000);
+                    tempOutlineThickness = isMaxThick ? 63 : Mathf.Clamp(OutlineThickness, 0, 1000);
                     float duration = isMaxThick ? .3f : .4f;
 
                     selectedMaterial.DOFloat(tempOutlineThickness, "_OutlineThickness", duration).SetEase(Ease.OutCubic);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Platformer.Audio;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,9 +12,12 @@ namespace Platformer
 
         private TilemapRenderer tilemapRenderer;
         private Tilemap tilemap;
+        private AudioManager audioManager;
+
 
         void Start()
         {
+            audioManager = FindObjectOfType<AudioManager>();
             tilemapRenderer = GetComponent<TilemapRenderer>();
             tilemap = GetComponent<Tilemap>();
 
@@ -29,6 +33,8 @@ namespace Platformer
             if (collision.tag == "Player" && !isExplored)
             {
                 ///TODO: Explore secret room SFX
+                audioManager.Play(true, GlobalData.AudioSources.CrystalMining1_wav, GlobalData.AudioSources.CrystalMining2_wav, GlobalData.AudioSources.CrystalMining3_wav); ///TODO: test sounds, change them later
+
                 StartCoroutine(FadeTo(tilemap, 0, .3f));
             }
         }

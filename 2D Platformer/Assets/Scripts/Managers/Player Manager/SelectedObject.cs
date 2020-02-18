@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Platformer.Interactables;
+using System;
 using UnityEngine;
 
 namespace Platformer.Managers

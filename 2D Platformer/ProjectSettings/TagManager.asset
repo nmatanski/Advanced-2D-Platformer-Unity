@@ -17,6 +17,7 @@ TagManager:
   - GliderChargesText
   - Managers
   - Minable
+  - PlayerMiningRange
   layers:
   - Default
   - TransparentFX
@@ -39,7 +40,7 @@ TagManager:
   - Selectable
   - AerialEnemy
   - HiddenRoom
-  - 
+  - PlayerMiningRange
   - 
   - 
   - 
