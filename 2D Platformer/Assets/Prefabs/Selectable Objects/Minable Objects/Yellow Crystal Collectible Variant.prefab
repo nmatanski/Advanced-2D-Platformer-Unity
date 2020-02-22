@@ -75,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 2666518800772302900, guid: 02967694a14f0a6478d9b667604a0e9b,
         type: 3}
       propertyPath: m_Name
-      value: Yellow Crystal Collectible
+      value: Yellow Crystal Collectible Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4962204902163476476, guid: 02967694a14f0a6478d9b667604a0e9b,
         type: 3}
@@ -87,6 +87,12 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 23.61
       objectReference: {fileID: 0}
+    - target: {fileID: 5376284096277034849, guid: 02967694a14f0a6478d9b667604a0e9b,
+        type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 821bba92b904d8a48ab23d266b435ec7,
+        type: 3}
     - target: {fileID: 6057192358393612989, guid: 02967694a14f0a6478d9b667604a0e9b,
         type: 3}
       propertyPath: m_Sprite

@@ -18,6 +18,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 99731b532f333664bba8a0dcc0b790c3, type: 2}
+    - target: {fileID: 3965470828716375904, guid: 0a5f49e22643dee4da1c3ff544431cc4,
+        type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f67698ca2ff0bb648937758fc929e807,
+        type: 3}
     - target: {fileID: 4127830820064552957, guid: 0a5f49e22643dee4da1c3ff544431cc4,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -46,7 +52,7 @@ PrefabInstance:
     - target: {fileID: 6383056336662528053, guid: 0a5f49e22643dee4da1c3ff544431cc4,
         type: 3}
       propertyPath: m_Name
-      value: Magenta Crystal Collectible
+      value: Magenta Crystal Collectible Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8238537726258668352, guid: 0a5f49e22643dee4da1c3ff544431cc4,
         type: 3}

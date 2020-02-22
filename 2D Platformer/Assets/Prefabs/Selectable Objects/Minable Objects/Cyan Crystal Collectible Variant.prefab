@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1880373126244347378, guid: 726f172148fa9f24c9778f3037091f7e,
         type: 3}
       propertyPath: m_Name
-      value: Cyan Crystal Collectible
+      value: Cyan Crystal Collectible Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1880373126244347381, guid: 726f172148fa9f24c9778f3037091f7e,
         type: 3}
@@ -88,6 +88,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 43809041f710d3549ad45ae0654b8011, type: 2}
+    - target: {fileID: 8468289278600778407, guid: 726f172148fa9f24c9778f3037091f7e,
+        type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c5cd52dc0cf27e14aa93893663181114,
+        type: 3}
     - target: {fileID: 8918331006909729338, guid: 726f172148fa9f24c9778f3037091f7e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
