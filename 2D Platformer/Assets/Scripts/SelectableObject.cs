@@ -35,7 +35,8 @@ namespace Platformer.Interactables
 
         private void Start()
         {
-            playerManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            //playerManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            playerManager = Managers.Managers.Player;
             selectedMaterial = GetComponent<SpriteRenderer>().material;
         }
 

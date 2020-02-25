@@ -10,12 +10,15 @@ namespace Platformer.Managers
     [RequireComponent(typeof(InventoryManager))]
     [RequireComponent(typeof(CardsManager))]
     [RequireComponent(typeof(AchievementManager))]
+    [RequireComponent(typeof(AudioManager))]
     public class Managers : MonoBehaviour
     {
+        public static Managers Instance { get; private set; }
         public static PlayerManager Player { get; private set; }
         public static InventoryManager Inventory { get; private set; }
         public static CardsManager Deck { get; private set; }
         public static AchievementManager Achievements { get; private set; }
+        public static AudioManager AudioManager { get; private set; }
 
         public bool AreReady { get; private set; } = false;
 
@@ -23,18 +26,37 @@ namespace Platformer.Managers
 
         void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            if (AreReady)
+            {
+                return;
+            }
+
             Player = GetComponent<PlayerManager>();
             Inventory = GetComponent<InventoryManager>();
+            //Inventory = InventoryManager.Instance; ///TODO: not working
             Deck = GetComponent<CardsManager>();
             Achievements = GetComponent<AchievementManager>();
+            AudioManager = AudioManager.Instance; ///TODO: test if working
 
             _startSequence = new List<IManager>();
             _startSequence.Add(Player);
             _startSequence.Add(Inventory);
             _startSequence.Add(Deck);
             _startSequence.Add(Achievements);
+            _startSequence.Add(AudioManager);
 
             StartCoroutine(StartupManagers());
+
         }
 
         private IEnumerator StartupManagers()

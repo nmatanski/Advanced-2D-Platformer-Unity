@@ -1,5 +1,6 @@
 ﻿using Platformer.Audio;
-using Platformer.Player;
+using Platformer.Managers;
+using Platformer.Managers.Items;
 using System.Collections;
 using UnityEngine;
 
@@ -10,14 +11,12 @@ namespace Platformer.Interactables
         [SerializeField]
         private int HealthClickCount = 3;
 
-        [SerializeField]
-        private GameObject[] pickups;
 
         [SerializeField]
         private ParticleSystem particles;
 
         [SerializeField]
-        private Sprite sprite;
+        private Sprite particlesSprite;
 
         [SerializeField]
         private int thicknessMultiplier = 2;
@@ -25,7 +24,8 @@ namespace Platformer.Interactables
         private SelectableObject selectable;
         private float defaultOutlineThickness;
         private bool isPlayerInRange = false;
-        private AudioManager audioManager;
+        //private AudioManager audioManager;
+        private Loot pickups;
 
 
         private void Start()
@@ -33,14 +33,17 @@ namespace Platformer.Interactables
             selectable = GetComponent<SelectableObject>();
             defaultOutlineThickness = selectable.OutlineThickness;
 
+            pickups = transform.Find("Loot").GetComponent<Loot>();
+            pickups.gameObject.SetActive(false);
+
             for (int i = particles.textureSheetAnimation.spriteCount - 1; i >= 0; i--)
             {
                 particles.textureSheetAnimation.RemoveSprite(i);
             }
 
-            particles.textureSheetAnimation.AddSprite(sprite);
+            particles?.textureSheetAnimation.AddSprite(particlesSprite); ///TODO: Null check
 
-            audioManager = FindObjectOfType<AudioManager>();
+            //audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void Update()
@@ -52,7 +55,7 @@ namespace Platformer.Interactables
                 StartCoroutine(IncreaseThickness(thicknessMultiplier, .2f));
 
                 ///TODO: Sound effect of mining - tests required (randomness, scene changing)
-                audioManager.Play(true, GlobalData.AudioSources.CrystalMining1_wav, GlobalData.AudioSources.CrystalMining2_wav, GlobalData.AudioSources.CrystalMining3_wav);
+                AudioManager.Instance.Play(true, true, GlobalData.AudioSources.CrystalMining1_wav, GlobalData.AudioSources.CrystalMining2_wav, GlobalData.AudioSources.CrystalMining3_wav);
 
                 HealthClickCount = Mathf.Clamp(HealthClickCount - 1, 0, int.MaxValue);
 
@@ -65,15 +68,17 @@ namespace Platformer.Interactables
 
         private IEnumerator InstantiateAndDestroy(float delay = 1f)
         {
-            if (pickups != null)
+            if (pickups != null && particles != null)
             {
                 ///TODO: Instantiate particle system
-                Instantiate(particles); // not working
-                foreach (var pickup in pickups)
+                Instantiate(particles, transform); // not working
+                ///TODO: Add rigidbody - rotation, force like an explosion
+                if (pickups.LootTable.Count > 0)
                 {
-                    ///TODO: Instantiate with rotation, force like an explosion
-                    Instantiate(pickup);
+                    pickups.gameObject.SetActive(true);
+                    pickups.gameObject.transform.parent = null;
                 }
+
                 yield return new WaitForSeconds(delay);
             }
 

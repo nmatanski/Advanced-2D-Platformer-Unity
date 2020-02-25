@@ -75,7 +75,8 @@ namespace Platformer.AI
         // Start is called before the first frame update
         private void Start()
         {
-            playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            //playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            playerStatus = Managers.Managers.Player;
             spriteRenderer = GetComponent<SpriteRenderer>();
             rigidbody = gameObject.GetComponent<Rigidbody2D>();
 

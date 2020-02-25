@@ -226,7 +226,8 @@ namespace Platformer.Managers
         public IEnumerator Load()
         {
             managers = GetComponent<Managers>();
-            inventoryManager = InventoryManager.Instance; ///TODO: more testing required: gets null but it loads it through the reference later
+            //inventoryManager = InventoryManager.Instance; ///TODO: more testing required: gets null but it loads it through the reference later
+            inventoryManager = Managers.Inventory; ///TODO: test this or above is better
 
             playerGO = GameObject.FindGameObjectWithTag("Player");
             playerController = playerGO.GetComponent<PlayerController>();

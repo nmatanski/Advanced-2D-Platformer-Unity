@@ -380,7 +380,8 @@ namespace Platformer.Managers
         public IEnumerator Load()
         {
             managers = GetComponent<Managers>();
-            player = GetComponent<PlayerManager>();
+            //player = GetComponent<PlayerManager>();
+            player = Managers.Player;
 
             //do
             //{

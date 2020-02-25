@@ -16,7 +16,8 @@ namespace Platformer.AI
 
         private void Start()
         {
-            playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            //playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
+            playerStatus = Managers.Managers.Player;
         }
 
 
