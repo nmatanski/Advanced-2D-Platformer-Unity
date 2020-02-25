@@ -1,5 +1,4 @@
-﻿using Platformer.Audio;
-using Platformer.Managers;
+﻿using Platformer.Managers;
 using Platformer.Managers.Items;
 using System.Collections;
 using UnityEngine;

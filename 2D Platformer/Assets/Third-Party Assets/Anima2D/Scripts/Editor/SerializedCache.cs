@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
 namespace Anima2D
 {
-	public class SerializedCache : ScriptableObject, ISerializationCallbackReceiver
+    public class SerializedCache : ScriptableObject, ISerializationCallbackReceiver
 	{
 		public void OnBeforeSerialize() { DoOnBeforeSerialize(); }
 		public void OnAfterDeserialize() { DoOnAfterDeserialize(); }

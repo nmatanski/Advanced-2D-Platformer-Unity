@@ -1,12 +1,10 @@
 ﻿#if UNITY_5_4_OR_NEWER
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class AnimationFixer
 	{
 		static AnimationFixer()

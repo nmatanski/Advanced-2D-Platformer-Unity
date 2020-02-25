@@ -1,14 +1,12 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Linq;
 
 namespace Anima2D
 {
-	public class ContextMenu
+    public class ContextMenu
 	{
 		[MenuItem("Assets/Create/Anima2D/SpriteMesh", true)]
 		static bool ValidateCreateSpriteMesh(MenuCommand menuCommand)

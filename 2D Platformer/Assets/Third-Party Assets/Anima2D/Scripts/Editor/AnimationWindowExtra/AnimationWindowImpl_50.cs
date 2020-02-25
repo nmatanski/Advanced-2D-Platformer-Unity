@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-using System.Collections;
 using System.Reflection;
 
 namespace Anima2D
 {
-	public class AnimationWindowImpl_50 : IAnimationWindowImpl
+    public class AnimationWindowImpl_50 : IAnimationWindowImpl
 	{
 		Type m_AnimationWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.AnimationWindow");
 		Type m_AnimationWindowStateType = typeof(EditorWindow).Assembly.GetType("UnityEditorInternal.AnimationWindowState");

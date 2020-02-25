@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[CustomEditor(typeof(IkGroup))]
+    [CustomEditor(typeof(IkGroup))]
 	public class IkGroupEditor : Editor
 	{
 		ReorderableList mList = null;

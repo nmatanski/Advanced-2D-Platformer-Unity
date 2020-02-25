@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class SpriteMeshInstanceTracker
+    public class SpriteMeshInstanceTracker
 	{
 		List<TransformTracker> m_TransformTrackers = new List<TransformTracker>();
 

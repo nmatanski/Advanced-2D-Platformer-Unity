@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D.Pool
 {
-	public interface ICreationPolicy<T>
+    public interface ICreationPolicy<T>
 	{
 		T Create();
 		void Destroy(T o);

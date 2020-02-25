@@ -1,12 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System;
-using System.Collections;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Anima2D
 {
-	public class AnimationWindowImpl_2017_1 : AnimationWindowImpl_56
+    public class AnimationWindowImpl_2017_1 : AnimationWindowImpl_56
 	{
 		MethodInfo m_StartRecording = null;
 		MethodInfo m_StopRecording = null;

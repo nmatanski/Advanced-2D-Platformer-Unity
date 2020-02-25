@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class IkSolver2DLimb : IkSolver2D
 	{
 		public bool flip = false;

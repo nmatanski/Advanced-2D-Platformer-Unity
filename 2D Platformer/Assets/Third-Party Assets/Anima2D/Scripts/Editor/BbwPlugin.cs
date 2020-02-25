@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class BbwPlugin
+    public class BbwPlugin
 	{
 		[DllImport ("Anima2D")]
 		private static extern int Bbw(int iterations,

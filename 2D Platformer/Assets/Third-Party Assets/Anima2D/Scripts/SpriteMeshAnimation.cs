@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Anima2D
 {
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
 	[RequireComponent(typeof(SpriteMeshInstance))]
 	public class SpriteMeshAnimation : MonoBehaviour
 	{

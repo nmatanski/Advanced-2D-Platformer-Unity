@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	internal class Timeline
+    internal class Timeline
 	{
 		private enum DragStates
 		{

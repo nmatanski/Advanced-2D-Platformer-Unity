@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Sprites;
-using UnityEditor.Sprites;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class TextureEditorWindow : EditorWindow
+    public class TextureEditorWindow : EditorWindow
 	{
 		public Color textureColor = Color.white;
 

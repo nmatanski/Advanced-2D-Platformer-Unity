@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class IkGroup : MonoBehaviour
+    public class IkGroup : MonoBehaviour
 	{
 		[SerializeField][HideInInspector]
 		List<Ik2D> m_IkComponents = new List<Ik2D>();

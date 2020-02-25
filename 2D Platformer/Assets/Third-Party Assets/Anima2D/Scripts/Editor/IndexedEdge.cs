@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public struct IndexedEdge
 	{
 		public int index1;

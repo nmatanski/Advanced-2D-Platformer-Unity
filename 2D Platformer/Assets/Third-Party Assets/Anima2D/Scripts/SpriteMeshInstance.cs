@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,7 +6,7 @@ using UnityEditor;
 
 namespace Anima2D
 {
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
 	public class SpriteMeshInstance : MonoBehaviour
 	{
 		[SerializeField]

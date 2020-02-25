@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
 using System.Reflection;
-using System.Collections;
 
 namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class ToolsExtra
 	{
 		static PropertyInfo s_ViewToolActivePropertyInfo;

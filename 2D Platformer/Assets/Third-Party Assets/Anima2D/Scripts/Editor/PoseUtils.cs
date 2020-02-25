@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public static class PoseUtils
+    public static class PoseUtils
 	{
 		public static void SavePose(Pose pose, Transform root)
 		{

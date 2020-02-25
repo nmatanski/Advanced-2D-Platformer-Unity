@@ -3,12 +3,11 @@ using UnityEditor;
 using UnityEditor.Sprites;
 using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class SpriteMeshCache : SerializedCache, IVertexManipulable, IRectManipulable
+    public class SpriteMeshCache : SerializedCache, IVertexManipulable, IRectManipulable
 	{
 		public SpriteMesh spriteMesh;
 		public SpriteMeshData spriteMeshData;

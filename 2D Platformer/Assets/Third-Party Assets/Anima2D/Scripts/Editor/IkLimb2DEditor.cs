@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
+﻿using UnityEditor;
 
 namespace Anima2D
 {
-	[CustomEditor(typeof(IkLimb2D))]
+    [CustomEditor(typeof(IkLimb2D))]
 	public class IkLimb2DEditor : Ik2DEditor
 	{
 		override public void OnInspectorGUI()

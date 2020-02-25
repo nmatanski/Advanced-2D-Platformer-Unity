@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using Anima2D.Pool;
 
 namespace Anima2D
 {
-	public class PreviewGameObjectCreationPolicy : InstantiateCreationPolicy<GameObject>
+    public class PreviewGameObjectCreationPolicy : InstantiateCreationPolicy<GameObject>
 	{
 		public PreviewGameObjectCreationPolicy(GameObject go) : base(go) { }
 		

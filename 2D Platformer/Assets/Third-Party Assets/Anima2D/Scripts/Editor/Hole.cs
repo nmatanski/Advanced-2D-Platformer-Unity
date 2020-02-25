@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class Hole : ICloneable
 	{
 		public Vector2 vertex = Vector2.zero;

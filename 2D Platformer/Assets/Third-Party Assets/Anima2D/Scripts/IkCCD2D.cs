@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class IkCCD2D : Ik2D
+    public class IkCCD2D : Ik2D
 	{
 		public int iterations = 10;
 		[Range(0, 1)]

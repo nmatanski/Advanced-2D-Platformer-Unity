@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEditor.Animations;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Anima2D
 {
-	public class MaskCreator
+    public class MaskCreator
 	{
 		[MenuItem("Window/Anima2D/Create Mask", true)]
 		static bool CreateMaskValidate()

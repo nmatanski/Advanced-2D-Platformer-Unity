@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class Exporter
+    public class Exporter
 	{
 		[MenuItem("Window/Anima2D/Export Prefab",true)]
 		static bool ExportValidate()

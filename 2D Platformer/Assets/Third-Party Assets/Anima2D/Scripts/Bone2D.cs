@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections;
-using UnityEngine.Serialization;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class Bone2D : MonoBehaviour
+    public class Bone2D : MonoBehaviour
 	{
 		[SerializeField]
 		private Color m_Color = Color.white;

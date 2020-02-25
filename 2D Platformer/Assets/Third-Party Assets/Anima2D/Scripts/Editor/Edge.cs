@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System;
-using System.Collections;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class Edge : ScriptableObject
 	{
 		public Node node1;

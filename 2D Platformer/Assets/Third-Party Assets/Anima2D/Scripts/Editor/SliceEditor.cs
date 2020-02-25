@@ -1,14 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.Sprites;
-using UnityEditorInternal;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class SliceEditor : WindowEditorTool
+    public class SliceEditor : WindowEditorTool
 	{
 		public SpriteMeshCache spriteMeshCache;
 

@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public abstract class IkSolver2D
 	{
 		[Serializable]

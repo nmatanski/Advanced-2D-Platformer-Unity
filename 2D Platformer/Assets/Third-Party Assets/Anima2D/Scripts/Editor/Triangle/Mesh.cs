@@ -9,7 +9,6 @@ namespace TriangleNet
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using TriangleNet.Data;
     using TriangleNet.Log;
     using TriangleNet.IO;

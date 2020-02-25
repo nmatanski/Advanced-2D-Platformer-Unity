@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[CanEditMultipleObjects]
+    [CanEditMultipleObjects]
 	[CustomEditor(typeof(Bone2D))]
 	public class Bone2DEditor : Editor
 	{

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Anima2D
 {
-	public class IkLimb2D : Ik2D
+    public class IkLimb2D : Ik2D
 	{
 		public bool flip = false;
 

@@ -3,14 +3,13 @@ using UnityEditor;
 using UnityEditor.Sprites;
 using System.IO;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TriangleNet.Geometry;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class SpriteMeshUtils
+    public class SpriteMeshUtils
 	{
 		static Material m_DefaultMaterial = null;
 		public static Material defaultMaterial {

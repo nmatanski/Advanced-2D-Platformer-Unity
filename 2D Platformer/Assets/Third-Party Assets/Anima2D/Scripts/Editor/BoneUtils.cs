@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public static class BoneUtils
+    public static class BoneUtils
 	{	
 		public static string GetUniqueBoneName(Bone2D root)
 		{

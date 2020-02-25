@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
-using System.Collections;
 
 namespace Anima2D
 {
-	[CustomEditor(typeof(SpriteMeshAnimation))]
+    [CustomEditor(typeof(SpriteMeshAnimation))]
 	public class SpriteMeshAnimationEditor : Editor
 	{
 		ReorderableList m_List = null;

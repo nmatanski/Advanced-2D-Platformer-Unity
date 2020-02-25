@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Anima2D
 {
-	public class TransformTracker
+    public class TransformTracker
 	{
 		Transform m_Transform;
 		Vector3 m_Position;

@@ -8,7 +8,6 @@
 namespace TriangleNet.Tools
 {
     using System;
-    using System.Text;
     using TriangleNet.Data;
     using TriangleNet.Geometry;
 

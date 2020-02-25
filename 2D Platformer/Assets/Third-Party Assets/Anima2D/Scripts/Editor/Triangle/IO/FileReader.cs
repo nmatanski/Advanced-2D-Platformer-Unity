@@ -10,7 +10,6 @@ namespace TriangleNet.IO
     using System;
     using System.IO;
     using System.Globalization;
-    using TriangleNet.Data;
     using TriangleNet.Log;
     using TriangleNet.Geometry;
     using System.Collections.Generic;

@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-using System.Collections;
 using System.Reflection;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class HandlesExtra
+    public class HandlesExtra
 	{
 		public delegate void CapFunction(int controlID, Vector3 position, Quaternion rotation, float size, EventType eventType);
 

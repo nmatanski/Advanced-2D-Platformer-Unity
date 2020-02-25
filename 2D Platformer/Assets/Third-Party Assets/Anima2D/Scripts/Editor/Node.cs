@@ -1,11 +1,9 @@
 using UnityEngine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class Node : ScriptableObject
 	{
 		public int index = -1;

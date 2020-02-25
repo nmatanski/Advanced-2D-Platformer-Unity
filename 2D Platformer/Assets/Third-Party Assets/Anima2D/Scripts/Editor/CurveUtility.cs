@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-using System.Collections;
 using System.Reflection;
 
 namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class CurveUtility
 	{
 		static Type m_CurveUtilityType = typeof(EditorWindow).Assembly.GetType("UnityEditor.CurveUtility");

@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System;
-using System.Collections;
-using System.Reflection;
 
 namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class AnimationWindowExtra
 	{
 		static IAnimationWindowImpl s_Impl;

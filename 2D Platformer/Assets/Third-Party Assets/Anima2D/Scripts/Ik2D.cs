@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public abstract class Ik2D : MonoBehaviour
+    public abstract class Ik2D : MonoBehaviour
 	{
 		[SerializeField]
 		bool m_Record = false;

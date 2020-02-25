@@ -1,11 +1,9 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class BlendShape : ScriptableObject
 	{
 		public BlendShapeFrame[] frames = new BlendShapeFrame[0];

@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class OnionSkinWindow : EditorWindow
+    public class OnionSkinWindow : EditorWindow
 	{
 		const int MaxFrames = 60;
 

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using UnityEngine;
-using UnityEditor;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class ZoomableArea
 	{
 		[Serializable]

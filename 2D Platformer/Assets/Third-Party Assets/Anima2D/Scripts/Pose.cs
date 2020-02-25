@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class Pose : ScriptableObject
+    public class Pose : ScriptableObject
 	{
 		[Serializable]
 		public class PoseEntry

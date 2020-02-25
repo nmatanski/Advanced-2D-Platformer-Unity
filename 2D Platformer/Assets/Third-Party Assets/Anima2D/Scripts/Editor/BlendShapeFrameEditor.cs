@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class BlendShapeFrameEditor : WindowEditorTool
+    public class BlendShapeFrameEditor : WindowEditorTool
 	{
 		public SpriteMeshCache spriteMeshCache;
 

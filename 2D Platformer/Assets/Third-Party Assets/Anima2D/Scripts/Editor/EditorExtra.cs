@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +10,7 @@ using UnityEngine.Rendering;
 
 namespace Anima2D
 {
-	public class EditorExtra
+    public class EditorExtra
 	{
 		public static GameObject InstantiateForAnimatorPreview(UnityEngine.Object original)
 		{

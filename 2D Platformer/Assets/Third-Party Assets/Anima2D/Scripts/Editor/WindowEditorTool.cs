@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
 namespace Anima2D
 {
-	public abstract class WindowEditorTool
+    public abstract class WindowEditorTool
 	{
 		public delegate void Callback();
 		public delegate bool BoolCallback();

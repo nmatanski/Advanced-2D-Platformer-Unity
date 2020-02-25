@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 namespace Anima2D
 {
-	public class BlendShapeFrameDopeElement : IDopeElement
+    public class BlendShapeFrameDopeElement : IDopeElement
 	{
 		public delegate void Callback(BlendShapeFrame frame, float weight);
 		public static Callback onFrameChanged;

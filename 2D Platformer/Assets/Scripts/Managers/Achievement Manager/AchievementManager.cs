@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Platformer.Achievements;
 using Platformer.Achievements.UI;
 using UnityEngine;

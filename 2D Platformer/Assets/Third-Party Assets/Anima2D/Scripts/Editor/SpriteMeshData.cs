@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
 namespace Anima2D
 {
-	[Serializable]
+    [Serializable]
 	public class SpriteMeshData : ScriptableObject
 	{
 		[SerializeField]

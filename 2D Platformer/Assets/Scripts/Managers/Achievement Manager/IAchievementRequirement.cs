@@ -1,5 +1,4 @@
 ﻿using System;
-using Platformer.Achievements;
 
 namespace Platformer.Achievements
 {

@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[CanEditMultipleObjects]
+    [CanEditMultipleObjects]
 	[CustomEditor(typeof(IkCCD2D))]
 	public class IkCCD2DEditor : Ik2DEditor
 	{

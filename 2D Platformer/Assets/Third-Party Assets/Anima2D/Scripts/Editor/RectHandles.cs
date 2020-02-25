@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
 namespace Anima2D
 {
-	public class RectHandles
+    public class RectHandles
 	{
 		private static Rect s_StartRect;
 		private static Rect s_CurrentRect;

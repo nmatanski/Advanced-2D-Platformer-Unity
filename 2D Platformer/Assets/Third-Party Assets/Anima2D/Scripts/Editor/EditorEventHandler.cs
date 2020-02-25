@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class EditorEventHandler
 	{
 		static List<SpriteMeshInstance> s_SpriteMeshInstances = new List<SpriteMeshInstance>();

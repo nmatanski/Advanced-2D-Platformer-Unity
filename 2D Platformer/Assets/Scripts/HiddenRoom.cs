@@ -1,6 +1,4 @@
-﻿using Platformer.Audio;
-using Platformer.Managers;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

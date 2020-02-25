@@ -1,13 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEditorInternal;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public class MeshToolEditor : WindowEditorTool
+    public class MeshToolEditor : WindowEditorTool
 	{
 		public enum MeshTool {
 			None,

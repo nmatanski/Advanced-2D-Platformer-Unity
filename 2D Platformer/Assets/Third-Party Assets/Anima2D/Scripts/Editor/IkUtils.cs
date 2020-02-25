@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	public static class IkUtils
+    public static class IkUtils
 	{
 		public static void InitializeIk2D(SerializedObject ikSO)
 		{

@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class BakedMesh
+    public class BakedMesh
 	{
 		Mesh m_ProxyMesh;
 	 	Mesh proxyMesh

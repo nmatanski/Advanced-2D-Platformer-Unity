@@ -1,5 +1,4 @@
 ﻿using Platformer.Audio;
-using Platformer.Managers;
 using System;
 using System.Collections;
 using UnityEngine;

@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[InitializeOnLoad]
+    [InitializeOnLoad]
 	public class Gizmos
 	{
 		static List<Bone2D> s_Bones = new List<Bone2D>();

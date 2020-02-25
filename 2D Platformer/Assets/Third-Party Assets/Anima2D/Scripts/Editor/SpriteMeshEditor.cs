@@ -1,13 +1,10 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.Sprites;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 
-namespace Anima2D 
+namespace Anima2D
 {
-	[CanEditMultipleObjects][CustomEditor(typeof(SpriteMesh))]
+    [CanEditMultipleObjects][CustomEditor(typeof(SpriteMesh))]
 	public class SpriteMeshEditor : Editor
 	{
 		SerializedProperty m_SpriteProperty;

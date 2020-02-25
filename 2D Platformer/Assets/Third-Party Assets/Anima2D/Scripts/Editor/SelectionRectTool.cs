@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Anima2D
 {
-	public class SelectionRectTool
+    public class SelectionRectTool
 	{
 		static Vector2 s_StartPosition = Vector2.zero;
 		static Vector2 s_EndPosition = Vector2.zero;

@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEditor;
 using System;
-using System.Collections;
 using System.Reflection;
 
 namespace Anima2D
 {
-	public class EditorGUIExtra
+    public class EditorGUIExtra
 	{
 		public static int s_MinMaxSliderHash = "MinMaxSlider".GetHashCode();
 

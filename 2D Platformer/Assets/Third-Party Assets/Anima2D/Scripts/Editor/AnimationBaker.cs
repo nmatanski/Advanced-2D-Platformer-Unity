@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
+﻿using UnityEditor;
 
 namespace Anima2D
 {
-	public class AnimationBaker
+    public class AnimationBaker
 	{
 		[MenuItem("Window/Anima2D/Bake Animation", true)]
 		static bool BakeAnimationValidate()

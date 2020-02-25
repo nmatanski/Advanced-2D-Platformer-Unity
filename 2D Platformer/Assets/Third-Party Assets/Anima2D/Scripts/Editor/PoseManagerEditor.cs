@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Anima2D
 {
-	[CustomEditor(typeof(PoseManager))]
+    [CustomEditor(typeof(PoseManager))]
 	public class PoseManagerEditor : Editor
 	{
 		ReorderableList mList = null;

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Platformer.Extensions;
 
 namespace Platformer.Managers
 {

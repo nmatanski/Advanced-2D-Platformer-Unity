@@ -1,14 +1,12 @@
 ﻿#if UNITY_5_6_OR_NEWER
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
 
 namespace Anima2D
 {
-	public class OnionLayerGameObjectCreationPolicy : PreviewGameObjectCreationPolicy
+    public class OnionLayerGameObjectCreationPolicy : PreviewGameObjectCreationPolicy
 	{
 		public OnionLayerGameObjectCreationPolicy(GameObject go) : base(go) {}
 
