@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Platformer.Managers.AudioManager" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="2" />
+    <AssociationLine Name="Instance" Type="Platformer.Managers.AudioManager" ManuallyRouted="true">
+      <Path>
+        <Point X="1.209" Y="6.559" />
+        <Point X="1.209" Y="6.939" />
+        <Point X="1.805" Y="6.939" />
+        <Point X="1.805" Y="6.559" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.014" Y="0.453" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAgAAEAAAAAQhAAAAAAAAAQAAEIQIAwQAACAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\AudioManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="sounds" />
+      <Field Name="currentThemeSong" />
+      <Field Name="previousThemeSong" />
+      <Property Name="Instance" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Audio.Sound">
+    <Position X="4.25" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAgAAAQAAAAAAAAQACAEEAEAgAAJAIAACACg=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\Sound.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="audioSourceLocation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Platformer.Extensions.AudioSourceExtensions">
+    <Position X="7.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Extensions\AudioSourceExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.GlobalData.GlobalStrings" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AudioSourceNames" />
+      <Property Name="TagNames" />
+    </ShowAsAssociation>
+  </Class>
+  <Struct Name="Platformer.GlobalData.AudioSources">
+    <Position X="7.75" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIQAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Platformer.GlobalData.Tags" Collapsed="true">
+    <Position X="10.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Platformer.Managers.IManager">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAAAAAAAAAAAAAAQAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\IManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Interface>
+  <Enum Name="Platformer.Audio.AudioSourceLocation">
+    <Position X="7.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\AudioSourceLocation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.Managers.ManagerStatus">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAQAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\ManagerStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

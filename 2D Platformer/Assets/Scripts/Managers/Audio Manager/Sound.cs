@@ -33,7 +33,35 @@ namespace Platformer.Audio
         private bool isLooping;
         public bool IsLooping { get => isLooping; set => isLooping = value; }
 
+        [SerializeField]
+        private AudioSourceLocation audioSourceLocation;
+
+        [SerializeField]
+        private GameObject locationGameObject;
+
+        public GameObject LocationGameObject { get => locationGameObject; set => locationGameObject = audioSourceLocation == AudioSourceLocation.Custom ? value : null; }
 
         public AudioSource Source { get; set; }
+
+
+        ///TODO: More tests if it works properly
+        public Sound(Sound newSound)
+        {
+            Name = newSound.Name ?? throw new ArgumentNullException(nameof(newSound.Name));
+            Clip = newSound.Clip ?? throw new ArgumentNullException(nameof(newSound.Clip));
+            Volume = newSound.Volume;
+            Pitch = newSound.Pitch;
+            SpatialBlend = newSound.SpatialBlend;
+            IsLooping = newSound.IsLooping;
+            LocationGameObject = newSound.LocationGameObject;
+            audioSourceLocation = LocationGameObject ? AudioSourceLocation.Custom : AudioSourceLocation.Default;
+            Source = newSound.Source ?? throw new ArgumentNullException(nameof(newSound.Source));
+        }
+
+        ///TODO: Test if working
+        //public Sound(Sound newSound)
+        //{
+        //    currentThemeSong = newSound;
+        //}
     }
 }
