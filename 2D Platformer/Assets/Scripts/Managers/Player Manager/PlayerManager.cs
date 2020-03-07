@@ -80,6 +80,8 @@ namespace Platformer.Managers
             set { lastSelectedObject = value; }
         }
 
+        public Animator PlayerAnimator { get; private set; }
+
 
         private PlayerController playerController;
         private SpriteMeshInstance[] playerSprites;
@@ -236,6 +238,7 @@ namespace Platformer.Managers
             playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
             ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
             playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
+            PlayerAnimator = GameObject.FindGameObjectWithTag("PlayerAnimator").GetComponent<Animator>();
             managers = GetComponent<Managers>();
 
             yield return null;

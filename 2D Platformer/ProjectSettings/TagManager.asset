@@ -18,6 +18,7 @@ TagManager:
   - Managers
   - Minable
   - PlayerMiningRange
+  - PlayerAnimator
   layers:
   - Default
   - TransparentFX
