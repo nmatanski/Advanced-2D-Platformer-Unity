@@ -45,7 +45,7 @@ namespace Platformer.Managers
             //Inventory = InventoryManager.Instance; ///TODO: not working
             Deck = GetComponent<CardsManager>();
             Achievements = GetComponent<AchievementManager>();
-            AudioManager = AudioManager.Instance; ///TODO: test if working
+            AudioManager = GetComponent<AudioManager>(); ///TODO: test if working
 
             _startSequence = new List<IManager>();
             _startSequence.Add(Player);

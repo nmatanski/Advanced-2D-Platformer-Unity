@@ -19,6 +19,7 @@ TagManager:
   - Minable
   - PlayerMiningRange
   - PlayerAnimator
+  - Weapon
   layers:
   - Default
   - TransparentFX
