@@ -141,7 +141,7 @@ namespace Platformer.AI
 
         private void Attack()
         {
-            attackCooldownSeconds = attackCooldownTimer; ///TODO: check if the player re-enters the range in less time than the cooldown time
+            //attackCooldownSeconds = attackCooldownTimer; ///TODO: check if the player re-enters the range in less time than the cooldown time
             isAttacking = true;
 
             enemyAnimator.SetTrigger("Attack");
