@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: 912793184}
   - component: {fileID: 912793183}
   - component: {fileID: 3171167123847402909}
-  - component: {fileID: 912793182}
   - component: {fileID: 912793181}
   - component: {fileID: 544169930731401965}
   m_Layer: 17
@@ -218,7 +217,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6bda1f5bf4224db44b12251ff5bfe8cb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -287,66 +286,6 @@ CircleCollider2D:
   m_Offset: {x: 0.02556, y: -0.2068634}
   serializedVersion: 2
   m_Radius: 0.2211008
---- !u!114 &912793182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290715225530138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf56b3e24aa333d4388ae73e7a0a1756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ignoreOneWayPlatformsThisFrame: 0
-  _skinWidth: 0.11
-  platformMask:
-    serializedVersion: 2
-    m_Bits: 60417
-  triggerMask:
-    serializedVersion: 2
-    m_Bits: 66305
-  oneWayPlatformMask:
-    serializedVersion: 2
-    m_Bits: 4096
-  slopeLimit: 30
-  jumpingThreshold: 0.133
-  slopeSpeedMultiplier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -90
-      value: 1.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 90
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  totalHorizontalRays: 7
-  totalVerticalRays: 3
 --- !u!114 &912793181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,10 +326,10 @@ MonoBehaviour:
   attackableLayers:
     serializedVersion: 2
     m_Bits: 256
-  chaseRange: 4
-  attackRange: 1
-  moveSpeed: 3
-  attackCooldownSeconds: 1.5
+  chaseRange: 6
+  attackRange: 1.5
+  moveSpeed: 2
+  attackCooldownSeconds: 2
 --- !u!1 &1315759352830414
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4399083178108848}
   - component: {fileID: 2966794462176144667}
+  - component: {fileID: 697540613}
   m_Layer: 17
   m_Name: Weapon
   m_TagString: Weapon
@@ -594,7 +534,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559754614193064}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -624,6 +564,21 @@ PolygonCollider2D:
       - {x: 0.03449784, y: -0.019540805}
       - {x: -0.23216721, y: 0.4556868}
       - {x: -0.52548134, y: 0.9505373}
+--- !u!114 &697540613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559754614193064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb508551808e7a349802f56e22150411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  isCollider: 0
+  isManagedByAIScript: 0
 --- !u!1 &1767043622670736
 GameObject:
   m_ObjectHideFlags: 0

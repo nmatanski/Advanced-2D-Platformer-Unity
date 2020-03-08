@@ -21,6 +21,7 @@ TagManager:
   - PlayerAnimator
   - Weapon
   - Enemy
+  - PlayerTargetPoint
   layers:
   - Default
   - TransparentFX

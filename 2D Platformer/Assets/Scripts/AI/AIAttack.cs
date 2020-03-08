@@ -1,5 +1,4 @@
-﻿using System;
-using Platformer.Managers;
+﻿using Platformer.Managers;
 using UnityEngine;
 
 namespace Platformer.AI
@@ -12,12 +11,16 @@ namespace Platformer.AI
         [SerializeField]
         private bool isCollider = true;
 
+        [Tooltip("True: Will not use the default OnTrigger/OnCollision code; Collisions with player should be managed from another script!")]
+        [SerializeField]
+        private bool isManagedByAIScript = false;
+
+
         private PlayerManager playerStatus;
 
 
         private void Start()
         {
-            //playerStatus = GameObject.FindGameObjectWithTag("Managers").GetComponent<PlayerManager>();
             playerStatus = Managers.Managers.Player;
         }
 
@@ -30,26 +33,26 @@ namespace Platformer.AI
             playerStatus.LastAttackDirection = collision.gameObject.transform.position - transform.position;
         }
 
-        public void DealDamageToPlayer(Collider2D collision)
+        public void DealDamageToPlayer(Collider2D triggerCollision)
         {
             playerStatus.AddHealth((short)-attackDamage);
 
             playerStatus.GetComponent<ModifyTime>().StopTime();
-            playerStatus.LastAttackDirection = collision.gameObject.transform.position - transform.position;
+            playerStatus.LastAttackDirection = triggerCollision.gameObject.transform.position - transform.position;
         }
 
 
-        private void OnCollisionEnter2D(Collision2D collision) ///TODO: Stay when player gets invulnerability   - fixed in player? needs tests
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag("Player") && isCollider)
+            if (collision.gameObject.CompareTag("Player") && isCollider && !isManagedByAIScript)
             {
                 DealDamageToPlayer(collision);
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision) ///TODO: Stay when player gets invulnerability   - fixed in player? needs tests
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player") && !isCollider)
+            if (collision.gameObject.CompareTag("Player") && !isCollider && !isManagedByAIScript)
             {
                 DealDamageToPlayer(collision);
             }

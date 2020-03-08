@@ -25,7 +25,7 @@ namespace Platformer.AI
         private float attackRange;
 
         [SerializeField]
-        private float moveSpeed;
+        private float moveSpeed = 5f;
 
         [SerializeField]
         private float attackCooldownSeconds;
@@ -33,14 +33,19 @@ namespace Platformer.AI
         private CharacterController2D characterController;
         private RaycastHit2D lineOfSightHit;
         private Transform target;
+        private Transform playerTargetPoint;
         private Animator enemyAnimator;
         private Vector3 positionLastFrame;
         private Vector3 positionThisFrame;
+        private float defaultMoveSpeed;
         private float distanceToTarget;
         private float attackCooldownTimer;
         private bool isAttacking;
+        private bool canMove = true;
         private bool isInRange;
         private bool isInCooldown;
+        private bool hasCustomSpeed = false;
+        private bool isChasing = false;
 
 
         private bool isFacingLeft;
@@ -49,22 +54,27 @@ namespace Platformer.AI
             get { return isFacingLeft; }
             set
             {
-                if (isFacingLeft != value)
+                if (isFacingLeft != value && canMove)
+                {
                     if (isAttacking)
-                        StartCoroutine(FlipDelayed(.5f));
+                        StartCoroutine(FlipDelayed(1f));
                     else
                         Flip();
-                isFacingLeft = value;
+                    isFacingLeft = value;
+                }
             }
         }
 
 
         private void Awake()
         {
+            defaultMoveSpeed = moveSpeed;
             SelectTarget();
             attackCooldownTimer = attackCooldownSeconds;
             enemyAnimator = GetComponent<Animator>();
             characterController = GetComponent<CharacterController2D>();
+
+            playerTargetPoint = GameObject.FindGameObjectWithTag("PlayerTargetPoint").transform;
         }
 
         private void Start()
@@ -79,26 +89,22 @@ namespace Platformer.AI
             positionLastFrame = positionThisFrame;
             IsFacingLeft = velocity.x < 0;
 
-            if (!isAttacking)
+            if (!isAttacking && canMove)
             {
                 Move();
             }
 
-            if (!InsideOfPatrollingPath() && !isInRange && !enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) ///remove last check?
+            if (!InsideOfPatrollingPath() && !isInRange && !enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && canMove)
             {
                 SelectTarget();
             }
 
-            if (isInRange)
-            {
-                lineOfSightHit = Physics2D.Raycast(attackRangeTransform.position, transform.right, chaseRange, attackableLayers);
-            }
+            lineOfSightHit = Physics2D.Raycast(attackRangeTransform.position, transform.right, chaseRange, attackableLayers);
 
             distanceToTarget = Vector2.Distance(transform.position, target.position);
             RaycastDebugger();
 
-
-            if (lineOfSightHit.collider) //Player detected
+            if (lineOfSightHit.collider && isInRange) //Player detected for attack
             {
                 ProcessAttackBehaviour();
             }
@@ -111,12 +117,31 @@ namespace Platformer.AI
             {
                 InterruptAttacking();
             }
+
+            if (isChasing)
+            {
+                moveSpeed = 1.5f * defaultMoveSpeed; ///TODO: test
+            }
+            else
+            {
+                moveSpeed = defaultMoveSpeed;
+            }
         }
 
 
         public void ToggleCooldown(bool state = true)
         {
             isInCooldown = state;
+        }
+
+        public void ToggleMovingOn()
+        {
+            canMove = true;
+        }
+
+        public void ToggleMovingOff()
+        {
+            canMove = false;
         }
 
 
@@ -136,6 +161,7 @@ namespace Platformer.AI
             {
                 SetCooldown();
                 enemyAnimator.ResetTrigger("Attack");
+                ToggleMovingOn();
             }
         }
 
@@ -150,10 +176,10 @@ namespace Platformer.AI
 
         private void InterruptAttacking()
         {
-            ToggleCooldown(false);///TODO: Wait for the timer to be = 0
+            ToggleCooldown(false);
             isAttacking = false;
-            //enemyAnimator.SetBool("Attack", false);
             enemyAnimator.ResetTrigger("Attack");
+            ToggleMovingOn();
         }
 
         private void Move()
@@ -171,7 +197,7 @@ namespace Platformer.AI
         private void SelectTarget()
         {
             target = Vector3.Distance(transform.position, leftPatrolPoint.position) > Vector3.Distance(transform.position, rightPatrolPoint.position) ? leftPatrolPoint : rightPatrolPoint;
-            Flip();
+            StartCoroutine(FlipDelayed(3f));
         }
 
         private bool InsideOfPatrollingPath()
@@ -188,8 +214,12 @@ namespace Platformer.AI
 
         private IEnumerator FlipDelayed(float delay)
         {
+            hasCustomSpeed = true;
+            moveSpeed = 0;
+            enemyAnimator.SetTrigger("Idle");
             yield return new WaitForSeconds(delay);
             Flip();
+            hasCustomSpeed = false;
         }
 
         private void SetCooldown()
@@ -221,9 +251,20 @@ namespace Platformer.AI
         {
             if (collision.gameObject.tag == "Player")
             {
-                target = collision.transform;
+                if (playerTargetPoint)
+                    target = playerTargetPoint;
+                else
+                    target = collision.transform;
                 isInRange = true;
-                Flip();
+                isChasing = true; ///TODO: another animation or particles/effects while chasing
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                isChasing = false; ///TODO: stop animation/particles/effects for chasing
             }
         }
     }
