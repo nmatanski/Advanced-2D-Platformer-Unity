@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2f8833bde931a4e904e6f5e67da088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
-  maxHealth: 1000
+  health: 100
+  maxHealth: 100
   gold: 0
   isDead: 0
   isInvulnerable: 0
@@ -156,19 +156,34 @@ MonoBehaviour:
     pitch: 1
     spatialBlend: 0.5
     isLooping: 0
+    audioSourceLocation: 0
+    locationGameObject: {fileID: 0}
   - name: Crystal Mining 2
     clip: {fileID: 8300000, guid: baa3ba7a857f85c41ab689e7964e0601, type: 3}
     volume: 1
     pitch: 1
     spatialBlend: 0.5
     isLooping: 0
+    audioSourceLocation: 0
+    locationGameObject: {fileID: 0}
   - name: Crystal Mining 3
     clip: {fileID: 8300000, guid: d2db7db4377dddb45bfebc81f36f0c7f, type: 3}
     volume: 1
     pitch: 1
     spatialBlend: 0.5
     isLooping: 0
+    audioSourceLocation: 0
+    locationGameObject: {fileID: 0}
   audioSourcesGameObject: {fileID: 7767699819238773681}
+  currentThemeSong:
+    name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    spatialBlend: 0
+    isLooping: 0
+    audioSourceLocation: 0
+    locationGameObject: {fileID: 0}
 --- !u!1 &7767699819238773681
 GameObject:
   m_ObjectHideFlags: 0

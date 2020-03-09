@@ -1,17 +1,17 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿//using UnityEditor;
+//using UnityEngine;
 
-[CustomEditor(typeof(EasingHelper))]
-public class ObjectBuilderEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+//[CustomEditor(typeof(EasingHelper))]
+//public class ObjectBuilderEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        DrawDefaultInspector();
 
-        EasingHelper myScript = (EasingHelper)target;
-        if (GUILayout.Button("Generate Curve"))
-        {
-            myScript.GenerateCurve();
-        }
-    }
-}
+//        EasingHelper myScript = (EasingHelper)target;
+//        if (GUILayout.Button("Generate Curve"))
+//        {
+//            myScript.GenerateCurve();
+//        }
+//    }
+//}
