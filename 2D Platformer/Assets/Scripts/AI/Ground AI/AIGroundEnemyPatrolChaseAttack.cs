@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Platformer.AI
 {
+    [RequireComponent(typeof(AIManager))]
     public class AIGroundEnemyPatrolChaseAttack : MonoBehaviour
     {
         [SerializeField]
@@ -216,7 +217,7 @@ namespace Platformer.AI
         {
             hasCustomSpeed = true;
             moveSpeed = 0;
-            enemyAnimator.SetTrigger("Idle");
+            enemyAnimator?.SetTrigger("Idle");
             yield return new WaitForSeconds(delay);
             Flip();
             hasCustomSpeed = false;

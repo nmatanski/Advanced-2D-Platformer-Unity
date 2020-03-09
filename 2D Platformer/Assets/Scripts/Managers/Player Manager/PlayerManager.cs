@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Platformer.Managers
 {
-    public class PlayerManager : MonoBehaviour, IManager
+    public class PlayerManager : MonoBehaviour, IManager, ICharacterManager
     {
         public ManagerStatus Status { get; private set; }
         public Vector3 LastAttackDirection { get; set; }
@@ -33,7 +33,7 @@ namespace Platformer.Managers
         public int Gold
         {
             get { return gold; }
-            set { gold = value; }
+            private set { gold = value; }
         }
 
         [SerializeField]
@@ -80,7 +80,7 @@ namespace Platformer.Managers
             set { lastSelectedObject = value; }
         }
 
-        public Animator PlayerAnimator { get; private set; }
+        public Animator CharacterAnimator { get; private set; }
 
 
         private PlayerController playerController;
@@ -238,7 +238,7 @@ namespace Platformer.Managers
             playerSprites = playerGO.GetComponentsInChildren<SpriteMeshInstance>();
             ChangeSpritesColor(playerSprites, Color.white); //to reset the original sprites' colors
             playerRigidBody = playerGO.GetComponent<Rigidbody2D>();
-            PlayerAnimator = GameObject.FindGameObjectWithTag("PlayerAnimator").GetComponent<Animator>();
+            CharacterAnimator = GameObject.FindGameObjectWithTag("PlayerAnimator").GetComponent<Animator>();
             managers = GetComponent<Managers>();
 
             yield return null;

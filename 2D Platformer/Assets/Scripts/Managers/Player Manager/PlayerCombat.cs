@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Platformer.AI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Platformer.Player
@@ -16,10 +17,15 @@ namespace Platformer.Player
         [SerializeField]
         private LayerMask enemyLayers;
 
+        private ContactFilter2D contactFilter;
+
 
         private void Start()
         {
-            playerAnimator = Managers.Managers.Player.PlayerAnimator;
+            playerAnimator = Managers.Managers.Player.CharacterAnimator;
+            contactFilter = new ContactFilter2D();
+            contactFilter.layerMask = enemyLayers;
+            contactFilter.useLayerMask = true;
         }
 
 
@@ -34,17 +40,15 @@ namespace Platformer.Player
         private void Attack()
         {
             playerAnimator.SetTrigger("Attack");
+        }
 
-            var contactFilter = new ContactFilter2D();
-            contactFilter.layerMask = enemyLayers;
-            contactFilter.useLayerMask = true;
+        public void ProcessAttackData()
+        {
             var attackedEnemyColliders = new List<Collider2D>();
-
             Physics2D.OverlapCollider(weaponCollider, contactFilter, attackedEnemyColliders);
 
             foreach (var attackedEnemyCollider in attackedEnemyColliders)
             {
-#pragma warning disable S3923 // All branches in a conditional structure should not have exactly the same implementation
                 switch (attackedEnemyCollider.tag)
                 {
                     case "Weapon":
@@ -52,13 +56,13 @@ namespace Platformer.Player
                         ///TODO: add a Weapon script to the weapon game object with the enemy/player gameobject and script to know who has this weapon
                         break;
                     case "Enemy":
-                        //attackedEnemyCollider.GetComponent<Enemy>().TakeDamage(weaponDamage); ///TODO: Use enemy script here
+                        attackedEnemyCollider.GetComponent<AIManager>()?.AddHealth((short)-weaponDamage); ///TODO: Use enemy script here
                         break;
                     default:
                         break;
                 }
-#pragma warning restore S3923 // All branches in a conditional structure should not have exactly the same implementation
-                Debug.Log($"We hit a {attackedEnemyCollider.name}");
+
+                Debug.Log($"\t\tWe hit a {attackedEnemyCollider.name} with tag {attackedEnemyCollider.tag}");
             }
 
             ///TODO: check if we have a weapon and its owner being collided to call Clash/Parry/Block/Stun method/s

@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Platformer.Interactables.SelectableObject" Collapsed="true">
+    <Position X="8" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABCAAEAAAEABQAAAAIAAAQAIAFAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SelectableObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Interactables.MinableObject" Collapsed="true">
+    <Position X="8" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAQCAACAAAAAQAAgAgAAAAEAACAAAAANAAAAAAQA=</HashCode>
+      <FileName>Assets\Scripts\MinableObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.RNG.RandomNumberGenerator" Collapsed="true">
+    <Position X="18.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\RandomNumberGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.ModifyTime" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIQAAgAAACAAAAAAAAAAAAgIIAAAIQAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\ModifyTime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.HiddenRoom" Collapsed="true">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAACAAAAAAAABAAAAAgEAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HiddenRoom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Character" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAABAAAAAAAAAAAAAgAAAAAAAAEAAgAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Character.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CharacterController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Platformer.CameraController" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAGAAAiEAQAAAAAAAAAAAAAAAAAABCABAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\CameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.CollapsablePlatform" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\CollapsablePlatform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.CustomEffector" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAIAAAAAAAAQAAAAEAAAgAAAAIAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\CustomEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.JumpPad" Collapsed="true">
+    <Position X="13.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\JumpPad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.MovingPlatform" Collapsed="true">
+    <Position X="11.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAhACAECAAAAAAAAAAAAEAQAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\MovingPlatform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.Achievement" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgMAAAAEggAAEAAAEAAQAAAAAAAIAAAAKAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Achievement Manager\Achievement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.AchievementRequirement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQCAQAACAACBAoAAAAKAAAAAEAAAAAACAAAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\Achievement Requirements\AchievementRequirement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Achievements.OnCollisionEnteredAchievementRequirementDTO" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Achievement Requirements\DTOs\OnCollisionEnteredAchievementRequirementDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.OnTriggerEnteredAchievementRequirementDTO" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Achievement Requirements\DTOs\OnTriggerEnteredAchievementRequirementDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.PointOfInterest" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAggAAAIAAAAAQAABAEAAAQAAAIAAAACgA=</HashCode>
+      <FileName>Assets\Scripts\Achievement Requirements\DTOs\PointOfInterest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.AchievementManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAJgIBEAAgAAAAABgAAAAAAQAAAIAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Achievement Manager\AchievementManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Managers.AudioManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAgAAEAAAAAQhAAAAAAAAAQAAEIQIAwQAACAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\AudioManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Managers.Card" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAABAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Cards Manager\Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.CardsManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAAAAAAAAAAAAAAUAAAIAAAAABAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Cards Manager\CardsManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Managers.Deck" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABgAAAAAAAAAIAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Cards Manager\Deck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.InventoryItem" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIEAAAABAAAAAAAAAAAAIAAAAAAACBAAAAgQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\InventoryItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.InventoryManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAAgAQEAAAABAEAAAgAAAYAYAAgIAABQAAUAgCEAEA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\InventoryManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Managers.Managers" Collapsed="true">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAgAAAAAAAAAEAAAAAAAQAAAAAQABAAwCAAEA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Managers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.PlayerManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQIiQAMAEQCCAAACACAEIhgYBaIYIBAABBAQACAAQk=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\PlayerManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.Managers.SelectedObject" Collapsed="true">
+    <Position X="9.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\SelectedObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.UI.AchievementButtonUI" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAiABAEAAAABABAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Achievement Manager\UI\AchievementButtonUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Achievements.UI.AchievementManagerUI" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQABAYEACAAIAAAJAEAAiQACABEAAgAQAAAAICAAQA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Achievement Manager\UI\AchievementManagerUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Audio.Sound" Collapsed="true">
+    <Position X="11.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAgAAAQAAAAAAAAQACAEEAEAgAAJAIAACACg=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.Items.HealingItem" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\Items\HealingItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.Items.Item" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAEAAIAAAAAQIAAAEKAAAASIAAAECAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\Items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.Items.Loot" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAACAAEAAAAIAAAACAAAACCAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\Items\Loot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Managers.Items.LootItem" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACQAAAAkAAAAAACIAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Inventory Manager\Items\LootItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Player.CharacterAnimatorEvents" Collapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\CharacterAnimatorEvents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Player.PlayerCombat" Collapsed="true">
+    <Position X="15" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAiAAAAAAAAAAAAAAAJAAAAAAAAAAAAIQQAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\PlayerCombat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Player.PlayerController" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DH/JTijJIHYIebAYBBU7CkHdWMZAdhO+JgIMe9ohwOY=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\PlayerController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CharacterController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Platformer.GlobalData.GlobalStrings" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EasingFunctions" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Animation Tweening\EasingFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EasingHelper" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAwABAAAAAAAQAAgAAAAAAAAABAAABAAAAAAABAAwA=</HashCode>
+      <FileName>Assets\Scripts\Animation Tweening\EasingHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Extensions.AudioSourceExtensions" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Extensions\AudioSourceExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Extensions.ParallelExtensions" Collapsed="true">
+    <Position X="13.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Extensions\ParallelExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.Extensions.StringExtensions" Collapsed="true">
+    <Position X="13.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Extensions\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.AI.AIAerialMovement" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQYAAAkAqAAISABYAAaAQIQAAZAAAAgCIJhAEKAACI=</HashCode>
+      <FileName>Assets\Scripts\AI\Aerial AI\AIAerialMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.AI.AIAttack" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAACAAAAAAAEAAMAAAAEAAAAAAAAAgEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AI\AIAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.AI.AIManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACQAIAAAACAAAAAAAEABAABIAQABAAAAAQAAAAUk=</HashCode>
+      <FileName>Assets\Scripts\AI\AIManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Platformer.AI.AIGroundEnemyPatrolChaseAttack" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABACIUaAhgQBMLAUABQGEhMAMAAABAAAAKAIAAEI=</HashCode>
+      <FileName>Assets\Scripts\AI\Ground AI\AIGroundEnemyPatrolChaseAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Platformer.AI.AIGroundMovementTest" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <AssociationLine Name="GroundMovementState" Type="Platformer.AI.GroundMovementState">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.3" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EARABgiBMCAIAxAAAAACLgCAAEIBgAELQgABAEagAVA=</HashCode>
+      <FileName>Assets\Scripts\AI\Ground AI\AIGroundMovement-TEST.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GroundMovementState" />
+      <Property Name="CharacterController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Platformer.AI.AIGroundMovement" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <AssociationLine Name="GroundMovementState" Type="Platformer.AI.GroundMovementState">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.126" Y="0.274" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EAQABggBECAIAQAAAAACDgCAAEIBgAEIAgAAAAYAARA=</HashCode>
+      <FileName>Assets\Scripts\AI\Ground AI\AIGroundMovement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CharacterController" />
+      <Property Name="GroundMovementState" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Prime31.CharacterController2D" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="Prime31.CharacterController2D.CharacterRaycastOrigins" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Third-Party Assets\Scripts\Prime31\CharacterController2D.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BICIAQCQpChgQAShAQAAAAACJEAFAAAJCAQAJgGAokA=</HashCode>
+      <FileName>Assets\Third-Party Assets\Scripts\Prime31\CharacterController2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Platformer.GlobalData.AudioSources" Collapsed="true">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIQAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Platformer.GlobalData.Tags" Collapsed="true">
+    <Position X="9.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Globals\GlobalStrings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Platformer.Achievements.IAchievementRequirement" Collapsed="true">
+    <Position X="8" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Achievement Manager\IAchievementRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Platformer.Managers.IManager" Collapsed="true">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAAAAAAAAAAAAAAQAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\IManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Platformer.Managers.ICharacterManager" Collapsed="true">
+    <Position X="9.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAAAAAAAEAAAAAIAQABAAAAAAAAAAQE=</HashCode>
+      <FileName>Assets\Scripts\Managers\Player Manager\ICharacterManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Platformer.GroundType" Collapsed="true">
+    <Position X="16.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAQAAIAAAAAAAAEAEAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\PlatformEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.EffectorType" Collapsed="true">
+    <Position X="15" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAABAAAAAAAAgAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Platforms\PlatformEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.Managers.ManagerStatus" Collapsed="true">
+    <Position X="18.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAQAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\ManagerStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.Audio.AudioSourceLocation" Collapsed="true">
+    <Position X="11.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\Audio Manager\AudioSourceLocation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.AI.GroundMovementState" Collapsed="true">
+    <Position X="8" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAgAAAAAAAAAAAAAAAIEAAAAgIAAAQAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AI\AIMovementEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.AI.AerialMovementState" Collapsed="true">
+    <Position X="9.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABIAAAAAAAAAAAAAAAABAAAAgIAAAQAAgAAA=</HashCode>
+      <FileName>Assets\Scripts\AI\AIMovementEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Platformer.AI.CollisionBehaviour" Collapsed="true">
+    <Position X="13.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAAAAAAAAAgAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\AI\AIMovementEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
