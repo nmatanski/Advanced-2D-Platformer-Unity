@@ -90,7 +90,7 @@ namespace Platformer.AI
             positionLastFrame = positionThisFrame;
             IsFacingLeft = velocity.x < 0;
 
-            if (!isAttacking && canMove)
+            if (!isAttacking && canMove && !enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
                 Move();
             }
@@ -114,7 +114,7 @@ namespace Platformer.AI
                 isInRange = false;
             }
 
-            if (!isInRange)
+            if (!isInRange && !enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) ///TODO: test with the 2nd condition
             {
                 InterruptAttacking();
             }
@@ -161,7 +161,7 @@ namespace Platformer.AI
             if (isInCooldown)
             {
                 SetCooldown();
-                enemyAnimator.ResetTrigger("Attack");
+                enemyAnimator.SetBool("isAttacking", false);
                 ToggleMovingOn();
             }
         }
@@ -171,7 +171,7 @@ namespace Platformer.AI
             //attackCooldownSeconds = attackCooldownTimer; ///TODO: check if the player re-enters the range in less time than the cooldown time
             isAttacking = true;
 
-            enemyAnimator.SetTrigger("Attack");
+            enemyAnimator.SetBool("isAttacking", true);
             enemyAnimator.SetBool("isRunning", false);
         }
 
@@ -179,7 +179,7 @@ namespace Platformer.AI
         {
             ToggleCooldown(false);
             isAttacking = false;
-            enemyAnimator.ResetTrigger("Attack");
+            enemyAnimator.SetBool("isAttacking", false);
             ToggleMovingOn();
         }
 
@@ -208,6 +208,11 @@ namespace Platformer.AI
 
         private void Flip()
         {
+            if (enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                return;
+            }
+
             var rotation = transform.eulerAngles;
             rotation.y = transform.position.x < target.position.x ? 180f : 0f;
             transform.eulerAngles = rotation;

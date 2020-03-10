@@ -175,7 +175,7 @@ MonoBehaviour:
     locationGameObject: {fileID: 0}
   - name: AI Minor Loop
     clip: {fileID: 8300000, guid: e948d510503de3c47a03a84d7da2cad6, type: 3}
-    volume: 0.1
+    volume: 0.07
     pitch: 1
     spatialBlend: 1
     isLooping: 1
