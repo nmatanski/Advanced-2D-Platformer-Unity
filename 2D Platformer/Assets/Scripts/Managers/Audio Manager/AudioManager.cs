@@ -49,7 +49,6 @@ namespace Platformer.Managers
 
             Status = ManagerStatus.Initializing;
 
-            PlayMainTheme();
 
             ///long-runing startups tasks here, set Status to Initializing 
 
@@ -128,7 +127,7 @@ namespace Platformer.Managers
         private void PlayMainTheme()
         {
             ///TODO: Add a main theme
-            //currentThemeSong = Play(GlobalData.AudioSources.MainTheme);
+            currentThemeSong = Play(GlobalData.AudioSources.AIMinorLoop_wav_3d);
         }
 
         private static void SetSound(Sound sound)
@@ -173,6 +172,8 @@ namespace Platformer.Managers
 
                 SetSound(sound);
             }
+
+            PlayMainTheme();
 
             yield return null;
         }
