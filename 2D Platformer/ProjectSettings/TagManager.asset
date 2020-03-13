@@ -44,7 +44,7 @@ TagManager:
   - Selectable
   - AerialEnemy
   - HiddenRoom
-  - PlayerMiningRange
+  - 
   - EnemySight
   - Confiner
   - Post-Processing

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Platformer.Interactables
 {
+    [RequireComponent(typeof(SelectableObject))]
     public class MinableObject : MonoBehaviour
     {
         [SerializeField]
@@ -47,9 +48,10 @@ namespace Platformer.Interactables
 
         private void Update()
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-            if (hit.collider && hit.collider.gameObject == gameObject && Input.GetMouseButtonDown(1) && isPlayerInRange)
+            //Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            var minableGO = selectable.HoveredSelectables[0];
+            if (minableGO && minableGO == gameObject && Input.GetMouseButtonDown(1) && isPlayerInRange)
             {
                 StartCoroutine(IncreaseThickness(thicknessMultiplier, .2f));
 

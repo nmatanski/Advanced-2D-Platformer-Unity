@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Platformer.Managers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Platformer.Interactables
@@ -22,6 +23,11 @@ namespace Platformer.Interactables
 
         [SerializeField]
         private bool isMaxThick = false;
+
+        [SerializeField]
+        private List<GameObject> hoveredSelectables;
+        public List<GameObject> HoveredSelectables { get => hoveredSelectables; private set => hoveredSelectables = value; }
+
 
 
         private GameObject selectedObject;
@@ -49,6 +55,8 @@ namespace Platformer.Interactables
             {
                 hoveredObject = gameObject;
 
+                HoveredSelectables.Add(hoveredObject);
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     selectedObject = gameObject;
@@ -56,6 +64,8 @@ namespace Platformer.Interactables
             }
             else
             {
+                HoveredSelectables.Remove(hoveredObject);
+
                 hoveredObject = null;
 
                 if (Input.GetMouseButtonDown(0))
